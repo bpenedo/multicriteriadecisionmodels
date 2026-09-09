@@ -8,7 +8,7 @@ E-mail: profbruanbima@gmail.com
 
 # 🎯 MCDM Studio — Модели многокритериального принятия решений
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="320"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="820"/>
 
 **ProfBru © 2026**
 
@@ -155,17 +155,57 @@ E-mail: profbruanbima@gmail.com
 python3 pipeline.py --listar
 ```
 
-| Случай | Область | Альтернативы | Критерии |
-|---|---|---|---|
-| `smartphone` | потребительский | 6 | 8 |
-| `veiculo_eletrico` | автомобильный | 7 | 8 |
-| `caca_multifuncao` | оборона | 6 | 9 |
-| `blindado` | оборона | 5 | 8 |
-| `portfolio_startup` | корпоративный | 7 | 9 |
-| `estacao_trabalho` | ИТ | 6 | 8 |
+| # | Случай | Область | Альтернативы | Критерии | Вердикт |
+|--:|---|---|--:|--:|---|
+| 1 | `smartphone` | потребительский | 6 | 8 | ВЕРОЯТНЫЙ 85% |
+| 2 | `veiculo_eletrico` | автомобильный | 7 | 8 | УСТОЙЧИВЫЙ 96% |
+| 3 | `caca_multifuncao` | оборона | 6 | 9 | УСТОЙЧИВЫЙ 100% |
+| 4 | `blindado` | оборона | 5 | 8 | УСТОЙЧИВЫЙ 90% |
+| 5 | `portfolio_startup` | корпоративный | 7 | 9 | УСТОЙЧИВЫЙ 97% |
+| 6 | `estacao_trabalho` | ИТ | 6 | 8 | УСТОЙЧИВЫЙ 98% |
+| 7 | `carros_eletricos` | автомобильный | 38 | 9 | УСТОЙЧИВЫЙ 99% |
+| 8 | `smartphones_2026` | потребительский | 38 | 9 | ВЕРОЯТНЫЙ 65% |
+| 9 | `tablets` | потребительский | 34 | 8 | ВЕРОЯТНЫЙ 62% |
+| 10 | `smartwatches` | потребительский | 31 | 8 | ВЕРОЯТНЫЙ 79% |
+| 11 | `notebooks` | ИТ | 32 | 8 | ВЕРОЯТНЫЙ 76% |
+| 12 | `maquinario_agricola` | агробизнес | 35 | 8 | УСТОЙЧИВЫЙ 100% |
+| 13 | `sbc_iot` | ИТ | 33 | 8 | УСТОЙЧИВЫЙ 100% |
+| 14 | `mineracao_asic` | инфраструктура | 31 | 8 | НЕУСТОЙЧИВЫЙ 51% |
+| 15 | `minipcs` | ИТ | 10 | 8 | УСТОЙЧИВЫЙ 96% |
+| 16 | `impressoras_3d_miniaturas` | производство | 30 | 9 | НЕУСТОЙЧИВЫЙ 35% |
+| 17 | `impressoras_3d_producao` | производство | 30 | 9 | НЕУСТОЙЧИВЫЙ 45% |
+| 18 | `plotters_formato` | производство | 24 | 9 | ВЕРОЯТНЫЙ 86% |
+| 19 | `impressoras_3d_miniaturas_triadas` | производство | 13 | 9 | УСТОЙЧИВЫЙ 100% |
+| 20 | `acoes_b3` 📚 | финансы | 20 | 7 | НЕУСТОЙЧИВЫЙ 52% |
+| 21 | `fundos_imobiliarios` 📚 | финансы | 18 | 8 | ВЕРОЯТНЫЙ 61% |
+| 22 | `fintech` 📚 | финансы | 16 | 8 | ВЕРОЯТНЫЙ 78% |
+| 23 | `avaliacao_imoveis` 📚 | недвижимость | 16 | 8 | УСТОЙЧИВЫЙ 96% |
+| 24 | `ordens_servico` 📚 | операции | 18 | 8 | УСТОЙЧИВЫЙ 92% |
+| 25 | `cloud_providers` 📚 | ИТ | 14 | 8 | УСТОЙЧИВЫЙ 100% |
+| 26 | `venture_capital` 📚 | корпоративный | 16 | 8 | УСТОЙЧИВЫЙ 97% |
+| 27 | `instrutores` 📚 | корпоративный | 15 | 8 | УСТОЙЧИВЫЙ 100% |
 
 > [!NOTE]
 > Матрицы случаев **иллюстративны** — публичные и правдоподобные порядки величин для демонстрации метода. **Неиллюстративным** является **моделирование**: критерии, направления, каузальная матрица DEMATEL и матрица Саати. Именно в ней заключена ценность. **Замените числа своей котировкой, своим тендером или своими лабораторными испытаниями** — движок тот же; данные ваши.
+
+> [!TIP]
+> **Вердикт** измеряет, в скольких из 2 000 смоделированных вселенных предпочтений победитель продолжает побеждать при возмущении весов по Дирихле (κ=200). **УСТОЙЧИВЫЙ** ≥ 90%: выбор не зависит от калибровки. **ВЕРОЯТНЫЙ** 60–89%: второе место конкурентоспособно, сравните оба. **НЕУСТОЙЧИВЫЙ** < 60%: первое место — артефакт весов, и это законный результат, а не сбой. Значит, данные не решают, и решение возвращается к человеку.
+
+### 📚 Кейсы, выведенные из литературы
+
+> [!IMPORTANT]
+> В восьми кейсах **критерии и причинная структура взяты из рецензируемых статей и диссертаций** — акции, фонды недвижимости, финтех, оценка недвижимости, наряды на обслуживание, облачные провайдеры, венчурный капитал и ранжирование инструкторов. Критерии не выдуманы: они происходят из исходного текста, а авторство каждой работы сохранено в заголовке соответствующего модуля. **Числовые матрицы** — наши собственные построения; данные оригинальных работ не воспроизводились.
+
+| Случай | Область | Источник и авторство |
+|---|---|---|
+| `acoes_b3` | финансы | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
+| `fundos_imobiliarios` | финансы | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
+| `fintech` | финансы | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
+| `avaliacao_imoveis` | недвижимость | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
+| `ordens_servico` | операции | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
+| `cloud_providers` | ИТ | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
+| `venture_capital` | корпоративный | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
+| `instrutores` | корпоративный | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
 
 ---
 
@@ -477,7 +517,7 @@ multicriteriadecisionmodels/
 
 <div align="center">
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="180"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="420"/>
 
 **ProfBru © 2026**
 

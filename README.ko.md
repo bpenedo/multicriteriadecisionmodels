@@ -8,7 +8,7 @@ E-mail: profbruanbima@gmail.com
 
 # 🎯 MCDM Studio — 다기준 의사결정 모델
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="320"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="820"/>
 
 **ProfBru © 2026**
 
@@ -155,17 +155,57 @@ E-mail: profbruanbima@gmail.com
 python3 pipeline.py --listar
 ```
 
-| 사례 | 영역 | 대안 | 기준 |
-|---|---|---|---|
-| `smartphone` | 소비재 | 6 | 8 |
-| `veiculo_eletrico` | 자동차 | 7 | 8 |
-| `caca_multifuncao` | 국방 | 6 | 9 |
-| `blindado` | 국방 | 5 | 8 |
-| `portfolio_startup` | 기업 | 7 | 9 |
-| `estacao_trabalho` | IT | 6 | 8 |
+| # | 사례 | 영역 | 대안 | 기준 | 판정 |
+|--:|---|---|--:|--:|---|
+| 1 | `smartphone` | 소비재 | 6 | 8 | 유력 85% |
+| 2 | `veiculo_eletrico` | 자동차 | 7 | 8 | 견고 96% |
+| 3 | `caca_multifuncao` | 국방 | 6 | 9 | 견고 100% |
+| 4 | `blindado` | 국방 | 5 | 8 | 견고 90% |
+| 5 | `portfolio_startup` | 기업 | 7 | 9 | 견고 97% |
+| 6 | `estacao_trabalho` | IT | 6 | 8 | 견고 98% |
+| 7 | `carros_eletricos` | 자동차 | 38 | 9 | 견고 99% |
+| 8 | `smartphones_2026` | 소비재 | 38 | 9 | 유력 65% |
+| 9 | `tablets` | 소비재 | 34 | 8 | 유력 62% |
+| 10 | `smartwatches` | 소비재 | 31 | 8 | 유력 79% |
+| 11 | `notebooks` | IT | 32 | 8 | 유력 76% |
+| 12 | `maquinario_agricola` | 농업 | 35 | 8 | 견고 100% |
+| 13 | `sbc_iot` | IT | 33 | 8 | 견고 100% |
+| 14 | `mineracao_asic` | 인프라 | 31 | 8 | 취약 51% |
+| 15 | `minipcs` | IT | 10 | 8 | 견고 96% |
+| 16 | `impressoras_3d_miniaturas` | 제조 | 30 | 9 | 취약 35% |
+| 17 | `impressoras_3d_producao` | 제조 | 30 | 9 | 취약 45% |
+| 18 | `plotters_formato` | 제조 | 24 | 9 | 유력 86% |
+| 19 | `impressoras_3d_miniaturas_triadas` | 제조 | 13 | 9 | 견고 100% |
+| 20 | `acoes_b3` 📚 | 금융 | 20 | 7 | 취약 52% |
+| 21 | `fundos_imobiliarios` 📚 | 금융 | 18 | 8 | 유력 61% |
+| 22 | `fintech` 📚 | 금융 | 16 | 8 | 유력 78% |
+| 23 | `avaliacao_imoveis` 📚 | 부동산 | 16 | 8 | 견고 96% |
+| 24 | `ordens_servico` 📚 | 운영 | 18 | 8 | 견고 92% |
+| 25 | `cloud_providers` 📚 | IT | 14 | 8 | 견고 100% |
+| 26 | `venture_capital` 📚 | 기업 | 16 | 8 | 견고 97% |
+| 27 | `instrutores` 📚 | 기업 | 15 | 8 | 견고 100% |
 
 > [!NOTE]
 > 사례 행렬은 **예시**입니다 — 방법을 보여 주기 위한 공개적이고 타당한 크기 수준입니다. **예시가 아닌 것**은 **모델링**입니다: 기준, 방향, DEMATEL 인과행렬, Saaty 행렬. 가치는 거기에 있습니다. **숫자를 당신의 견적서, 입찰공고, 실험 결과로 바꾸십시오** — 엔진은 같고, 데이터는 당신의 것입니다.
+
+> [!TIP]
+> **판정**은 가중치를 디리클레(κ=200)로 교란한 2,000개의 모의 선호 세계 중 몇 곳에서 우승자가 계속 이기는지를 측정합니다. **견고** ≥ 90%: 선택이 보정에 의존하지 않습니다. **유력** 60–89%: 차점자가 경쟁력이 있으니 둘을 비교하십시오. **취약** < 60%: 1위는 가중치가 만든 산물입니다 — 이는 실패가 아니라 정당한 발견입니다. 데이터가 결정하지 못하므로 결정이 사람에게 돌아간다는 뜻입니다.
+
+### 📚 문헌에서 도출한 사례 연구
+
+> [!IMPORTANT]
+> 여덟 개 사례는 **기준과 인과 구조를 동료 심사 논문 및 학위논문에서 가져왔습니다** — 주식, 부동산 펀드, 핀테크, 부동산 감정, 정비 작업지시, 클라우드 사업자, 벤처 캐피털, 강사 순위. 기준은 지어낸 것이 아니라 원문에서 온 것이며, 각 연구의 저작자 정보는 해당 모듈 헤더에 보존되어 있습니다. **수치 행렬**은 자체 구성으로, 원 논문의 데이터는 재현하지 않았습니다.
+
+| 사례 | 영역 | 출처 및 저작자 |
+|---|---|---|
+| `acoes_b3` | 금융 | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
+| `fundos_imobiliarios` | 금융 | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
+| `fintech` | 금융 | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
+| `avaliacao_imoveis` | 부동산 | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
+| `ordens_servico` | 운영 | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
+| `cloud_providers` | IT | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
+| `venture_capital` | 기업 | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
+| `instrutores` | 기업 | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
 
 ---
 
@@ -477,7 +517,7 @@ multicriteriadecisionmodels/
 
 <div align="center">
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="180"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="420"/>
 
 **ProfBru © 2026**
 

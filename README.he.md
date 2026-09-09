@@ -8,7 +8,7 @@ E-mail: profbruanbima@gmail.com
 
 # 🎯 MCDM Studio — מודלים רב-קריטריוניים לקבלת החלטות
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="320"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="820"/>
 
 **ProfBru © 2026**
 
@@ -155,17 +155,57 @@ E-mail: profbruanbima@gmail.com
 python3 pipeline.py --listar
 ```
 
-| מקרה | תחום | חלופות | קריטריונים |
-|---|---|---|---|
-| `smartphone` | צריכה | 6 | 8 |
-| `veiculo_eletrico` | רכב | 7 | 8 |
-| `caca_multifuncao` | ביטחון | 6 | 9 |
-| `blindado` | ביטחון | 5 | 8 |
-| `portfolio_startup` | ארגוני | 7 | 9 |
-| `estacao_trabalho` | מערכות מידע | 6 | 8 |
+| # | מקרה | תחום | חלופות | קריטריונים | פסק |
+|--:|---|---|--:|--:|---|
+| 1 | `smartphone` | צריכה | 6 | 8 | סביר 85% |
+| 2 | `veiculo_eletrico` | רכב | 7 | 8 | יציב 96% |
+| 3 | `caca_multifuncao` | ביטחון | 6 | 9 | יציב 100% |
+| 4 | `blindado` | ביטחון | 5 | 8 | יציב 90% |
+| 5 | `portfolio_startup` | ארגוני | 7 | 9 | יציב 97% |
+| 6 | `estacao_trabalho` | מערכות מידע | 6 | 8 | יציב 98% |
+| 7 | `carros_eletricos` | רכב | 38 | 9 | יציב 99% |
+| 8 | `smartphones_2026` | צריכה | 38 | 9 | סביר 65% |
+| 9 | `tablets` | צריכה | 34 | 8 | סביר 62% |
+| 10 | `smartwatches` | צריכה | 31 | 8 | סביר 79% |
+| 11 | `notebooks` | מערכות מידע | 32 | 8 | סביר 76% |
+| 12 | `maquinario_agricola` | אגרו-עסקים | 35 | 8 | יציב 100% |
+| 13 | `sbc_iot` | מערכות מידע | 33 | 8 | יציב 100% |
+| 14 | `mineracao_asic` | תשתיות | 31 | 8 | שביר 51% |
+| 15 | `minipcs` | מערכות מידע | 10 | 8 | יציב 96% |
+| 16 | `impressoras_3d_miniaturas` | ייצור | 30 | 9 | שביר 35% |
+| 17 | `impressoras_3d_producao` | ייצור | 30 | 9 | שביר 45% |
+| 18 | `plotters_formato` | ייצור | 24 | 9 | סביר 86% |
+| 19 | `impressoras_3d_miniaturas_triadas` | ייצור | 13 | 9 | יציב 100% |
+| 20 | `acoes_b3` 📚 | פיננסי | 20 | 7 | שביר 52% |
+| 21 | `fundos_imobiliarios` 📚 | פיננסי | 18 | 8 | סביר 61% |
+| 22 | `fintech` 📚 | פיננסי | 16 | 8 | סביר 78% |
+| 23 | `avaliacao_imoveis` 📚 | נדל"ן | 16 | 8 | יציב 96% |
+| 24 | `ordens_servico` 📚 | תפעול | 18 | 8 | יציב 92% |
+| 25 | `cloud_providers` 📚 | מערכות מידע | 14 | 8 | יציב 100% |
+| 26 | `venture_capital` 📚 | ארגוני | 16 | 8 | יציב 97% |
+| 27 | `instrutores` 📚 | ארגוני | 15 | 8 | יציב 100% |
 
 > [!NOTE]
 > מטריצות המקרים הן **להמחשה** — סדרי גודל ציבוריים וסבירים, להדגמת השיטה. מה ש**אינו** להמחשה הוא ה**מידול**: קריטריונים, כיוונים, מטריצת הסיבתיות של DEMATEL ומטריצת Saaty. שם שוכן הערך. **החליפו את המספרים בהצעת המחיר שלכם, במכרז שלכם או בבדיקת המעבדה שלכם** — המנוע זהה; הנתונים שלכם.
+
+> [!TIP]
+> ה**פסק** מודד בכמה מתוך 2,000 יקומי העדפה מדומים המנצח ממשיך לנצח, בהפרעת המשקלים לפי דיריכלה (κ=200). **יציב** ≥ 90%: הבחירה אינה תלויה בכיול. **סביר** 60–89%: המקום השני תחרותי, השוו בין השניים. **שביר** < 60%: המקום הראשון הוא תוצר של המשקלים — וזהו ממצא לגיטימי, לא כישלון. משמעו שהנתונים אינם מכריעים, וההכרעה חוזרת לאדם.
+
+### 📚 מקרי בוחן הנגזרים מן הספרות
+
+> [!IMPORTANT]
+> בשמונה מן המקרים **הקריטריונים והמבנה הסיבתי נלקחו ממאמרים ומעבודות גמר שעברו שיפוט עמיתים** — מניות, קרנות נדל"ן, פינטק, שמאות מקרקעין, הזמנות עבודה, ספקי ענן, הון סיכון ודירוג מדריכים. הקריטריונים אינם מומצאים: הם מגיעים מטקסט המקור, והבעלות על כל עבודה נשמרת בכותרת המודול המתאים. **מטריצות המספרים** הן יצירה עצמית — שום נתון מן העבודות המקוריות לא שוחזר.
+
+| מקרה | תחום | מקור ובעלות |
+|---|---|---|
+| `acoes_b3` | פיננסי | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
+| `fundos_imobiliarios` | פיננסי | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
+| `fintech` | פיננסי | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
+| `avaliacao_imoveis` | נדל"ן | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
+| `ordens_servico` | תפעול | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
+| `cloud_providers` | מערכות מידע | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
+| `venture_capital` | ארגוני | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
+| `instrutores` | ארגוני | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
 
 ---
 
@@ -477,7 +517,7 @@ multicriteriadecisionmodels/
 
 <div align="center">
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="180"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="420"/>
 
 **ProfBru © 2026**
 

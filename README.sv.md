@@ -8,7 +8,7 @@ E-mail: profbruanbima@gmail.com
 
 # 🎯 MCDM Studio — Multikriteriella beslutsmodeller
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="320"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="820"/>
 
 **ProfBru © 2026**
 
@@ -155,17 +155,57 @@ Motorn är **domänoberoende**: enheten är *beslutsfallet* (alternativ × krite
 python3 pipeline.py --listar
 ```
 
-| Fall | Domän | Alternativ | Kriterier |
-|---|---|---|---|
-| `smartphone` | konsument | 6 | 8 |
-| `veiculo_eletrico` | fordon | 7 | 8 |
-| `caca_multifuncao` | försvar | 6 | 9 |
-| `blindado` | försvar | 5 | 8 |
-| `portfolio_startup` | företag | 7 | 9 |
-| `estacao_trabalho` | IT | 6 | 8 |
+| # | Fall | Domän | Alternativ | Kriterier | Utlåtande |
+|--:|---|---|--:|--:|---|
+| 1 | `smartphone` | konsument | 6 | 8 | TROLIG 85% |
+| 2 | `veiculo_eletrico` | fordon | 7 | 8 | ROBUST 96% |
+| 3 | `caca_multifuncao` | försvar | 6 | 9 | ROBUST 100% |
+| 4 | `blindado` | försvar | 5 | 8 | ROBUST 90% |
+| 5 | `portfolio_startup` | företag | 7 | 9 | ROBUST 97% |
+| 6 | `estacao_trabalho` | IT | 6 | 8 | ROBUST 98% |
+| 7 | `carros_eletricos` | fordon | 38 | 9 | ROBUST 99% |
+| 8 | `smartphones_2026` | konsument | 38 | 9 | TROLIG 65% |
+| 9 | `tablets` | konsument | 34 | 8 | TROLIG 62% |
+| 10 | `smartwatches` | konsument | 31 | 8 | TROLIG 79% |
+| 11 | `notebooks` | IT | 32 | 8 | TROLIG 76% |
+| 12 | `maquinario_agricola` | lantbruk | 35 | 8 | ROBUST 100% |
+| 13 | `sbc_iot` | IT | 33 | 8 | ROBUST 100% |
+| 14 | `mineracao_asic` | infrastruktur | 31 | 8 | BRÄCKLIG 51% |
+| 15 | `minipcs` | IT | 10 | 8 | ROBUST 96% |
+| 16 | `impressoras_3d_miniaturas` | tillverkning | 30 | 9 | BRÄCKLIG 35% |
+| 17 | `impressoras_3d_producao` | tillverkning | 30 | 9 | BRÄCKLIG 45% |
+| 18 | `plotters_formato` | tillverkning | 24 | 9 | TROLIG 86% |
+| 19 | `impressoras_3d_miniaturas_triadas` | tillverkning | 13 | 9 | ROBUST 100% |
+| 20 | `acoes_b3` 📚 | finans | 20 | 7 | BRÄCKLIG 52% |
+| 21 | `fundos_imobiliarios` 📚 | finans | 18 | 8 | TROLIG 61% |
+| 22 | `fintech` 📚 | finans | 16 | 8 | TROLIG 78% |
+| 23 | `avaliacao_imoveis` 📚 | fastigheter | 16 | 8 | ROBUST 96% |
+| 24 | `ordens_servico` 📚 | drift | 18 | 8 | ROBUST 92% |
+| 25 | `cloud_providers` 📚 | IT | 14 | 8 | ROBUST 100% |
+| 26 | `venture_capital` 📚 | företag | 16 | 8 | ROBUST 97% |
+| 27 | `instrutores` 📚 | företag | 15 | 8 | ROBUST 100% |
 
 > [!NOTE]
 > Fallens matriser är **illustrativa** — offentliga och rimliga storleksordningar för att demonstrera metoden. Det som **inte** är illustrativt är **modelleringen**: kriterier, riktningar, DEMATEL:s kausalmatris och Saaty-matrisen. Där ligger värdet. **Byt ut siffrorna mot din offert, din upphandling eller ditt labbtest** — motorn är densamma; datan är din.
+
+> [!TIP]
+> **Utfallet** mäter i hur många av de 2 000 simulerade preferensuniversen vinnaren fortsätter att vinna, när vikterna störs med Dirichlet (κ=200). **ROBUST** ≥ 90 %: valet beror inte på kalibreringen. **TROLIG** 60–89 %: tvåan är konkurrenskraftig, jämför båda. **BRÄCKLIG** < 60 %: förstaplatsen är en artefakt av vikterna — och det är ett legitimt fynd, inte ett misslyckande. Det betyder att data inte avgör, och beslutet återgår till människan.
+
+### 📚 Fallstudier härledda ur litteraturen
+
+> [!IMPORTANT]
+> Åtta av fallen har sina **kriterier och kausalstruktur hämtade ur granskade artiklar och examensarbeten** — aktier, fastighetsfonder, fintech, fastighetsvärdering, underhållsarbetsordrar, molnleverantörer, riskkapital och instruktörsrangordning. Kriterierna är inte påhittade: de kommer från källtexten, och varje arbetes upphovsmannaskap bevaras i motsvarande moduls filhuvud. **Sifferma­triserna** är egna instansieringar — inga data ur originalarbetena har återgivits.
+
+| Fall | Domän | Källa och upphovsman |
+|---|---|---|
+| `acoes_b3` | finans | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
+| `fundos_imobiliarios` | finans | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
+| `fintech` | finans | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
+| `avaliacao_imoveis` | fastigheter | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
+| `ordens_servico` | drift | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
+| `cloud_providers` | IT | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
+| `venture_capital` | företag | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
+| `instrutores` | företag | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
 
 ---
 
@@ -477,7 +517,7 @@ Det är precis vad det är till för. Ett fall är en deklarativ struktur i `cas
 
 <div align="center">
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="180"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="420"/>
 
 **ProfBru © 2026**
 

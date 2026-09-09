@@ -8,7 +8,7 @@ E-mail: profbruanbima@gmail.com
 
 # 🎯 MCDM Studio — Monikriteeriset päätösmallit
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="320"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="820"/>
 
 **ProfBru © 2026**
 
@@ -155,17 +155,57 @@ Moottori on **toimialariippumaton**: yksikkö on *päätöstapaus* (vaihtoehdot 
 python3 pipeline.py --listar
 ```
 
-| Tapaus | Toimiala | Vaihtoehdot | Kriteerit |
-|---|---|---|---|
-| `smartphone` | kuluttaja | 6 | 8 |
-| `veiculo_eletrico` | autoala | 7 | 8 |
-| `caca_multifuncao` | puolustus | 6 | 9 |
-| `blindado` | puolustus | 5 | 8 |
-| `portfolio_startup` | yritys | 7 | 9 |
-| `estacao_trabalho` | IT | 6 | 8 |
+| # | Tapaus | Toimiala | Vaihtoehdot | Kriteerit | Tuomio |
+|--:|---|---|--:|--:|---|
+| 1 | `smartphone` | kuluttaja | 6 | 8 | TODENNÄKÖINEN 85% |
+| 2 | `veiculo_eletrico` | autoala | 7 | 8 | VAKAA 96% |
+| 3 | `caca_multifuncao` | puolustus | 6 | 9 | VAKAA 100% |
+| 4 | `blindado` | puolustus | 5 | 8 | VAKAA 90% |
+| 5 | `portfolio_startup` | yritys | 7 | 9 | VAKAA 97% |
+| 6 | `estacao_trabalho` | IT | 6 | 8 | VAKAA 98% |
+| 7 | `carros_eletricos` | autoala | 38 | 9 | VAKAA 99% |
+| 8 | `smartphones_2026` | kuluttaja | 38 | 9 | TODENNÄKÖINEN 65% |
+| 9 | `tablets` | kuluttaja | 34 | 8 | TODENNÄKÖINEN 62% |
+| 10 | `smartwatches` | kuluttaja | 31 | 8 | TODENNÄKÖINEN 79% |
+| 11 | `notebooks` | IT | 32 | 8 | TODENNÄKÖINEN 76% |
+| 12 | `maquinario_agricola` | maatalous | 35 | 8 | VAKAA 100% |
+| 13 | `sbc_iot` | IT | 33 | 8 | VAKAA 100% |
+| 14 | `mineracao_asic` | infrastruktuuri | 31 | 8 | HAURAS 51% |
+| 15 | `minipcs` | IT | 10 | 8 | VAKAA 96% |
+| 16 | `impressoras_3d_miniaturas` | valmistus | 30 | 9 | HAURAS 35% |
+| 17 | `impressoras_3d_producao` | valmistus | 30 | 9 | HAURAS 45% |
+| 18 | `plotters_formato` | valmistus | 24 | 9 | TODENNÄKÖINEN 86% |
+| 19 | `impressoras_3d_miniaturas_triadas` | valmistus | 13 | 9 | VAKAA 100% |
+| 20 | `acoes_b3` 📚 | rahoitus | 20 | 7 | HAURAS 52% |
+| 21 | `fundos_imobiliarios` 📚 | rahoitus | 18 | 8 | TODENNÄKÖINEN 61% |
+| 22 | `fintech` 📚 | rahoitus | 16 | 8 | TODENNÄKÖINEN 78% |
+| 23 | `avaliacao_imoveis` 📚 | kiinteistöt | 16 | 8 | VAKAA 96% |
+| 24 | `ordens_servico` 📚 | toiminta | 18 | 8 | VAKAA 92% |
+| 25 | `cloud_providers` 📚 | IT | 14 | 8 | VAKAA 100% |
+| 26 | `venture_capital` 📚 | yritys | 16 | 8 | VAKAA 97% |
+| 27 | `instrutores` 📚 | yritys | 15 | 8 | VAKAA 100% |
 
 > [!NOTE]
 > Tapausten matriisit ovat **havainnollistavia** — julkisia ja uskottavia suuruusluokkia menetelmän esittelyyn. **Ei-havainnollistavaa** on **mallinnus**: kriteerit, suunnat, DEMATELin kausaalimatriisi ja Saatyn matriisi. Siinä on arvo. **Korvaa luvut omalla tarjouksellasi, omalla tarjouspyynnölläsi tai omalla laboratoriotestilläsi** — moottori on sama; data on sinun.
+
+> [!TIP]
+> **Tuomio** mittaa, kuinka monessa 2 000 simuloidusta preferenssiuniversumista voittaja jatkaa voittamista, kun painoja häiritään Dirichlet'llä (κ=200). **VAKAA** ≥ 90 %: valinta ei riipu kalibroinnista. **TODENNÄKÖINEN** 60–89 %: kakkonen on kilpailukykyinen, vertaa molempia. **HAURAS** < 60 %: ensimmäinen sija on painojen artefakti — ja se on pätevä löydös, ei epäonnistuminen. Se tarkoittaa, että data ei ratkaise ja päätös palaa ihmiselle.
+
+### 📚 Kirjallisuudesta johdetut tapaustutkimukset
+
+> [!IMPORTANT]
+> Kahdeksassa tapauksessa **kriteerit ja kausaalirakenne on otettu vertaisarvioiduista artikkeleista ja opinnäytteistä** — osakkeet, kiinteistörahastot, fintech, kiinteistöarviointi, kunnossapidon työmääräimet, pilvipalveluntarjoajat, riskipääoma ja kouluttajien järjestäminen. Kriteerejä ei ole keksitty: ne tulevat lähdetekstistä, ja kunkin työn tekijyys on säilytetty vastaavan moduulin otsikossa. **Lukumatriisit** ovat omia instansseja — alkuperäisten töiden dataa ei ole toisinnettu.
+
+| Tapaus | Toimiala | Lähde ja tekijyys |
+|---|---|---|
+| `acoes_b3` | rahoitus | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
+| `fundos_imobiliarios` | rahoitus | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
+| `fintech` | rahoitus | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
+| `avaliacao_imoveis` | kiinteistöt | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
+| `ordens_servico` | toiminta | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
+| `cloud_providers` | IT | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
+| `venture_capital` | yritys | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
+| `instrutores` | yritys | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
 
 ---
 
@@ -477,7 +517,7 @@ Juuri sitä varten tämä on. Tapaus on deklaratiivinen rakenne tiedostossa `cas
 
 <div align="center">
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="180"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="420"/>
 
 **ProfBru © 2026**
 

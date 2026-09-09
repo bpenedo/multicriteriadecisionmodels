@@ -28,7 +28,7 @@ import re
 import sys
 from pathlib import Path
 
-from config import ENCODING, PROJETO_DIR
+from config import ENCODING, PIPELINE_DIR, PROJETO_DIR
 
 BLOCOS_JSON = PROJETO_DIR / "_private" / "foundations" / "translation" / "readme.blocos.json"
 TEMPLATE = PROJETO_DIR / "_private" / "foundations" / "translation" / "readme.template.md"
@@ -49,6 +49,115 @@ IDIOMAS = [
 ]
 
 PADRAO_BLOCO = re.compile(r"\{\{([a-z0-9_.]+)\}\}")
+
+# ---------------------------------------------------------------------------
+# Tabelas dinâmicas de estudos de caso
+# ---------------------------------------------------------------------------
+# Por que geradas e não escritas no template: a tabela de casos é a parte do README
+# que ENVELHECE — todo caso novo a torna mentirosa, em 12 idiomas de uma vez, e sem
+# nenhum sinal de que ficou desatualizada. Antes ela era colada no template a cada
+# rodada, e a cada rodada alguém tinha de lembrar. Agora ela é derivada do CATALOGO
+# e do banco na hora da geração: se o catálogo cresce, os 12 READMEs crescem juntos.
+#
+# Os placeholders são MAIÚSCULOS de propósito — PADRAO_BLOCO só casa minúsculas, então
+# não competem com os blocos traduzíveis e são substituídos depois deles, como {{SELETOR}}.
+
+# Domínio do caso -> chave do bloco traduzível que o nomeia.
+DOMINIO_BLOCO = {
+    "consumo": "dm_consumo", "automotivo": "dm_automotivo", "defesa": "dm_defesa",
+    "corporativo": "dm_corporativo", "ti": "dm_ti", "financeiro": "dm_financeiro",
+    "imobiliario": "dm_imobiliario", "operacoes": "dm_operacoes",
+    "manufatura": "dm_manufatura", "agronegocio": "dm_agronegocio",
+    "infraestrutura": "dm_infraestrutura",
+}
+
+# Classificação de robustez -> chave do bloco traduzível.
+VEREDITO_BLOCO = {
+    "ROBUSTO": "vd_robusto", "PROVÁVEL": "vd_provavel", "FRÁGIL": "vd_fragil",
+}
+
+# Casos derivados da base de conhecimento, com a referência que DEVE acompanhá-los.
+# Isto não é decoração: os critérios vieram do texto destes autores, e a atribuição
+# viaja junto com a tabela em todos os 12 idiomas.
+FONTES_KB = {
+    "acoes_b3": "COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o "
+                "método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio "
+                "Investments*, Risks 10(4):4, 2022",
+    "fundos_imobiliarios": "SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE",
+    "fintech": "*A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and "
+               "Selecting Fintech Projects*",
+    "avaliacao_imoveis": "DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas "
+                         "na avaliação de imóveis*; MARQUES, J. P. M.",
+    "ordens_servico": "*Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. "
+                      "Revista Produção Online, v.22, n.2, 2022",
+    "cloud_providers": "SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS "
+                       "Model*. The George Washington University",
+    "venture_capital": "BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. "
+                       "et al.; MILKOVA/ANDREICHIKOV (IJAHP)",
+    "instrutores": "*Modelagem matemática com os métodos AHP e TOPSIS para ordenação de "
+                   "instrutores em uma escola da FAB*. LIV SBPO, 2022",
+}
+
+# Blocos consumidos SÓ pelas tabelas dinâmicas. Precisam ser declarados aqui, senão
+# `verificar()` os acusa de órfãos (não aparecem no template) e a cobertura deixa de
+# ser checada justamente nos blocos que ninguém vê ao ler o template. Ver bugs.md #BUG-034.
+CHAVES_DINAMICAS = (tuple(DOMINIO_BLOCO.values()) + tuple(VEREDITO_BLOCO.values())
+                    + ("th_caso", "th_dominio", "th_alternativas", "th_criterios",
+                       "th_veredito", "th_fonte"))
+
+
+def _catalogo_e_vereditos():
+    """Catálogo de casos + veredito de cada um. O veredito é opcional: um caso recém
+    cadastrado e ainda não executado entra na tabela sem coluna de robustez, em vez
+    de derrubar a geração do README."""
+    sys.path.insert(0, str(PIPELINE_DIR))
+    from casos import CATALOGO
+    vereditos = {}
+    try:
+        from db import get_conn
+        conn = get_conn()
+        vereditos = {r[0]: (r[1], r[2]) for r in conn.execute(
+            "SELECT id_caso, classificacao, prob_vitoria FROM veredito")}
+        conn.close()
+    except Exception:
+        pass                       # sem banco, a tabela sai sem veredito — e diz isso
+    return CATALOGO, vereditos
+
+
+def tabela_casos(codigo, blocos):
+    """Tabela com TODOS os casos do catálogo, no idioma pedido."""
+    catalogo, vereditos = _catalogo_e_vereditos()
+
+    def t(chave):
+        return blocos.get(chave, {}).get(codigo, chave)
+
+    linhas = [f"| # | {t('th_caso')} | {t('th_dominio')} | {t('th_alternativas')} | "
+              f"{t('th_criterios')} | {t('th_veredito')} |",
+              "|--:|---|---|--:|--:|---|"]
+    for i, (id_caso, caso) in enumerate(catalogo.items(), 1):
+        marca = " 📚" if id_caso in FONTES_KB else ""
+        cls, prob = vereditos.get(id_caso, (None, None))
+        vd = f"{t(VEREDITO_BLOCO[cls])} {prob:.0f}%" if cls in VEREDITO_BLOCO else "—"
+        linhas.append(f"| {i} | `{id_caso}`{marca} | {t(DOMINIO_BLOCO[caso['dominio']])} | "
+                      f"{len(caso['alternativas'])} | {len(caso['criterios'])} | {vd} |")
+    return "\n".join(linhas)
+
+
+def tabela_casos_kb(codigo, blocos):
+    """Tabela dos casos derivados da literatura, com referência e autoria."""
+    catalogo, _ = _catalogo_e_vereditos()
+
+    def t(chave):
+        return blocos.get(chave, {}).get(codigo, chave)
+
+    linhas = [f"| {t('th_caso')} | {t('th_dominio')} | {t('th_fonte')} |", "|---|---|---|"]
+    for id_caso, fonte in FONTES_KB.items():
+        caso = catalogo.get(id_caso)
+        if caso is None:
+            continue
+        linhas.append(f"| `{id_caso}` | {t(DOMINIO_BLOCO[caso['dominio']])} | {fonte} |")
+    return "\n".join(linhas)
+
 
 
 def seletor_idiomas(codigo_atual):
@@ -80,7 +189,8 @@ def chaves_do_template(template):
 
 def verificar(template, blocos):
     """Confere que todo bloco do template existe em todo idioma. Devolve problemas."""
-    chaves = chaves_do_template(template)
+    chaves = chaves_do_template(template) + [
+        k for k in CHAVES_DINAMICAS if k not in chaves_do_template(template)]
     problemas = []
     for cod, nome, _arq, _d in IDIOMAS:
         se_falta = [k for k in chaves if not blocos.get(k, {}).get(cod, "").strip()]
@@ -113,6 +223,8 @@ def gerar(codigo, template, blocos):
             f"({', '.join(sorted(set(faltando))[:5])}). Nada foi escrito.")
 
     texto = texto.replace("{{SELETOR}}", seletor_idiomas(codigo))
+    texto = texto.replace("{{TABELA_CASOS}}", tabela_casos(codigo, blocos))
+    texto = texto.replace("{{TABELA_CASOS_KB}}", tabela_casos_kb(codigo, blocos))
     return texto
 
 

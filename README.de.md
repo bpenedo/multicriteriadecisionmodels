@@ -8,7 +8,7 @@ E-mail: profbruanbima@gmail.com
 
 # 🎯 MCDM Studio — Multikriterielle Entscheidungsmodelle
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="320"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="820"/>
 
 **ProfBru © 2026**
 
@@ -155,17 +155,57 @@ Die Engine ist **domänenagnostisch**: die Einheit ist der *Entscheidungsfall* (
 python3 pipeline.py --listar
 ```
 
-| Fall | Domäne | Alternativen | Kriterien |
-|---|---|---|---|
-| `smartphone` | Konsum | 6 | 8 |
-| `veiculo_eletrico` | Automobil | 7 | 8 |
-| `caca_multifuncao` | Verteidigung | 6 | 9 |
-| `blindado` | Verteidigung | 5 | 8 |
-| `portfolio_startup` | Unternehmen | 7 | 9 |
-| `estacao_trabalho` | IT | 6 | 8 |
+| # | Fall | Domäne | Alternativen | Kriterien | Urteil |
+|--:|---|---|--:|--:|---|
+| 1 | `smartphone` | Konsum | 6 | 8 | WAHRSCHEINLICH 85% |
+| 2 | `veiculo_eletrico` | Automobil | 7 | 8 | ROBUST 96% |
+| 3 | `caca_multifuncao` | Verteidigung | 6 | 9 | ROBUST 100% |
+| 4 | `blindado` | Verteidigung | 5 | 8 | ROBUST 90% |
+| 5 | `portfolio_startup` | Unternehmen | 7 | 9 | ROBUST 97% |
+| 6 | `estacao_trabalho` | IT | 6 | 8 | ROBUST 98% |
+| 7 | `carros_eletricos` | Automobil | 38 | 9 | ROBUST 99% |
+| 8 | `smartphones_2026` | Konsum | 38 | 9 | WAHRSCHEINLICH 65% |
+| 9 | `tablets` | Konsum | 34 | 8 | WAHRSCHEINLICH 62% |
+| 10 | `smartwatches` | Konsum | 31 | 8 | WAHRSCHEINLICH 79% |
+| 11 | `notebooks` | IT | 32 | 8 | WAHRSCHEINLICH 76% |
+| 12 | `maquinario_agricola` | Agrarwirtschaft | 35 | 8 | ROBUST 100% |
+| 13 | `sbc_iot` | IT | 33 | 8 | ROBUST 100% |
+| 14 | `mineracao_asic` | Infrastruktur | 31 | 8 | FRAGIL 51% |
+| 15 | `minipcs` | IT | 10 | 8 | ROBUST 96% |
+| 16 | `impressoras_3d_miniaturas` | Fertigung | 30 | 9 | FRAGIL 35% |
+| 17 | `impressoras_3d_producao` | Fertigung | 30 | 9 | FRAGIL 45% |
+| 18 | `plotters_formato` | Fertigung | 24 | 9 | WAHRSCHEINLICH 86% |
+| 19 | `impressoras_3d_miniaturas_triadas` | Fertigung | 13 | 9 | ROBUST 100% |
+| 20 | `acoes_b3` 📚 | Finanzen | 20 | 7 | FRAGIL 52% |
+| 21 | `fundos_imobiliarios` 📚 | Finanzen | 18 | 8 | WAHRSCHEINLICH 61% |
+| 22 | `fintech` 📚 | Finanzen | 16 | 8 | WAHRSCHEINLICH 78% |
+| 23 | `avaliacao_imoveis` 📚 | Immobilien | 16 | 8 | ROBUST 96% |
+| 24 | `ordens_servico` 📚 | Betrieb | 18 | 8 | ROBUST 92% |
+| 25 | `cloud_providers` 📚 | IT | 14 | 8 | ROBUST 100% |
+| 26 | `venture_capital` 📚 | Unternehmen | 16 | 8 | ROBUST 97% |
+| 27 | `instrutores` 📚 | Unternehmen | 15 | 8 | ROBUST 100% |
 
 > [!NOTE]
 > Die Fallmatrizen sind **illustrativ** — öffentliche, plausible Größenordnungen zur Demonstration der Methode. **Nicht** illustrativ ist die **Modellierung**: Kriterien, Richtungen, DEMATEL-Kausalmatrix und Saaty-Matrix. Dort liegt der Wert. **Ersetzen Sie die Zahlen durch Ihr Angebot, Ihre Ausschreibung oder Ihre Laborprüfung** — die Engine bleibt dieselbe; die Daten sind Ihre.
+
+> [!TIP]
+> Das **Urteil** misst, in wie vielen der 2.000 simulierten Präferenzuniversen der Sieger Sieger bleibt, wobei die Gewichte per Dirichlet (κ=200) gestört werden. **ROBUST** ≥ 90 %: Die Wahl hängt nicht von der Kalibrierung ab. **WAHRSCHEINLICH** 60–89 %: Der Zweite ist konkurrenzfähig, vergleichen Sie beide. **FRAGIL** < 60 %: Der erste Platz ist ein Artefakt der Gewichte — und das ist ein legitimer Befund, kein Fehler. Es bedeutet, dass die Daten nicht entscheiden und die Entscheidung zum Menschen zurückkehrt.
+
+### 📚 Aus der Fachliteratur abgeleitete Fallstudien
+
+> [!IMPORTANT]
+> Bei acht Fällen stammen **Kriterien und Kausalstruktur aus begutachteten Aufsätzen und Abschlussarbeiten** — Aktien, Immobilienfonds, Fintechs, Immobilienbewertung, Instandhaltungsaufträge, Cloud-Anbieter, Wagniskapital und Dozentenreihung. Die Kriterien sind nicht erfunden: Sie kommen aus dem Quelltext, und die Urheberschaft jeder Arbeit steht im Kopf des zugehörigen Moduls. Die **Zahlenmatrizen** sind eigene Instanziierungen — es wurden keine Daten aus den Originalarbeiten übernommen.
+
+| Fall | Domäne | Quelle und Urheberschaft |
+|---|---|---|
+| `acoes_b3` | Finanzen | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
+| `fundos_imobiliarios` | Finanzen | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
+| `fintech` | Finanzen | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
+| `avaliacao_imoveis` | Immobilien | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
+| `ordens_servico` | Betrieb | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
+| `cloud_providers` | IT | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
+| `venture_capital` | Unternehmen | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
+| `instrutores` | Unternehmen | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
 
 ---
 
@@ -477,7 +517,7 @@ Dafür ist es da. Ein Fall ist eine deklarative Struktur in `casos/catalogo.py`:
 
 <div align="center">
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="180"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="420"/>
 
 **ProfBru © 2026**
 

@@ -8,7 +8,7 @@ E-mail: profbruanbima@gmail.com
 
 # 🎯 MCDM Studio — Modèles de Décision Multicritère
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="320"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="820"/>
 
 **ProfBru © 2026**
 
@@ -155,17 +155,57 @@ Le moteur est **agnostique au domaine** : l'unité est le *cas de décision* (al
 python3 pipeline.py --listar
 ```
 
-| Cas | Domaine | Alternatives | Critères |
-|---|---|---|---|
-| `smartphone` | grand public | 6 | 8 |
-| `veiculo_eletrico` | automobile | 7 | 8 |
-| `caca_multifuncao` | défense | 6 | 9 |
-| `blindado` | défense | 5 | 8 |
-| `portfolio_startup` | entreprise | 7 | 9 |
-| `estacao_trabalho` | informatique | 6 | 8 |
+| # | Cas | Domaine | Alternatives | Critères | Verdict |
+|--:|---|---|--:|--:|---|
+| 1 | `smartphone` | grand public | 6 | 8 | PROBABLE 85% |
+| 2 | `veiculo_eletrico` | automobile | 7 | 8 | ROBUSTE 96% |
+| 3 | `caca_multifuncao` | défense | 6 | 9 | ROBUSTE 100% |
+| 4 | `blindado` | défense | 5 | 8 | ROBUSTE 90% |
+| 5 | `portfolio_startup` | entreprise | 7 | 9 | ROBUSTE 97% |
+| 6 | `estacao_trabalho` | informatique | 6 | 8 | ROBUSTE 98% |
+| 7 | `carros_eletricos` | automobile | 38 | 9 | ROBUSTE 99% |
+| 8 | `smartphones_2026` | grand public | 38 | 9 | PROBABLE 65% |
+| 9 | `tablets` | grand public | 34 | 8 | PROBABLE 62% |
+| 10 | `smartwatches` | grand public | 31 | 8 | PROBABLE 79% |
+| 11 | `notebooks` | informatique | 32 | 8 | PROBABLE 76% |
+| 12 | `maquinario_agricola` | agro-industrie | 35 | 8 | ROBUSTE 100% |
+| 13 | `sbc_iot` | informatique | 33 | 8 | ROBUSTE 100% |
+| 14 | `mineracao_asic` | infrastructure | 31 | 8 | FRAGILE 51% |
+| 15 | `minipcs` | informatique | 10 | 8 | ROBUSTE 96% |
+| 16 | `impressoras_3d_miniaturas` | fabrication | 30 | 9 | FRAGILE 35% |
+| 17 | `impressoras_3d_producao` | fabrication | 30 | 9 | FRAGILE 45% |
+| 18 | `plotters_formato` | fabrication | 24 | 9 | PROBABLE 86% |
+| 19 | `impressoras_3d_miniaturas_triadas` | fabrication | 13 | 9 | ROBUSTE 100% |
+| 20 | `acoes_b3` 📚 | finance | 20 | 7 | FRAGILE 52% |
+| 21 | `fundos_imobiliarios` 📚 | finance | 18 | 8 | PROBABLE 61% |
+| 22 | `fintech` 📚 | finance | 16 | 8 | PROBABLE 78% |
+| 23 | `avaliacao_imoveis` 📚 | immobilier | 16 | 8 | ROBUSTE 96% |
+| 24 | `ordens_servico` 📚 | opérations | 18 | 8 | ROBUSTE 92% |
+| 25 | `cloud_providers` 📚 | informatique | 14 | 8 | ROBUSTE 100% |
+| 26 | `venture_capital` 📚 | entreprise | 16 | 8 | ROBUSTE 97% |
+| 27 | `instrutores` 📚 | entreprise | 15 | 8 | ROBUSTE 100% |
 
 > [!NOTE]
 > Les matrices des cas sont **illustratives** — des ordres de grandeur publics et plausibles, pour démontrer la méthode. Ce qui **n'est pas** illustratif, c'est la **modélisation** : critères, sens, matrice causale du DEMATEL et matrice de Saaty. C'est là que réside la valeur. **Remplacez les nombres par votre devis, votre appel d'offres ou votre essai de laboratoire** — le moteur est le même ; les données sont les vôtres.
+
+> [!TIP]
+> Le **verdict** mesure dans combien des 2 000 univers de préférence simulés le gagnant continue de gagner, en perturbant les poids par Dirichlet (κ=200). **ROBUSTE** ≥ 90 % : le choix ne dépend pas du calibrage. **PROBABLE** 60–89 % : le second est compétitif, comparez les deux. **FRAGILE** < 60 % : la première place est un artefact des poids — et c'est un résultat légitime, pas un échec. Cela signifie que les données ne tranchent pas, et la décision revient à l'humain.
+
+### 📚 Études de cas issues de la littérature
+
+> [!IMPORTANT]
+> Huit des cas ont leurs **critères et leur structure causale tirés d'articles et de thèses évalués par les pairs** — actions, fonds immobiliers, fintechs, évaluation immobilière, ordres de travail, fournisseurs de cloud, capital-risque et classement d'instructeurs. Les critères n'ont pas été inventés : ils viennent du texte source, et la paternité de chaque travail est préservée dans l'en-tête du module correspondant. Les **matrices numériques** sont nos propres instanciations — aucune donnée des travaux d'origine n'a été reproduite.
+
+| Cas | Domaine | Référence et paternité |
+|---|---|---|
+| `acoes_b3` | finance | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
+| `fundos_imobiliarios` | finance | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
+| `fintech` | finance | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
+| `avaliacao_imoveis` | immobilier | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
+| `ordens_servico` | opérations | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
+| `cloud_providers` | informatique | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
+| `venture_capital` | entreprise | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
+| `instrutores` | entreprise | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
 
 ---
 
@@ -477,7 +517,7 @@ C'est fait pour. Un cas est une structure déclarative dans `casos/catalogo.py` 
 
 <div align="center">
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="180"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="420"/>
 
 **ProfBru © 2026**
 

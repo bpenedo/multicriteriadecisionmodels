@@ -40,6 +40,49 @@ COR_DEMATEL, COR_AHP = "#236aa4", "#f4b548"
 plt.rcParams.update({"font.size": 10, "axes.titlesize": 12, "figure.autolayout": False})
 
 
+def _encurtar(texto, limite=26):
+    """Encurta preservando palavras inteiras, com reticências.
+
+    O corte cru por `texto[:26]` produzia rótulos mutilados — "Instrutor convidado — dout",
+    "Instrutor operacional sêni" — em que o leitor não distingue a alternativa truncada de
+    outra com o mesmo prefixo. Cortar na fronteira da palavra e marcar a omissão com "…"
+    diz ao leitor que há texto além, e o rótulo continua identificando a alternativa.
+    """
+    texto = texto.strip()
+    if len(texto) <= limite:
+        return texto
+    corte = texto[:limite - 1]
+    espaco = corte.rfind(" ")
+    if espaco >= limite * 0.55:            # só vale se não amputar quase tudo
+        corte = corte[:espaco]
+    return corte.rstrip(" —-·,;:") + "…"
+
+
+def _encurtar_lote(textos, limite=26, teto=44):
+    """Encurta um conjunto de rótulos SEM torná-los ambíguos entre si.
+
+    Encurtar cada rótulo isoladamente cria um defeito pior do que o que resolve: numa
+    lista com "Instrutor sênior — doutorado" e "Instrutor sênior — mestrado", o corte na
+    fronteira da palavra devolve "Instrutor sênior…" para os DOIS. O gráfico fica limpo e
+    mentiroso — dois rótulos idênticos apontando para pontos diferentes, e o leitor sem
+    como saber qual é qual. Rótulo mutilado ainda identifica; rótulo ambíguo, não.
+
+    Aqui o limite é do CONJUNTO: enquanto houver colisão, ele sobe (de 4 em 4 caracteres)
+    até desambiguar ou bater no teto. Quem não colide fica curto; só os rótulos que
+    disputam prefixo pagam o preço da largura extra. Ver bugs.md #BUG-032.
+    """
+    textos = list(textos)
+    for lim in range(limite, teto + 1, 4):
+        curtos = [_encurtar(t, lim) for t in textos]
+        # Ambíguo = mesmo rótulo curto para textos originais diferentes.
+        por_curto = {}
+        for original, curto in zip(textos, curtos):
+            por_curto.setdefault(curto, set()).add(original)
+        if all(len(v) == 1 for v in por_curto.values()):
+            return curtos
+    return textos            # desistimos de encurtar antes de desistir de distinguir
+
+
 def _anotar_sem_colisao(ax, fig, pontos, candidatos=None, folga=3.0):
     """Posiciona rótulos com linha de chamada, sem corte nem sobreposição.
 
@@ -89,7 +132,7 @@ def _anotar_sem_colisao(ax, fig, pontos, candidatos=None, folga=3.0):
     for xi, yi, texto, cor_i in pontos:
         # Ponto na metade direita prefere rótulo à esquerda, e vice-versa.
         ordem = sorted(candidatos, key=lambda c: c[0] * (1 if xi > meio else -1))
-        melhor, melhor_custo = None, None
+        melhor, melhor_custo, melhor_fora = None, None, 0.0
         for dx, dy in ordem:
             ann = ax.annotate(texto, (xi, yi), xytext=(dx, dy),
                               textcoords="offset points", ha="center", va="center",
@@ -106,7 +149,10 @@ def _anotar_sem_colisao(ax, fig, pontos, candidatos=None, folga=3.0):
             distancia = (dx * dx + dy * dy) ** 0.5
             custo = (sum(1 for c in postos if _colide(caixa, c)) * 1000
                      + fora * 10 + distancia * 0.05)
+            if melhor_custo is None or custo < melhor_custo:
+                melhor_fora = fora
             if custo == 0:
+                melhor_fora = 0.0
                 # Remove o melhor parcial ANTES de aceitar este, senão a anotação
                 # descartada continua desenhada (rótulo duplicado, #BUG-013c).
                 if melhor is not None and melhor is not ann:
@@ -122,7 +168,7 @@ def _anotar_sem_colisao(ax, fig, pontos, candidatos=None, folga=3.0):
         if melhor is not None:
             postos.append(melhor.get_window_extent(renderer))
             desenhados.append(melhor)
-            if melhor_custo is not None and melhor_custo >= 1000:
+            if (melhor_custo is not None and melhor_custo >= 1000) or melhor_fora > 0.5:
                 choques_restantes += 1
     return choques_restantes, desenhados
 
@@ -174,73 +220,43 @@ def diagrama_causa_efeito(conn, id_caso, destino):
 
     # Rótulos SEMPRE fora do círculo, com linha de chamada.
     #
-    # Colisão medida por RETÂNGULO REAL, não por distância entre centros: os rótulos
-    # têm larguras muito diferentes ("Raio de combate 6,8%" contra "Transferência de
-    # tecnologia 11,3%"), e um teste por distância de centros deixa caixas largas se
-    # sobreporem enquanto afasta caixas estreitas sem necessidade. Desenhamos a
-    # anotação, medimos o bbox pelo renderer e, se ela invadir outra caixa já posta
-    # ou escapar da área do eixo, tentamos o próximo offset candidato.
-    # Ver bugs.md #BUG-013.
-    candidatos = [(0, 32), (0, -36), (46, 16), (-46, 16), (46, -22), (-46, -22),
-                  (62, 40), (-62, 40), (62, -46), (-62, -46), (0, 62), (0, -66)]
-    fig.canvas.draw()                       # materializa o renderer para medir texto
-    renderer = fig.canvas.get_renderer()
-    area = ax.get_window_extent(renderer)
-    postos = []
-
-    def _colide(a, b, folga=3.0):
-        return not (a.x1 + folga < b.x0 or b.x1 + folga < a.x0 or
-                    a.y1 + folga < b.y0 or b.y1 + folga < a.y0)
-
-    meio_x = (x.max() + x.min()) / 2
-    for i, (r, xi, yi) in enumerate(zip(linhas, x, y)):
-        # Pontos na metade direita preferem rótulo à ESQUERDA (e vice-versa): evita
-        # empurrar a caixa para fora da figura nos extremos do eixo.
-        ordem_cand = sorted(candidatos, key=lambda c: c[0] * (1 if xi > meio_x else -1))
-        melhor_ann, melhor_custo = None, None
-        for cdx, cdy in ordem_cand:
-            ann = ax.annotate(
-                f"{r['rotulo']}  {r['peso']*100:.1f}%", (xi, yi),
-                xytext=(cdx, cdy), textcoords="offset points",
-                fontsize=9, fontweight="bold", ha="center", va="center",
-                color=cores[i], zorder=5,
-                bbox=dict(boxstyle="round,pad=0.3", fc="white", ec=cores[i],
-                          lw=0.9, alpha=0.96),
-                arrowprops=dict(arrowstyle="-", color=cores[i], lw=1.0,
-                                shrinkA=0, shrinkB=5))
-            caixa = ann.get_window_extent(renderer)
-            fora = max(0.0, area.x0 - caixa.x0) + max(0.0, caixa.x1 - area.x1)
-            choques = sum(1 for c in postos if _colide(caixa, c))
-            custo = choques * 1000 + fora        # sobreposição é pior que transbordo
-            if custo == 0:
-                # Remove o melhor parcial ANTES de aceitar este: sem isso a anotação
-                # descartada continua desenhada e o gráfico ganha rótulos duplicados.
-                if melhor_ann is not None and melhor_ann is not ann:
-                    melhor_ann.remove()
-                melhor_ann, melhor_custo = ann, 0
-                break
-            if melhor_custo is None or custo < melhor_custo:
-                if melhor_ann is not None:
-                    melhor_ann.remove()
-                melhor_ann, melhor_custo = ann, custo
-            else:
-                ann.remove()
-        postos.append(melhor_ann.get_window_extent(renderer))
-
+    # A MOLDURA VEM PRIMEIRO. Antes, os rótulos eram posicionados e medidos e só
+    # depois `set_xlim`/`set_ylim` eram aplicados — ou seja, cada caixa era testada
+    # contra uma área de eixos que ainda ia mudar, e a medição inteira era descartada
+    # em silêncio. O rótulo do critério mais à direita saía cortado pela borda
+    # ("...mprovada 14.2%") mesmo com o algoritmo de anticolisão funcionando: ele
+    # acertava o alvo errado. Ver bugs.md #BUG-029.
+    #
+    # E usamos `_anotar_sem_colisao` em vez de uma cópia local: este gráfico manteve
+    # sua própria versão com 12 candidatos por engano, enquanto a função compartilhada
+    # — extraída no #BUG-025 justamente para acabar com a duplicação — já testava 32.
+    # O DEMATEL nunca foi migrado. Ver bugs.md #BUG-030.
     faixa = max(abs(y).max(), 0.1) * 1.45
-    ax.set_ylim(-faixa, faixa)
-    # xlim FIXADO antes do preenchimento: pintar sobre um limite que ainda vai
-    # mudar desalinha as faixas de fundo. Ver bugs.md #BUG-010.
-    # Margem generosa: as caixas de rótulo se afastam até ~54 pt do ponto, e um
-    # rótulo longo ("Transferência de tecnologia 11,3%") ultrapassa a área de dados.
-    # Com 12% de folga o rótulo do critério mais à direita saía cortado.
-    # Ver bugs.md #BUG-013.
     margem = (x.max() - x.min()) * 0.30 or 0.5
-    ax.set_xlim(x.min() - margem, x.max() + margem)
-    xlim = ax.get_xlim()
-    ax.fill_between(xlim, 0, faixa, color=CAUSA, alpha=0.05, zorder=0)
-    ax.fill_between(xlim, -faixa, 0, color=EFEITO, alpha=0.05, zorder=0)
+    rotulos = [(xi, yi, f"{r['rotulo']}  {r['peso']*100:.1f}%", cores[i])
+               for i, (r, xi, yi) in enumerate(zip(linhas, x, y))]
+
+    # Nenhum critério pode ser omitido — num diagrama causal, um critério sem rótulo
+    # é um critério que o decisor não vê. Então, em vez de reduzir a quantidade de
+    # rótulos (o que a matriz BCG faz), ALARGAMOS a moldura até todos caberem.
+    for _ in range(7):
+        ax.set_ylim(-faixa, faixa)
+        ax.set_xlim(x.min() - margem, x.max() + margem)
+        for ann in list(ax.texts):
+            ann.remove()
+        pendencias, _ = _anotar_sem_colisao(ax, fig, rotulos)
+        if pendencias == 0:
+            break
+        margem *= 1.30
+        faixa *= 1.18
+
+    # Faixas de fundo pintadas com o xlim JÁ definitivo: pintar sobre um limite que
+    # ainda vai mudar desalinha o preenchimento. Ver bugs.md #BUG-010.
+    xlim, ylim = ax.get_xlim(), ax.get_ylim()
+    ax.fill_between(xlim, 0, ylim[1], color=CAUSA, alpha=0.05, zorder=0)
+    ax.fill_between(xlim, ylim[0], 0, color=EFEITO, alpha=0.05, zorder=0)
     ax.set_xlim(xlim)
+    ax.set_ylim(ylim)
 
     ax.text(0.985, 0.965, "CAUSAS — alavancas: aja aqui", transform=ax.transAxes,
             ha="right", fontsize=10, fontweight="bold", color=CAUSA)
@@ -467,16 +483,35 @@ def matriz_bcg(conn, id_caso, destino):
                     for r in linhas]) + 60
 
     fig, ax = plt.subplots(figsize=(11.0, 8.2))
-    # Fundo dos quadrantes, pintado antes dos pontos.
-    ax.axvspan(cx, 1.05, ymin=0, ymax=1, color="#f8fafc", zorder=0)
-    for (xa, xb, ya, yb, q) in ((cx, 1.05, cy, 1.05, "ESTRELA"),
-                                (cx, 1.05, -0.05, cy, "VACA"),
-                                (-0.05, cx, cy, 1.05, "INTERROGACAO"),
-                                (-0.05, cx, -0.05, cy, "ABACAXI")):
+
+    # A MOLDURA VEM ANTES DO FUNDO. Os quadrantes eram pintados com as constantes
+    # -0.05 e 1.05 — que presumiam onde os eixos iriam parar — e só depois
+    # `set_xlim`/`set_ylim` definiam os limites de verdade, calculados a partir da
+    # amplitude dos dados. Quando a amplitude empurrava os limites além de ±0.05,
+    # sobravam FAIXAS BRANCAS nas bordas, e o gráfico passava a insinuar uma região
+    # "fora de quadrante" que não existe: na matriz BCG todo ponto está em algum
+    # quadrante, por construção. Terceira ocorrência da mesma causa raiz (#BUG-010,
+    # #BUG-029). Ver bugs.md #BUG-031.
+    amp_x = max(x.max() - x.min(), 1e-6)
+    amp_y = max(y.max() - y.min(), 1e-6)
+    ax.set_xlim(min(x.min(), cx) - amp_x * 0.22, max(x.max(), cx) + amp_x * 0.22)
+    ax.set_ylim(min(y.min(), cy) - amp_y * 0.10, max(y.max(), cy) + amp_y * 0.14)
+    lx0, lx1 = ax.get_xlim()
+    ly0, ly1 = ax.get_ylim()
+
+    # Fundo dos quadrantes, agora nos limites REAIS do eixo.
+    ax.axvspan(cx, lx1, ymin=0, ymax=1, color="#f8fafc", zorder=0)
+    for (xa, xb, ya, yb, q) in ((cx, lx1, cy, ly1, "ESTRELA"),
+                                (cx, lx1, ly0, cy, "VACA"),
+                                (lx0, cx, cy, ly1, "INTERROGACAO"),
+                                (lx0, cx, ly0, cy, "ABACAXI")):
         ax.add_patch(plt.Rectangle((xa, ya), xb - xa, yb - ya,
                                    color=cor[q], alpha=0.06, zorder=0))
     ax.axvline(cx, color="black", lw=1.2, ls="--", alpha=0.7, zorder=1)
     ax.axhline(cy, color="black", lw=1.2, ls="--", alpha=0.7, zorder=1)
+    # `add_patch` pode reativar o autoscale e reabrir os limites — refixamos.
+    ax.set_xlim(lx0, lx1)
+    ax.set_ylim(ly0, ly1)
 
     for r, xi, yi, ti in zip(linhas, x, y, tam):
         ax.scatter(xi, yi, s=ti, c=cor[r["quadrante"]], alpha=0.80,
@@ -486,11 +521,7 @@ def matriz_bcg(conn, id_caso, destino):
     # Margem PROPORCIONAL à amplitude de cada eixo, não fixa: com dados concentrados
     # (amplitude 0,1) uma folga de 0,06 é enorme, e com dados espalhados (amplitude 1,0)
     # é insuficiente para caber um rótulo de 26 caracteres. Ver bugs.md #BUG-013a/#BUG-025.
-    amp_x = max(x.max() - x.min(), 1e-6)
-    amp_y = max(y.max() - y.min(), 1e-6)
-    ax.set_xlim(min(x.min(), cx) - amp_x * 0.22, max(x.max(), cx) + amp_x * 0.22)
-    ax.set_ylim(min(y.min(), cy) - amp_y * 0.10, max(y.max(), cy) + amp_y * 0.14)
-    x0, x1 = ax.get_xlim(); y0, y1 = ax.get_ylim()
+    x0, x1, y0, y1 = lx0, lx1, ly0, ly1
     for (px, py, ha, va, q) in ((x1, y1, "right", "top", "ESTRELA"),
                                 (x1, y0, "right", "bottom", "VACA"),
                                 (x0, y1, "left", "top", "INTERROGACAO"),
@@ -508,9 +539,11 @@ def matriz_bcg(conn, id_caso, destino):
 
     # Rotula as primeiras colocadas — no MÁXIMO 8 (38 seriam ilegíveis, #BUG-021) e no
     # máximo o que couber sem sobreposição, que em região densa costuma ser menos.
+    primeiros = list(zip(linhas, x, y))[:8]
+    nomes = _encurtar_lote(r["rotulo"] for r, _, _ in primeiros)
     rotulados = _anotar_o_que_couber(ax, fig, [
-        (xi, yi, f"{r['rank_consenso']}º {r['rotulo'][:26]}", cor[r["quadrante"]])
-        for r, xi, yi in list(zip(linhas, x, y))[:8]])
+        (xi, yi, f"{r['rank_consenso']}º {nome}", cor[r["quadrante"]])
+        for (r, xi, yi), nome in zip(primeiros, nomes)])
     if rotulados < len(linhas):
         ax.text(0.5, -0.105, f"rotuladas as {rotulados} primeiras colocadas de "
                              f"{len(linhas)} — as demais estão no gráfico sem rótulo",

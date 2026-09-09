@@ -8,7 +8,7 @@ E-mail: profbruanbima@gmail.com
 
 # 🎯 MCDM Studio — बहु-मानदंड निर्णय मॉडल
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="320"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="820"/>
 
 **ProfBru © 2026**
 
@@ -155,17 +155,57 @@ E-mail: profbruanbima@gmail.com
 python3 pipeline.py --listar
 ```
 
-| प्रकरण | क्षेत्र | विकल्प | मानदंड |
-|---|---|---|---|
-| `smartphone` | उपभोक्ता | 6 | 8 |
-| `veiculo_eletrico` | मोटर वाहन | 7 | 8 |
-| `caca_multifuncao` | रक्षा | 6 | 9 |
-| `blindado` | रक्षा | 5 | 8 |
-| `portfolio_startup` | कॉर्पोरेट | 7 | 9 |
-| `estacao_trabalho` | आईटी | 6 | 8 |
+| # | प्रकरण | क्षेत्र | विकल्प | मानदंड | निर्णय |
+|--:|---|---|--:|--:|---|
+| 1 | `smartphone` | उपभोक्ता | 6 | 8 | संभावित 85% |
+| 2 | `veiculo_eletrico` | मोटर वाहन | 7 | 8 | सुदृढ़ 96% |
+| 3 | `caca_multifuncao` | रक्षा | 6 | 9 | सुदृढ़ 100% |
+| 4 | `blindado` | रक्षा | 5 | 8 | सुदृढ़ 90% |
+| 5 | `portfolio_startup` | कॉर्पोरेट | 7 | 9 | सुदृढ़ 97% |
+| 6 | `estacao_trabalho` | आईटी | 6 | 8 | सुदृढ़ 98% |
+| 7 | `carros_eletricos` | मोटर वाहन | 38 | 9 | सुदृढ़ 99% |
+| 8 | `smartphones_2026` | उपभोक्ता | 38 | 9 | संभावित 65% |
+| 9 | `tablets` | उपभोक्ता | 34 | 8 | संभावित 62% |
+| 10 | `smartwatches` | उपभोक्ता | 31 | 8 | संभावित 79% |
+| 11 | `notebooks` | आईटी | 32 | 8 | संभावित 76% |
+| 12 | `maquinario_agricola` | कृषि व्यवसाय | 35 | 8 | सुदृढ़ 100% |
+| 13 | `sbc_iot` | आईटी | 33 | 8 | सुदृढ़ 100% |
+| 14 | `mineracao_asic` | अवसंरचना | 31 | 8 | अस्थिर 51% |
+| 15 | `minipcs` | आईटी | 10 | 8 | सुदृढ़ 96% |
+| 16 | `impressoras_3d_miniaturas` | विनिर्माण | 30 | 9 | अस्थिर 35% |
+| 17 | `impressoras_3d_producao` | विनिर्माण | 30 | 9 | अस्थिर 45% |
+| 18 | `plotters_formato` | विनिर्माण | 24 | 9 | संभावित 86% |
+| 19 | `impressoras_3d_miniaturas_triadas` | विनिर्माण | 13 | 9 | सुदृढ़ 100% |
+| 20 | `acoes_b3` 📚 | वित्तीय | 20 | 7 | अस्थिर 52% |
+| 21 | `fundos_imobiliarios` 📚 | वित्तीय | 18 | 8 | संभावित 61% |
+| 22 | `fintech` 📚 | वित्तीय | 16 | 8 | संभावित 78% |
+| 23 | `avaliacao_imoveis` 📚 | रियल एस्टेट | 16 | 8 | सुदृढ़ 96% |
+| 24 | `ordens_servico` 📚 | संचालन | 18 | 8 | सुदृढ़ 92% |
+| 25 | `cloud_providers` 📚 | आईटी | 14 | 8 | सुदृढ़ 100% |
+| 26 | `venture_capital` 📚 | कॉर्पोरेट | 16 | 8 | सुदृढ़ 97% |
+| 27 | `instrutores` 📚 | कॉर्पोरेट | 15 | 8 | सुदृढ़ 100% |
 
 > [!NOTE]
 > प्रकरणों के आव्यूह **उदाहरणात्मक** हैं — विधि प्रदर्शित करने के लिए सार्वजनिक और प्रशंसनीय परिमाण-कोटियाँ। जो **उदाहरणात्मक नहीं** है वह है **मॉडलिंग**: मानदंड, दिशाएँ, DEMATEL कारण आव्यूह और Saaty आव्यूह। मूल्य वहीं बसता है। **संख्याओं को अपने कोटेशन, अपनी निविदा या अपने प्रयोगशाला परीक्षण से बदलिए** — इंजन वही है; डेटा आपका है।
+
+> [!TIP]
+> **निर्णय** मापता है कि डिरिक्ले (κ=200) द्वारा भारों को विक्षुब्ध करने पर 2,000 अनुरूपित अधिमान-विश्वों में से कितनों में विजेता जीतता रहता है। **सुदृढ़** ≥ 90%: चयन अंशांकन पर निर्भर नहीं है। **संभावित** 60–89%: उपविजेता प्रतिस्पर्धी है, दोनों की तुलना करें। **अस्थिर** < 60%: पहला स्थान भारों की कलाकृति है — और यह विफलता नहीं, वैध निष्कर्ष है। इसका अर्थ है कि आँकड़े निर्णय नहीं करते, और निर्णय मनुष्य के पास लौटता है।
+
+### 📚 साहित्य से व्युत्पन्न केस स्टडी
+
+> [!IMPORTANT]
+> आठ केस के **मानदंड और कारण-संरचना सहकर्मी-समीक्षित शोधपत्रों और शोध-प्रबंधों से ली गई हैं** — शेयर, रियल-एस्टेट फंड, फिनटेक, संपत्ति मूल्यांकन, अनुरक्षण कार्य-आदेश, क्लाउड प्रदाता, वेंचर कैपिटल और प्रशिक्षक क्रमांकन। मानदंड गढ़े नहीं गए: वे मूल पाठ से आए हैं, और प्रत्येक कार्य का कर्तृत्व संबंधित मॉड्यूल के शीर्ष में सुरक्षित है। **संख्यात्मक आव्यूह** हमारे अपने हैं — मूल कार्यों का कोई डेटा पुनरुत्पादित नहीं किया गया।
+
+| प्रकरण | क्षेत्र | संदर्भ एवं कर्तृत्व |
+|---|---|---|
+| `acoes_b3` | वित्तीय | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
+| `fundos_imobiliarios` | वित्तीय | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
+| `fintech` | वित्तीय | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
+| `avaliacao_imoveis` | रियल एस्टेट | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
+| `ordens_servico` | संचालन | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
+| `cloud_providers` | आईटी | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
+| `venture_capital` | कॉर्पोरेट | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
+| `instrutores` | कॉर्पोरेट | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
 
 ---
 
@@ -477,7 +517,7 @@ multicriteriadecisionmodels/
 
 <div align="center">
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="180"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="420"/>
 
 **ProfBru © 2026**
 

@@ -8,7 +8,7 @@ E-mail: profbruanbima@gmail.com
 
 # 🎯 MCDM Studio — 多准则决策模型
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="320"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="820"/>
 
 **ProfBru © 2026**
 
@@ -155,17 +155,57 @@ E-mail: profbruanbima@gmail.com
 python3 pipeline.py --listar
 ```
 
-| 案例 | 领域 | 备选方案 | 准则 |
-|---|---|---|---|
-| `smartphone` | 消费 | 6 | 8 |
-| `veiculo_eletrico` | 汽车 | 7 | 8 |
-| `caca_multifuncao` | 国防 | 6 | 9 |
-| `blindado` | 国防 | 5 | 8 |
-| `portfolio_startup` | 企业 | 7 | 9 |
-| `estacao_trabalho` | 信息技术 | 6 | 8 |
+| # | 案例 | 领域 | 备选方案 | 准则 | 结论 |
+|--:|---|---|--:|--:|---|
+| 1 | `smartphone` | 消费 | 6 | 8 | 可能 85% |
+| 2 | `veiculo_eletrico` | 汽车 | 7 | 8 | 稳健 96% |
+| 3 | `caca_multifuncao` | 国防 | 6 | 9 | 稳健 100% |
+| 4 | `blindado` | 国防 | 5 | 8 | 稳健 90% |
+| 5 | `portfolio_startup` | 企业 | 7 | 9 | 稳健 97% |
+| 6 | `estacao_trabalho` | 信息技术 | 6 | 8 | 稳健 98% |
+| 7 | `carros_eletricos` | 汽车 | 38 | 9 | 稳健 99% |
+| 8 | `smartphones_2026` | 消费 | 38 | 9 | 可能 65% |
+| 9 | `tablets` | 消费 | 34 | 8 | 可能 62% |
+| 10 | `smartwatches` | 消费 | 31 | 8 | 可能 79% |
+| 11 | `notebooks` | 信息技术 | 32 | 8 | 可能 76% |
+| 12 | `maquinario_agricola` | 农业 | 35 | 8 | 稳健 100% |
+| 13 | `sbc_iot` | 信息技术 | 33 | 8 | 稳健 100% |
+| 14 | `mineracao_asic` | 基础设施 | 31 | 8 | 脆弱 51% |
+| 15 | `minipcs` | 信息技术 | 10 | 8 | 稳健 96% |
+| 16 | `impressoras_3d_miniaturas` | 制造 | 30 | 9 | 脆弱 35% |
+| 17 | `impressoras_3d_producao` | 制造 | 30 | 9 | 脆弱 45% |
+| 18 | `plotters_formato` | 制造 | 24 | 9 | 可能 86% |
+| 19 | `impressoras_3d_miniaturas_triadas` | 制造 | 13 | 9 | 稳健 100% |
+| 20 | `acoes_b3` 📚 | 金融 | 20 | 7 | 脆弱 52% |
+| 21 | `fundos_imobiliarios` 📚 | 金融 | 18 | 8 | 可能 61% |
+| 22 | `fintech` 📚 | 金融 | 16 | 8 | 可能 78% |
+| 23 | `avaliacao_imoveis` 📚 | 房地产 | 16 | 8 | 稳健 96% |
+| 24 | `ordens_servico` 📚 | 运营 | 18 | 8 | 稳健 92% |
+| 25 | `cloud_providers` 📚 | 信息技术 | 14 | 8 | 稳健 100% |
+| 26 | `venture_capital` 📚 | 企业 | 16 | 8 | 稳健 97% |
+| 27 | `instrutores` 📚 | 企业 | 15 | 8 | 稳健 100% |
 
 > [!NOTE]
 > 案例矩阵是**示意性的**——采用公开且合理的数量级，用于演示方法。**并非**示意性的是**建模本身**：准则、方向、DEMATEL因果矩阵与Saaty矩阵。价值正在于此。**请把数字替换成你的报价、你的招标书或你的实验室测试结果**——引擎不变，数据是你的。
+
+> [!TIP]
+> **结论**衡量在 2000 个模拟偏好世界中优胜者仍然获胜的比例，权重按 Dirichlet(κ=200) 扰动。**稳健** ≥ 90%：结果不依赖于权重校准。**可能** 60–89%：亚军具有竞争力，请比较两者。**脆弱** < 60%：第一名只是权重造成的假象——这是一项正当的发现，而非失败。它意味着数据无法定夺，决策回到人手中。
+
+### 📚 源自文献的案例研究
+
+> [!IMPORTANT]
+> 其中八个案例的**准则与因果结构取自经同行评审的论文与学位论文**——股票、房地产基金、金融科技、房产估值、维修工单、云服务商、风险投资与教员排序。准则并非杜撰：它们出自原文，各项工作的著作权信息保留在对应模块的文件头中。**数值矩阵**为我们自行构造——未复制原始论文中的任何数据。
+
+| 案例 | 领域 | 文献与著作权 |
+|---|---|---|
+| `acoes_b3` | 金融 | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
+| `fundos_imobiliarios` | 金融 | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
+| `fintech` | 金融 | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
+| `avaliacao_imoveis` | 房地产 | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
+| `ordens_servico` | 运营 | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
+| `cloud_providers` | 信息技术 | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
+| `venture_capital` | 企业 | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
+| `instrutores` | 企业 | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
 
 ---
 
@@ -477,7 +517,7 @@ multicriteriadecisionmodels/
 
 <div align="center">
 
-<img src="docs/logo_capa.png" alt="ProfBru" width="180"/>
+<img src="docs/MCDM_Studio_logo.png" alt="MCDM Studio — ProfBru" width="420"/>
 
 **ProfBru © 2026**
 
