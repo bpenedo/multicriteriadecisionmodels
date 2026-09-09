@@ -184,6 +184,14 @@ python3 pipeline.py --listar
 | 25 | `cloud_providers` 📚 | IT | 14 | 8 | 견고 100% |
 | 26 | `venture_capital` 📚 | 기업 | 16 | 8 | 견고 97% |
 | 27 | `instrutores` 📚 | 기업 | 15 | 8 | 견고 100% |
+| 28 | `cripto_portfolio` 📚 | 금융 | 9 | 7 | 견고 100% |
+| 29 | `portfolio_crise` 📚 | 금융 | 8 | 4 | 유력 71% |
+| 30 | `cenarios_va` 📚 | 자동차 | 16 | 9 | 유력 75% |
+| 31 | `impressora_3d_energia` 📚 | 제조 | 12 | 7 | 유력 80% |
+| 32 | `impressoras_juridico` 📚 | 운영 | 12 | 4 | 견고 100% |
+| 33 | `fundos_hedge` 📚 | 금융 | 20 | 8 | 견고 98% |
+| 34 | `modelos_previsao` 📚 | IT | 7 | 8 | 유력 74% |
+| 35 | `policultivo_rj` 📚 | 농업 | 8 | 8 | 견고 100% |
 
 > [!NOTE]
 > 사례 행렬은 **예시**입니다 — 방법을 보여 주기 위한 공개적이고 타당한 크기 수준입니다. **예시가 아닌 것**은 **모델링**입니다: 기준, 방향, DEMATEL 인과행렬, Saaty 행렬. 가치는 거기에 있습니다. **숫자를 당신의 견적서, 입찰공고, 실험 결과로 바꾸십시오** — 엔진은 같고, 데이터는 당신의 것입니다.
@@ -206,6 +214,14 @@ python3 pipeline.py --listar
 | `cloud_providers` | IT | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
 | `venture_capital` | 기업 | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
 | `instrutores` | 기업 | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
+| `cripto_portfolio` | 금융 | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, 9(14):1677, 2021 — **pesos AHP do artigo** |
+| `portfolio_crise` | 금융 | COSTA, I. P. A.; MAÊDA, S. M. N.; TEIXEIRA, L. F. H. S. B.; GOMES, C. F. S.; SANTOS, M. *Finanças em períodos de crise: aplicação do método SAPEVO-M*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — **matriz de decisão do artigo** |
+| `cenarios_va` | 자동차 | LI, S.; ZHOU, R.; HUANG, H. *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 |
+| `impressora_3d_energia` | 제조 | OLIVEIRA, V. A. R. et al. *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI, Cidade do México, 2025 — UNESP |
+| `impressoras_juridico` | 운영 | OLIVEIRA, N. C.; OLIVEIRA, P. F. C.; GOMES, C. F. S.; SANTOS, M. *Aplicação do método AHP TOPSIS 2N: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias*, 2019 |
+| `fundos_hedge` | 금융 | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
+| `modelos_previsao` | IT | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
+| `policultivo_rj` | 농업 | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
 
 ---
 

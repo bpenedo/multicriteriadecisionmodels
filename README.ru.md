@@ -184,6 +184,14 @@ python3 pipeline.py --listar
 | 25 | `cloud_providers` 📚 | ИТ | 14 | 8 | УСТОЙЧИВЫЙ 100% |
 | 26 | `venture_capital` 📚 | корпоративный | 16 | 8 | УСТОЙЧИВЫЙ 97% |
 | 27 | `instrutores` 📚 | корпоративный | 15 | 8 | УСТОЙЧИВЫЙ 100% |
+| 28 | `cripto_portfolio` 📚 | финансы | 9 | 7 | УСТОЙЧИВЫЙ 100% |
+| 29 | `portfolio_crise` 📚 | финансы | 8 | 4 | ВЕРОЯТНЫЙ 71% |
+| 30 | `cenarios_va` 📚 | автомобильный | 16 | 9 | ВЕРОЯТНЫЙ 75% |
+| 31 | `impressora_3d_energia` 📚 | производство | 12 | 7 | ВЕРОЯТНЫЙ 80% |
+| 32 | `impressoras_juridico` 📚 | операции | 12 | 4 | УСТОЙЧИВЫЙ 100% |
+| 33 | `fundos_hedge` 📚 | финансы | 20 | 8 | УСТОЙЧИВЫЙ 98% |
+| 34 | `modelos_previsao` 📚 | ИТ | 7 | 8 | ВЕРОЯТНЫЙ 74% |
+| 35 | `policultivo_rj` 📚 | агробизнес | 8 | 8 | УСТОЙЧИВЫЙ 100% |
 
 > [!NOTE]
 > Матрицы случаев **иллюстративны** — публичные и правдоподобные порядки величин для демонстрации метода. **Неиллюстративным** является **моделирование**: критерии, направления, каузальная матрица DEMATEL и матрица Саати. Именно в ней заключена ценность. **Замените числа своей котировкой, своим тендером или своими лабораторными испытаниями** — движок тот же; данные ваши.
@@ -206,6 +214,14 @@ python3 pipeline.py --listar
 | `cloud_providers` | ИТ | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
 | `venture_capital` | корпоративный | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
 | `instrutores` | корпоративный | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
+| `cripto_portfolio` | финансы | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, 9(14):1677, 2021 — **pesos AHP do artigo** |
+| `portfolio_crise` | финансы | COSTA, I. P. A.; MAÊDA, S. M. N.; TEIXEIRA, L. F. H. S. B.; GOMES, C. F. S.; SANTOS, M. *Finanças em períodos de crise: aplicação do método SAPEVO-M*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — **matriz de decisão do artigo** |
+| `cenarios_va` | автомобильный | LI, S.; ZHOU, R.; HUANG, H. *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 |
+| `impressora_3d_energia` | производство | OLIVEIRA, V. A. R. et al. *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI, Cidade do México, 2025 — UNESP |
+| `impressoras_juridico` | операции | OLIVEIRA, N. C.; OLIVEIRA, P. F. C.; GOMES, C. F. S.; SANTOS, M. *Aplicação do método AHP TOPSIS 2N: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias*, 2019 |
+| `fundos_hedge` | финансы | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
+| `modelos_previsao` | ИТ | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
+| `policultivo_rj` | агробизнес | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
 
 ---
 

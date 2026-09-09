@@ -184,6 +184,14 @@ python3 pipeline.py --listar
 | 25 | `cloud_providers` 📚 | 信息技术 | 14 | 8 | 稳健 100% |
 | 26 | `venture_capital` 📚 | 企业 | 16 | 8 | 稳健 97% |
 | 27 | `instrutores` 📚 | 企业 | 15 | 8 | 稳健 100% |
+| 28 | `cripto_portfolio` 📚 | 金融 | 9 | 7 | 稳健 100% |
+| 29 | `portfolio_crise` 📚 | 金融 | 8 | 4 | 可能 71% |
+| 30 | `cenarios_va` 📚 | 汽车 | 16 | 9 | 可能 75% |
+| 31 | `impressora_3d_energia` 📚 | 制造 | 12 | 7 | 可能 80% |
+| 32 | `impressoras_juridico` 📚 | 运营 | 12 | 4 | 稳健 100% |
+| 33 | `fundos_hedge` 📚 | 金融 | 20 | 8 | 稳健 98% |
+| 34 | `modelos_previsao` 📚 | 信息技术 | 7 | 8 | 可能 74% |
+| 35 | `policultivo_rj` 📚 | 农业 | 8 | 8 | 稳健 100% |
 
 > [!NOTE]
 > 案例矩阵是**示意性的**——采用公开且合理的数量级，用于演示方法。**并非**示意性的是**建模本身**：准则、方向、DEMATEL因果矩阵与Saaty矩阵。价值正在于此。**请把数字替换成你的报价、你的招标书或你的实验室测试结果**——引擎不变，数据是你的。
@@ -206,6 +214,14 @@ python3 pipeline.py --listar
 | `cloud_providers` | 信息技术 | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
 | `venture_capital` | 企业 | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
 | `instrutores` | 企业 | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
+| `cripto_portfolio` | 金融 | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, 9(14):1677, 2021 — **pesos AHP do artigo** |
+| `portfolio_crise` | 金融 | COSTA, I. P. A.; MAÊDA, S. M. N.; TEIXEIRA, L. F. H. S. B.; GOMES, C. F. S.; SANTOS, M. *Finanças em períodos de crise: aplicação do método SAPEVO-M*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — **matriz de decisão do artigo** |
+| `cenarios_va` | 汽车 | LI, S.; ZHOU, R.; HUANG, H. *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 |
+| `impressora_3d_energia` | 制造 | OLIVEIRA, V. A. R. et al. *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI, Cidade do México, 2025 — UNESP |
+| `impressoras_juridico` | 运营 | OLIVEIRA, N. C.; OLIVEIRA, P. F. C.; GOMES, C. F. S.; SANTOS, M. *Aplicação do método AHP TOPSIS 2N: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias*, 2019 |
+| `fundos_hedge` | 金融 | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
+| `modelos_previsao` | 信息技术 | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
+| `policultivo_rj` | 农业 | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
 
 ---
 

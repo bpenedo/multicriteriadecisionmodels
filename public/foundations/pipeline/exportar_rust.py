@@ -50,9 +50,20 @@ def exportar(conn, id_caso: str) -> Path:
         "",
         "matriz:",
     ]
-    linhas += [" ".join(f"{v:g}" for v in linha) for linha in X]
+    # `.17g` e não `.6g` (que é o padrão de `{v:g}`).
+    #
+    # Dezessete dígitos significativos é o mínimo que garante ROUND-TRIP EXATO de
+    # um f64: o Rust relê exatamente o mesmo número que o Python escreveu. Com o
+    # `:g` padrão, a matriz chegava ao Rust truncada em 6 dígitos — 2508.167 virava
+    # 2508.17 — e a verificação cruzada, que é a maior garantia de corretude deste
+    # projeto, comparava o Python contra um Rust alimentado com dados DIFERENTES.
+    #
+    # Passou despercebido em 34 casos porque os valores eram redondos o bastante
+    # para caber em 6 dígitos. O primeiro caso com dado real de 7 dígitos revelou
+    # a perda. Ver bugs.md #BUG-034.
+    linhas += [" ".join(f"{v:.17g}" for v in linha) for linha in X]
     linhas += ["", "dematel:"]
-    linhas += [" ".join(f"{v:g}" for v in linha) for linha in caso["dematel"]]
+    linhas += [" ".join(f"{v:.17g}" for v in linha) for linha in caso["dematel"]]
     destino.write_text("\n".join(linhas) + "\n", encoding=ENCODING)
     return destino
 

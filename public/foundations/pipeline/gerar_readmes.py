@@ -96,6 +96,27 @@ FONTES_KB = {
                        "et al.; MILKOVA/ANDREICHIKOV (IJAHP)",
     "instrutores": "*Modelagem matemática com os métodos AHP e TOPSIS para ordenação de "
                    "instrutores em uma escola da FAB*. LIV SBPO, 2022",
+    "cripto_portfolio": "ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. *Cryptocurrency "
+                        "Portfolio Selection — A Multicriteria Approach*. Mathematics, "
+                        "9(14):1677, 2021 — **pesos AHP do artigo**",
+    "portfolio_crise": "COSTA, I. P. A.; MAÊDA, S. M. N.; TEIXEIRA, L. F. H. S. B.; GOMES, "
+                       "C. F. S.; SANTOS, M. *Finanças em períodos de crise: aplicação do "
+                       "método SAPEVO-M*. Pesquisa Operacional para o Desenvolvimento, "
+                       "v.13, e13004, 2021 — **matriz de decisão do artigo**",
+    "cenarios_va": "LI, S.; ZHOU, R.; HUANG, H. *Multidimensional Evaluation of Autonomous "
+                   "Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive "
+                   "Innovation, 2025",
+    "impressora_3d_energia": "OLIVEIRA, V. A. R. et al. *Multicriteria Analysis for 3D "
+                             "Printer Selection*. 23rd LACCEI, Cidade do México, 2025 — UNESP",
+    "impressoras_juridico": "OLIVEIRA, N. C.; OLIVEIRA, P. F. C.; GOMES, C. F. S.; SANTOS, M. "
+                            "*Aplicação do método AHP TOPSIS 2N: estudo de caso no departamento "
+                            "jurídico da Secretaria Municipal de Saúde de Duque de Caxias*, 2019",
+    "fundos_hedge": "SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge "
+                    "brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP",
+    "modelos_previsao": "SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins "
+                        "University — o artigo compara os modelos; a modelagem multicritério é deste projeto",
+    "policultivo_rj": "*AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, "
+                      "relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório**",
 }
 
 # Blocos consumidos SÓ pelas tabelas dinâmicas. Precisam ser declarados aqui, senão
