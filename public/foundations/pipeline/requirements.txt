@@ -1,0 +1,15 @@
+# MCDM Studio — Modelos Multicritério de Decisão
+# Autor: ProfBru - Bruno Penedo © 2026 - TODOS OS DIREITOS RESERVADOS
+# E-mail: profbruanbima@gmail.com
+#
+# Instalação:  pip install -r requirements.txt
+# (sqlite3, concurrent.futures, pathlib, json e xml vêm na biblioteca padrão)
+
+numpy>=2.0          # álgebra de todos os métodos — API 2.x (ver bugs.md #BUG-014)
+numba>=0.60         # JIT dos kernels O(m²k) — política R4 de foundations.md
+scipy>=1.10         # estatística auxiliar
+matplotlib>=3.7     # as 5 telas por caso (backend Agg, sem display)
+
+# --- opcionais ---
+Cython>=3.0         # política R5: usado quando o JIT do numba não alcança
+python-dotenv>=1.0  # leitura de .env

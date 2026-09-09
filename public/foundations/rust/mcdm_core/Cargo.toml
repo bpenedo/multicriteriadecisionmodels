@@ -1,0 +1,31 @@
+# MCDM Studio — Modelos Multicritério de Decisão
+# Autor: ProfBru - Bruno Penedo © 2026 - TODOS OS DIREITOS RESERVADOS
+# E-mail: profbruanbima@gmail.com
+
+[package]
+name = "mcdm_core"
+version = "1.0.0"
+edition = "2021"
+authors = ["ProfBru - Bruno Penedo <profbruanbima@gmail.com>"]
+description = "Motor de decisão multicritério: DEMATEL, AHP, TOPSIS 2N, ELECTRE I/II, PROMETHEE II, MAUT, MCDA-C, VIKOR, TODIM, SAPEVO-M"
+license = "Proprietário — TODOS OS DIREITOS RESERVADOS"
+
+# SEM dependências externas: o crate compila offline, em qualquer máquina, sem
+# registry. Álgebra linear (eliminação gaussiana, método das potências) é
+# implementada aqui — são poucas dezenas de linhas e evitam arrastar uma árvore
+# de dependências inteira para um motor que só precisa de f64.
+[dependencies]
+
+[lib]
+name = "mcdm_core"
+path = "src/lib.rs"
+
+[[bin]]
+name = "mcdm"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"

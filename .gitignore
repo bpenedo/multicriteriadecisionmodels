@@ -1,0 +1,60 @@
+# MCDM Studio — Modelos Multicritério de Decisão
+# Autor: ProfBru - Bruno Penedo © 2026 - TODOS OS DIREITOS RESERVADOS
+
+# ═══ PRIVADO — NUNCA versionar ═══
+# Governança, base de conhecimento e corpus de terceiros (direito autoral).
+_private/
+
+# ═══ Dados ═══
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# ═══ Segredos ═══
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+
+# ═══ Python ═══
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+build/
+dist/
+*.egg-info/
+# artefatos de compilação Cython
+*.c
+!public/foundations/rust/**/*.c
+
+# ═══ Rust ═══
+target/
+**/*.rs.bk
+public/foundations/rust/mcdm_core/problemas/
+
+# ═══ Node / Evidence ═══
+node_modules/
+.evidence/
+public/foundations/evidence/build/
+.svelte-kit/
+
+# ═══ Saídas geradas ═══
+# As telas publicadas em docs/telas/ SÃO versionadas (os READMEs dependem delas).
+public/foundations/evidence/static/mc/
+logs/
+*.log
+
+# ═══ Sistema ═══
+.DS_Store
+Thumbs.db
+*~
+*.swp
+:Zone.Identifier

@@ -1,0 +1,6 @@
+# MCDM Studio — fonte de dados do dashboard
+# Autor: ProfBru - Bruno Penedo © 2026 - TODOS OS DIREITOS RESERVADOS
+name: mcdm
+type: sqlite
+options:
+  filename: mcdm.db
