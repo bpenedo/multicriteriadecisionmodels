@@ -13,10 +13,11 @@ from casos.produtos import CATALOGO_PRODUTOS as _PRODUTOS      # noqa: F401
 from casos.producao import CATALOGO_PRODUCAO as _PRODUCAO      # noqa: F401
 from casos.estudos_kb import CATALOGO_ESTUDOS_KB as _ESTUDOS    # noqa: F401
 from casos.estudos_kb2 import CATALOGO_ESTUDOS_KB2 as _ESTUDOS2  # noqa: F401
+from casos.parafusadeiras import CATALOGO_PARAFUSADEIRAS as _PARAF  # noqa: F401
 
 # Um caso de `produtos.py` com o mesmo id sobrepõe o demonstrativo — nenhum
 # colide hoje, e a ordem deixa explícita a precedência caso venha a colidir.
-CATALOGO = {**_BASE, **_PRODUTOS, **_PRODUCAO, **_ESTUDOS, **_ESTUDOS2}
+CATALOGO = {**_BASE, **_PRODUTOS, **_PRODUCAO, **_ESTUDOS, **_ESTUDOS2, **_PARAF}
 
 
 def listar():

@@ -192,6 +192,8 @@ python3 pipeline.py --listar
 | 33 | `fundos_hedge` 📚 | פיננסי | 20 | 8 | יציב 98% |
 | 34 | `modelos_previsao` 📚 | מערכות מידע | 7 | 8 | סביר 74% |
 | 35 | `policultivo_rj` 📚 | אגרו-עסקים | 8 | 8 | יציב 100% |
+| 36 | `parafusadeiras_domesticas` 📚 | צריכה | 14 | 8 | סביר 86% |
+| 37 | `parafusadeiras_profissionais` 📚 | ייצור | 12 | 8 | יציב 100% |
 
 > [!NOTE]
 > מטריצות המקרים הן **להמחשה** — סדרי גודל ציבוריים וסבירים, להדגמת השיטה. מה ש**אינו** להמחשה הוא ה**מידול**: קריטריונים, כיוונים, מטריצת הסיבתיות של DEMATEL ומטריצת Saaty. שם שוכן הערך. **החליפו את המספרים בהצעת המחיר שלכם, במכרז שלכם או בבדיקת המעבדה שלכם** — המנוע זהה; הנתונים שלכם.
@@ -222,6 +224,8 @@ python3 pipeline.py --listar
 | `fundos_hedge` | פיננסי | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
 | `modelos_previsao` | מערכות מידע | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
 | `policultivo_rj` | אגרו-עסקים | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
+| `parafusadeiras_domesticas` | צריכה | COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! // Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — especificações extraídas da narração |
+| `parafusadeiras_profissionais` | ייצור | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo |
 
 ---
 

@@ -192,6 +192,8 @@ python3 pipeline.py --listar
 | 33 | `fundos_hedge` 📚 | वित्तीय | 20 | 8 | सुदृढ़ 98% |
 | 34 | `modelos_previsao` 📚 | आईटी | 7 | 8 | संभावित 74% |
 | 35 | `policultivo_rj` 📚 | कृषि व्यवसाय | 8 | 8 | सुदृढ़ 100% |
+| 36 | `parafusadeiras_domesticas` 📚 | उपभोक्ता | 14 | 8 | संभावित 86% |
+| 37 | `parafusadeiras_profissionais` 📚 | विनिर्माण | 12 | 8 | सुदृढ़ 100% |
 
 > [!NOTE]
 > प्रकरणों के आव्यूह **उदाहरणात्मक** हैं — विधि प्रदर्शित करने के लिए सार्वजनिक और प्रशंसनीय परिमाण-कोटियाँ। जो **उदाहरणात्मक नहीं** है वह है **मॉडलिंग**: मानदंड, दिशाएँ, DEMATEL कारण आव्यूह और Saaty आव्यूह। मूल्य वहीं बसता है। **संख्याओं को अपने कोटेशन, अपनी निविदा या अपने प्रयोगशाला परीक्षण से बदलिए** — इंजन वही है; डेटा आपका है।
@@ -222,6 +224,8 @@ python3 pipeline.py --listar
 | `fundos_hedge` | वित्तीय | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
 | `modelos_previsao` | आईटी | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
 | `policultivo_rj` | कृषि व्यवसाय | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
+| `parafusadeiras_domesticas` | उपभोक्ता | COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! // Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — especificações extraídas da narração |
+| `parafusadeiras_profissionais` | विनिर्माण | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo |
 
 ---
 

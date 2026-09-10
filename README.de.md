@@ -192,6 +192,8 @@ python3 pipeline.py --listar
 | 33 | `fundos_hedge` 📚 | Finanzen | 20 | 8 | ROBUST 98% |
 | 34 | `modelos_previsao` 📚 | IT | 7 | 8 | WAHRSCHEINLICH 74% |
 | 35 | `policultivo_rj` 📚 | Agrarwirtschaft | 8 | 8 | ROBUST 100% |
+| 36 | `parafusadeiras_domesticas` 📚 | Konsum | 14 | 8 | WAHRSCHEINLICH 86% |
+| 37 | `parafusadeiras_profissionais` 📚 | Fertigung | 12 | 8 | ROBUST 100% |
 
 > [!NOTE]
 > Die Fallmatrizen sind **illustrativ** — öffentliche, plausible Größenordnungen zur Demonstration der Methode. **Nicht** illustrativ ist die **Modellierung**: Kriterien, Richtungen, DEMATEL-Kausalmatrix und Saaty-Matrix. Dort liegt der Wert. **Ersetzen Sie die Zahlen durch Ihr Angebot, Ihre Ausschreibung oder Ihre Laborprüfung** — die Engine bleibt dieselbe; die Daten sind Ihre.
@@ -222,6 +224,8 @@ python3 pipeline.py --listar
 | `fundos_hedge` | Finanzen | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
 | `modelos_previsao` | IT | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
 | `policultivo_rj` | Agrarwirtschaft | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
+| `parafusadeiras_domesticas` | Konsum | COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! // Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — especificações extraídas da narração |
+| `parafusadeiras_profissionais` | Fertigung | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo |
 
 ---
 

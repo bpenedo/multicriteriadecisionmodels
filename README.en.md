@@ -192,6 +192,8 @@ python3 pipeline.py --listar
 | 33 | `fundos_hedge` 📚 | finance | 20 | 8 | ROBUST 98% |
 | 34 | `modelos_previsao` 📚 | IT | 7 | 8 | LIKELY 74% |
 | 35 | `policultivo_rj` 📚 | agribusiness | 8 | 8 | ROBUST 100% |
+| 36 | `parafusadeiras_domesticas` 📚 | consumer | 14 | 8 | LIKELY 86% |
+| 37 | `parafusadeiras_profissionais` 📚 | manufacturing | 12 | 8 | ROBUST 100% |
 
 > [!NOTE]
 > The case matrices are **illustrative** — public, plausible orders of magnitude to demonstrate the method. What is **not** illustrative is the **modelling**: criteria, directions, the DEMATEL causal matrix and the Saaty matrix. That is where the value lives. **Replace the numbers with your quotation, your tender or your lab test** — the engine is the same; the data is yours.
@@ -222,6 +224,8 @@ python3 pipeline.py --listar
 | `fundos_hedge` | finance | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
 | `modelos_previsao` | IT | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
 | `policultivo_rj` | agribusiness | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
+| `parafusadeiras_domesticas` | consumer | COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! // Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — especificações extraídas da narração |
+| `parafusadeiras_profissionais` | manufacturing | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo |
 
 ---
 

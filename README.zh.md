@@ -192,6 +192,8 @@ python3 pipeline.py --listar
 | 33 | `fundos_hedge` 📚 | 金融 | 20 | 8 | 稳健 98% |
 | 34 | `modelos_previsao` 📚 | 信息技术 | 7 | 8 | 可能 74% |
 | 35 | `policultivo_rj` 📚 | 农业 | 8 | 8 | 稳健 100% |
+| 36 | `parafusadeiras_domesticas` 📚 | 消费 | 14 | 8 | 可能 86% |
+| 37 | `parafusadeiras_profissionais` 📚 | 制造 | 12 | 8 | 稳健 100% |
 
 > [!NOTE]
 > 案例矩阵是**示意性的**——采用公开且合理的数量级，用于演示方法。**并非**示意性的是**建模本身**：准则、方向、DEMATEL因果矩阵与Saaty矩阵。价值正在于此。**请把数字替换成你的报价、你的招标书或你的实验室测试结果**——引擎不变，数据是你的。
@@ -222,6 +224,8 @@ python3 pipeline.py --listar
 | `fundos_hedge` | 金融 | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
 | `modelos_previsao` | 信息技术 | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
 | `policultivo_rj` | 农业 | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
+| `parafusadeiras_domesticas` | 消费 | COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! // Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — especificações extraídas da narração |
+| `parafusadeiras_profissionais` | 制造 | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo |
 
 ---
 

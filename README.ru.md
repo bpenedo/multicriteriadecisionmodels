@@ -192,6 +192,8 @@ python3 pipeline.py --listar
 | 33 | `fundos_hedge` 📚 | финансы | 20 | 8 | УСТОЙЧИВЫЙ 98% |
 | 34 | `modelos_previsao` 📚 | ИТ | 7 | 8 | ВЕРОЯТНЫЙ 74% |
 | 35 | `policultivo_rj` 📚 | агробизнес | 8 | 8 | УСТОЙЧИВЫЙ 100% |
+| 36 | `parafusadeiras_domesticas` 📚 | потребительский | 14 | 8 | ВЕРОЯТНЫЙ 86% |
+| 37 | `parafusadeiras_profissionais` 📚 | производство | 12 | 8 | УСТОЙЧИВЫЙ 100% |
 
 > [!NOTE]
 > Матрицы случаев **иллюстративны** — публичные и правдоподобные порядки величин для демонстрации метода. **Неиллюстративным** является **моделирование**: критерии, направления, каузальная матрица DEMATEL и матрица Саати. Именно в ней заключена ценность. **Замените числа своей котировкой, своим тендером или своими лабораторными испытаниями** — движок тот же; данные ваши.
@@ -222,6 +224,8 @@ python3 pipeline.py --listar
 | `fundos_hedge` | финансы | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
 | `modelos_previsao` | ИТ | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
 | `policultivo_rj` | агробизнес | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
+| `parafusadeiras_domesticas` | потребительский | COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! // Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — especificações extraídas da narração |
+| `parafusadeiras_profissionais` | производство | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo |
 
 ---
 

@@ -239,7 +239,20 @@ def diagrama_causa_efeito(conn, id_caso, destino):
     # Nenhum critério pode ser omitido — num diagrama causal, um critério sem rótulo
     # é um critério que o decisor não vê. Então, em vez de reduzir a quantidade de
     # rótulos (o que a matriz BCG faz), ALARGAMOS a moldura até todos caberem.
-    for _ in range(7):
+    # ATENÇÃO à diferença entre as duas coisas que "dão mais espaço":
+    #
+    #   · alargar os LIMITES do eixo cria margem nas bordas — resolve TRANSBORDO,
+    #     mas APROXIMA os pontos entre si em pixels, porque os mesmos dados passam
+    #     a caber num intervalo maior. Como os offsets dos rótulos são medidos em
+    #     pontos de TELA, alargar o eixo PIORA a colisão;
+    #   · ampliar a FIGURA dá mais pixels para a mesma dispersão — é o que afasta
+    #     os rótulos uns dos outros.
+    #
+    # A primeira versão deste laço só alargava os limites e, num caso com oito
+    # critérios apinhados numa faixa estreita de proeminência, chegou ao fim das
+    # sete tentativas com rótulos ainda sobrepostos. Ver bugs.md #BUG-035.
+    larg, alt = fig.get_size_inches()
+    for tentativa in range(7):
         ax.set_ylim(-faixa, faixa)
         ax.set_xlim(x.min() - margem, x.max() + margem)
         for ann in list(ax.texts):
@@ -247,8 +260,11 @@ def diagrama_causa_efeito(conn, id_caso, destino):
         pendencias, _ = _anotar_sem_colisao(ax, fig, rotulos)
         if pendencias == 0:
             break
-        margem *= 1.30
-        faixa *= 1.18
+        # margem cresce pouco (só para o transbordo); a FIGURA cresce de verdade.
+        margem *= 1.06
+        faixa *= 1.06
+        larg, alt = larg * 1.13, alt * 1.10
+        fig.set_size_inches(larg, alt)
 
     # Faixas de fundo pintadas com o xlim JÁ definitivo: pintar sobre um limite que
     # ainda vai mudar desalinha o preenchimento. Ver bugs.md #BUG-010.

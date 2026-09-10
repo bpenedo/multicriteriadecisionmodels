@@ -192,6 +192,8 @@ python3 pipeline.py --listar
 | 33 | `fundos_hedge` 📚 | 금융 | 20 | 8 | 견고 98% |
 | 34 | `modelos_previsao` 📚 | IT | 7 | 8 | 유력 74% |
 | 35 | `policultivo_rj` 📚 | 농업 | 8 | 8 | 견고 100% |
+| 36 | `parafusadeiras_domesticas` 📚 | 소비재 | 14 | 8 | 유력 86% |
+| 37 | `parafusadeiras_profissionais` 📚 | 제조 | 12 | 8 | 견고 100% |
 
 > [!NOTE]
 > 사례 행렬은 **예시**입니다 — 방법을 보여 주기 위한 공개적이고 타당한 크기 수준입니다. **예시가 아닌 것**은 **모델링**입니다: 기준, 방향, DEMATEL 인과행렬, Saaty 행렬. 가치는 거기에 있습니다. **숫자를 당신의 견적서, 입찰공고, 실험 결과로 바꾸십시오** — 엔진은 같고, 데이터는 당신의 것입니다.
@@ -222,6 +224,8 @@ python3 pipeline.py --listar
 | `fundos_hedge` | 금융 | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
 | `modelos_previsao` | IT | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
 | `policultivo_rj` | 농업 | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
+| `parafusadeiras_domesticas` | 소비재 | COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! // Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — especificações extraídas da narração |
+| `parafusadeiras_profissionais` | 제조 | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo |
 
 ---
 

@@ -117,6 +117,12 @@ FONTES_KB = {
                         "University — o artigo compara os modelos; a modelagem multicritério é deste projeto",
     "policultivo_rj": "*AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, "
                       "relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório**",
+    "parafusadeiras_domesticas": "COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! "
+                                 "// Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — "
+                                 "especificações extraídas da narração",
+    "parafusadeiras_profissionais": "FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores "
+                                    "Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias "
+                                    "lidos dos quadros do vídeo",
 }
 
 # Blocos consumidos SÓ pelas tabelas dinâmicas. Precisam ser declarados aqui, senão
