@@ -38,8 +38,13 @@ from casos import CATALOGO, obter
 from casos.catalogo import validar
 from config import N_WORKERS, ROBUSTEZ_ITER, ROBUSTEZ_KAPPA, SEED, resumo
 from db import carregar_caso, get_conn, init_schema
+from config import FUZZY_FATOR_SAATY
+from bwm import bwm_de_pesos, comparacoes, pesos_bwm
+from drsa import (discretizar_classes, induzir_regras, qualidade_aproximacao,
+                  texto_regra)
+from fuzzy import fuzzificar_saaty, fuzzy_ahp_pesos, indice_fuzziness
 from nucleo import (CONSENSO, METODOS, ahp_consistente, ahp_topsis_2n, borda,
-                    dematel, electre_i, pesos_ahp, preparar, ranks)
+                    dematel, electre_i, orientar, pesos_ahp, preparar, ranks)
 from robustez import (DESCRICAO_VEREDITO, classificar, distribuicao_consenso,
                       resumir, simular)
 
@@ -99,7 +104,9 @@ def executar(conn, id_caso, n_workers=N_WORKERS, n_iter=ROBUSTEZ_ITER, verboso=T
     cur = conn.cursor()
     n_alt = len(alternativas)
 
-    for tabela in ("dematel_criterio", "dematel_relacao", "ahp_peso", "decisao_topsis",
+    for tabela in ("dematel_criterio", "dematel_relacao", "ahp_peso",
+                   "ahp_fuzzy_peso", "bwm_peso", "drsa_regra", "drsa_qualidade",
+                   "decisao_topsis",
                    "decisao_mcdm", "electre_nucleo", "decisao_consenso",
                    "mcdm_robustez", "mcdm_robustez_dist", "veredito"):
         cur.execute(f"DELETE FROM {tabela} WHERE id_caso = ?", (id_caso,))
@@ -126,7 +133,38 @@ def executar(conn, id_caso, n_workers=N_WORKERS, n_iter=ROBUSTEZ_ITER, verboso=T
         [(id_caso, criterios[j], float(w_ahp[j]), float(cr), int(consistente))
          for j in range(len(criterios))])
 
-    # --- 3) Cinco métodos, todos com os pesos do DEMATEL ---------------------
+    # --- 2b) AHP Fuzzy: o mesmo julgamento, com a imprecisão preservada -----
+    # O decisor que disse "5" quis dizer algo entre 4 e 6. O AHP crisp descarta
+    # essa faixa na primeira linha; o fuzzy a carrega até o fim e devolve, em Φ,
+    # quanto ela pesa. Φ baixo = julgamento praticamente crisp, e os dois AHP vão
+    # concordar; Φ alto = a ordem dos pesos é sensível à imprecisão declarada.
+    A_fuzzy = fuzzificar_saaty(caso["ahp"], FUZZY_FATOR_SAATY)
+    w_fz, W_fz = fuzzy_ahp_pesos(A_fuzzy)
+    phi = indice_fuzziness(W_fz)
+    cur.executemany(
+        "INSERT INTO ahp_fuzzy_peso (id_caso, criterio, peso, l, m, u, fator, fuzziness) "
+        "VALUES (?,?,?,?,?,?,?,?)",
+        [(id_caso, criterios[j], float(w_fz[j]), float(W_fz[j, 0]), float(W_fz[j, 1]),
+          float(W_fz[j, 2]), float(FUZZY_FATOR_SAATY), float(phi))
+         for j in range(len(criterios))])
+
+    # --- 2c) BWM: os mesmos pesos, por 2n−3 comparações em vez de n(n−1)/2 --
+    # O BWM é derivado aqui dos pesos do AHP (ver bwm.bwm_de_pesos): não há
+    # elicitação humana neste projeto, e a pergunta que ele responde é
+    # "um decisor coerente recuperaria estes pesos com 58% menos perguntas?".
+    # Com workshop real, os vetores BO/OW vêm do decisor e o método é o que é.
+    n_crit = len(criterios)
+    melhor_i, pior_i, a_bo, a_ow = bwm_de_pesos(w_ahp)
+    w_bwm, ksi, cr_bwm, ok_bwm = pesos_bwm(melhor_i, pior_i, a_bo, a_ow)
+    comp = comparacoes(n_crit)
+    cur.executemany(
+        "INSERT INTO bwm_peso (id_caso, criterio, peso, melhor, pior, ksi, cr, "
+        "consistente, n_comparacoes, n_comp_ahp) VALUES (?,?,?,?,?,?,?,?,?,?)",
+        [(id_caso, criterios[j], float(w_bwm[j]), int(j == melhor_i), int(j == pior_i),
+          float(ksi), float(cr_bwm), int(ok_bwm), comp["BWM"], comp["AHP"])
+         for j in range(n_crit)])
+
+    # --- 3) Os dez métodos, todos com os pesos do DEMATEL -------------------
     prep = preparar(X, direcoes)
     scores = prep.pontuar(pesos)
     posicoes = {m: ranks(s) for m, s in scores.items()}
@@ -165,6 +203,29 @@ def executar(conn, id_caso, n_workers=N_WORKERS, n_iter=ROBUSTEZ_ITER, verboso=T
         "unanime) VALUES (?,?,?,?,?,?)",
         [(id_caso, alternativas[i], round(float(rank_medio[i]), 3), int(pontos[i]),
           int(rank_final[i]), int(unanime[i])) for i in range(n_alt)])
+
+    # --- 4b) DRSA: as REGRAS que explicam o consenso ------------------------
+    # Único método do projeto que não produz score: produz frases auditáveis, e
+    # a qualidade da aproximação γ. γ < 1 denuncia violação do princípio de
+    # dominância NOS DADOS — alternativa pior em tudo classificada acima de outra.
+    # Nenhum método compensatório acusa isso; eles calculam o score e seguem.
+    classes_drsa = discretizar_classes(-rank_final.astype(float), n_classes=3)
+    gamma, ambiguas, violacoes = qualidade_aproximacao(
+        orientar(X, direcoes), classes_drsa)
+    regras = induzir_regras(X, direcoes, classes_drsa, rotulos)
+    cur.execute(
+        "INSERT INTO drsa_qualidade (id_caso, gamma, n_classes, n_ambiguas, "
+        "n_violacoes, n_regras) VALUES (?,?,?,?,?,?)",
+        (id_caso, float(gamma), int(len(set(classes_drsa))), int(ambiguas.sum()),
+         len(violacoes), len(regras)))
+    cur.executemany(
+        "INSERT INTO drsa_regra (id_caso, n_regra, classe_min, condicoes, "
+        "cobertura, certeza, texto) VALUES (?,?,?,?,?,?,?)",
+        [(id_caso, i, r["classe_min"],
+          " E ".join(f"{rot} {'≥' if d == 'benefit' else '≤'} {v:g}"
+                     for rot, d, v in r["condicoes"]),
+          r["cobertura"], r["certeza"], texto_regra(r))
+         for i, r in enumerate(regras, 1)])
 
     # --- 5) Robustez sob perturbação de Dirichlet ---------------------------
     t0 = time.perf_counter()

@@ -14,9 +14,9 @@ E-mail: profbruanbima@gmail.com
 
 ### Pare de escolher com planilha. Comece a decidir com prova.
 
-**Nove escolas de decisão. Um vencedor. E — pela primeira vez — a probabilidade de esse vencedor estar certo.**
+**Dez escolas de decisão. Um vencedor. E — pela primeira vez — a probabilidade de esse vencedor estar certo.**
 
-[![MCDM](https://img.shields.io/badge/Métodos_MCDM-9-2563eb?style=for-the-badge)](#-as-nove-escolas-de-decisão-e-por-que-nove)
+[![MCDM](https://img.shields.io/badge/Métodos_MCDM-10-2563eb?style=for-the-badge)](#-as-dez-escolas-de-decisão-e-por-que-dez)
 [![Engines](https://img.shields.io/badge/Motores-Python_+_Rust-c2410c?style=for-the-badge)](#-dois-motores-independentes-a-prova-cruzada)
 [![i18n](https://img.shields.io/badge/Idiomas-12-16a34a?style=for-the-badge)](#-12-idiomas--memória-de-tradução-sdl-trados)
 [![Robustez](https://img.shields.io/badge/Universos_simulados-2.000-8f3d56?style=for-the-badge)](#-a-pergunta-que-ninguém-responde-e-se-os-pesos-estiverem-errados)
@@ -65,7 +65,7 @@ Aquele "vencedor" nunca foi um vencedor. Era um **artefato da sua calibração**
 
 ---
 
-## 💊 A solução: nove escolas, um consenso, e um intervalo de confiança
+## 💊 A solução: dez escolas, um consenso, e um intervalo de confiança
 
 **MCDM Studio roda **nove métodos multicritério** consagrados sobre o mesmo problema, tira o vencedor do **consenso** entre eles, e então faz a única coisa que realmente importa:**
 
@@ -98,7 +98,7 @@ O **DEMATEL** monta a matriz de relação total `T = X(I−X)⁻¹` — que soma
 
 > No caso acima, **Transferência de Tecnologia** e **Assinatura Radar** são CAUSAS: mexer nelas move o sistema inteiro. **Disponibilidade de frota** é EFEITO — é termômetro, não alavanca. Um edital que pontua disponibilidade e ignora ToT está medindo febre e ignorando a infecção.
 
-### 2. Nove escolas sobre o mesmo problema
+### 2. Dez escolas sobre o mesmo problema
 
 <div align="center"><img src="docs/telas/veiculo_eletrico/mapa_metodos.png" alt="Métodos" width="900"/></div>
 
@@ -155,45 +155,46 @@ O motor é **agnóstico de domínio**: a unidade é o *caso de decisão* (altern
 python3 pipeline.py --listar
 ```
 
-| # | Caso | Domínio | Alternativas | Critérios | Veredito |
-|--:|---|---|--:|--:|---|
-| 1 | `smartphone` | consumo | 6 | 8 | PROVÁVEL 85% |
-| 2 | `veiculo_eletrico` | automotivo | 7 | 8 | ROBUSTO 96% |
-| 3 | `caca_multifuncao` | defesa | 6 | 9 | ROBUSTO 100% |
-| 4 | `blindado` | defesa | 5 | 8 | ROBUSTO 90% |
-| 5 | `portfolio_startup` | corporativo | 7 | 9 | ROBUSTO 97% |
-| 6 | `estacao_trabalho` | TI | 6 | 8 | ROBUSTO 98% |
-| 7 | `carros_eletricos` | automotivo | 38 | 9 | ROBUSTO 99% |
-| 8 | `smartphones_2026` | consumo | 38 | 9 | PROVÁVEL 65% |
-| 9 | `tablets` | consumo | 34 | 8 | PROVÁVEL 62% |
-| 10 | `smartwatches` | consumo | 31 | 8 | PROVÁVEL 79% |
-| 11 | `notebooks` | TI | 32 | 8 | PROVÁVEL 76% |
-| 12 | `maquinario_agricola` | agronegócio | 35 | 8 | ROBUSTO 100% |
-| 13 | `sbc_iot` | TI | 33 | 8 | ROBUSTO 100% |
-| 14 | `mineracao_asic` | infraestrutura | 31 | 8 | FRÁGIL 51% |
-| 15 | `minipcs` | TI | 10 | 8 | ROBUSTO 96% |
-| 16 | `impressoras_3d_miniaturas` | manufatura | 30 | 9 | FRÁGIL 35% |
-| 17 | `impressoras_3d_producao` | manufatura | 30 | 9 | FRÁGIL 45% |
-| 18 | `plotters_formato` | manufatura | 24 | 9 | PROVÁVEL 86% |
-| 19 | `impressoras_3d_miniaturas_triadas` | manufatura | 13 | 9 | ROBUSTO 100% |
-| 20 | `acoes_b3` 📚 | financeiro | 20 | 7 | FRÁGIL 52% |
-| 21 | `fundos_imobiliarios` 📚 | financeiro | 18 | 8 | PROVÁVEL 61% |
-| 22 | `fintech` 📚 | financeiro | 16 | 8 | PROVÁVEL 78% |
-| 23 | `avaliacao_imoveis` 📚 | imobiliário | 16 | 8 | ROBUSTO 96% |
-| 24 | `ordens_servico` 📚 | operações | 18 | 8 | ROBUSTO 92% |
-| 25 | `cloud_providers` 📚 | TI | 14 | 8 | ROBUSTO 100% |
-| 26 | `venture_capital` 📚 | corporativo | 16 | 8 | ROBUSTO 97% |
-| 27 | `instrutores` 📚 | corporativo | 15 | 8 | ROBUSTO 100% |
-| 28 | `cripto_portfolio` 📚 | financeiro | 9 | 7 | ROBUSTO 100% |
-| 29 | `portfolio_crise` 📚 | financeiro | 8 | 4 | PROVÁVEL 71% |
-| 30 | `cenarios_va` 📚 | automotivo | 16 | 9 | PROVÁVEL 75% |
-| 31 | `impressora_3d_energia` 📚 | manufatura | 12 | 7 | PROVÁVEL 80% |
-| 32 | `impressoras_juridico` 📚 | operações | 12 | 4 | ROBUSTO 100% |
-| 33 | `fundos_hedge` 📚 | financeiro | 20 | 8 | ROBUSTO 98% |
-| 34 | `modelos_previsao` 📚 | TI | 7 | 8 | PROVÁVEL 74% |
-| 35 | `policultivo_rj` 📚 | agronegócio | 8 | 8 | ROBUSTO 100% |
-| 36 | `parafusadeiras_domesticas` 📚 | consumo | 14 | 8 | PROVÁVEL 86% |
-| 37 | `parafusadeiras_profissionais` 📚 | manufatura | 12 | 8 | ROBUSTO 100% |
+| # | Caso | Domínio | Alternativas | Critérios | Veredito | Autoria / fonte |
+|--:|---|---|--:|--:|---|---|
+| 1 | `smartphone` | consumo | 6 | 8 | PROVÁVEL 63% | Modelagem autoral |
+| 2 | `veiculo_eletrico` | automotivo | 7 | 8 | ROBUSTO 99% | Modelagem autoral |
+| 3 | `caca_multifuncao` | defesa | 6 | 9 | ROBUSTO 100% | Modelagem autoral |
+| 4 | `blindado` | defesa | 5 | 8 | ROBUSTO 93% | Modelagem autoral |
+| 5 | `portfolio_startup` | corporativo | 7 | 9 | ROBUSTO 96% | Modelagem autoral |
+| 6 | `estacao_trabalho` | TI | 6 | 8 | ROBUSTO 98% | Modelagem autoral |
+| 7 | `carros_eletricos` | automotivo | 38 | 9 | ROBUSTO 96% | Modelagem autoral |
+| 8 | `smartphones_2026` | consumo | 38 | 9 | PROVÁVEL 73% | Modelagem autoral |
+| 9 | `tablets` | consumo | 34 | 8 | PROVÁVEL 67% | Modelagem autoral |
+| 10 | `smartwatches` | consumo | 31 | 8 | PROVÁVEL 84% | Modelagem autoral |
+| 11 | `notebooks` | TI | 32 | 8 | PROVÁVEL 83% | Modelagem autoral |
+| 12 | `maquinario_agricola` | agronegócio | 35 | 8 | ROBUSTO 100% | Modelagem autoral |
+| 13 | `sbc_iot` | TI | 33 | 8 | ROBUSTO 100% | Modelagem autoral |
+| 14 | `mineracao_asic` | infraestrutura | 31 | 8 | FRÁGIL 50% | Modelagem autoral |
+| 15 | `minipcs` | TI | 10 | 8 | ROBUSTO 91% | Modelagem autoral |
+| 16 | `impressoras_3d_miniaturas` | manufatura | 30 | 9 | FRÁGIL 48% | Modelagem autoral |
+| 17 | `impressoras_3d_producao` | manufatura | 30 | 9 | FRÁGIL 58% | Modelagem autoral |
+| 18 | `plotters_formato` | manufatura | 24 | 9 | ROBUSTO 96% | Modelagem autoral |
+| 19 | `impressoras_3d_miniaturas_triadas` | manufatura | 13 | 9 | ROBUSTO 100% | Modelagem autoral |
+| 20 | `acoes_b3` 📚 | financeiro | 20 | 7 | FRÁGIL 39% | COSTA, L. S. da · VÁSQUEZ, J. A.; ESCOBAR, J. W.; MANOTAS, D. F. · [DOI](https://doi.org/10.3390/risks10010004) |
+| 21 | `fundos_imobiliarios` 📚 | financeiro | 18 | 8 | PROVÁVEL 85% | SANTOS, V. V. dos (orient. ALMEIDA FILHO, A. T. de) |
+| 22 | `fintech` 📚 | financeiro | 16 | 8 | PROVÁVEL 67% | WIBOWO, S.; GRANDHI, L.; GRANDHI, S.; WELLS, M. · [DOI](https://doi.org/10.3390/math10020225) |
+| 23 | `avaliacao_imoveis` 📚 | imobiliário | 16 | 8 | ROBUSTO 94% | DUARTE, D. C. de O. · MARQUES, J. P. M. |
+| 24 | `ordens_servico` 📚 | operações | 18 | 8 | ROBUSTO 97% | ALENCAR, L. G. de; TAVARES, F. R. M.; MENDONÇA, F. J. S. de F.; DUARTE, A. K. G. |
+| 25 | `cloud_providers` 📚 | TI | 14 | 8 | ROBUSTO 100% | SOLOMON, T. |
+| 26 | `venture_capital` 📚 | corporativo | 16 | 8 | ROBUSTO 96% | BEIM, G.; LÉVESQUE, M. · DHOCHAK, M.; DOLIYA, P. · AFFUL-DADZIE, E.; AFFUL-DADZIE, A.; OPLATKOVÁ, Z. K. · [DOI](https://doi.org/10.1002/mcda.1703) |
+| 27 | `instrutores` 📚 | corporativo | 15 | 8 | ROBUSTO 100% | SILVA, C. E. J. da; SALLES-NETO, L. L. de; SANTOS, M. dos |
+| 28 | `cripto_portfolio` 📚 | financeiro | 9 | 7 | ROBUSTO 100% | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. · [DOI](https://doi.org/10.3390/math9141677) |
+| 29 | `portfolio_crise` 📚 | financeiro | 8 | 4 | PROVÁVEL 77% | COSTA, I. P. de A.; MAÊDA, S. M. do N.; TEIXEIRA, L. F. H. de S. de B.; GOMES, C. F. S.; SANTOS, M. dos |
+| 30 | `cenarios_va` 📚 | automotivo | 16 | 9 | PROVÁVEL 73% | LI, S.; ZHOU, R.; HUANG, H. · [DOI](https://doi.org/10.1007/s42154-024-00344-6) |
+| 31 | `impressora_3d_energia` 📚 | manufatura | 12 | 7 | PROVÁVEL 69% | OLIVEIRA, V. A. R. de; ALVARADO SILVA, C. A.; OLIVEIRA, G. C. R. de; TAJIMA, F. M.; FARIA NETO, A. dos R.; SALOMON, V. A. P.; GUIDI, E. S. · [DOI](https://doi.org/10.18687/LACCEI2025.1.1.1193) |
+| 32 | `impressoras_juridico` 📚 | operações | 12 | 4 | ROBUSTO 100% | OLIVEIRA, N. C.; OLIVEIRA, P. F. C. de; GOMES, C. F. S.; SANTOS, M. dos |
+| 33 | `fundos_hedge` 📚 | financeiro | 20 | 8 | ROBUSTO 94% | SILVA, F. P. da; RIBEIRO, C. de O. |
+| 34 | `modelos_previsao` 📚 | TI | 7 | 8 | ROBUSTO 95% | SHAH, S. |
+| 35 | `policultivo_rj` 📚 | agronegócio | 8 | 8 | PROVÁVEL 86% | PENEDO, B. |
+| 36 | `parafusadeiras_domesticas` 📚 | consumo | 14 | 8 | PROVÁVEL 70% | COMPROU AVALIOU (canal) · [vídeo](https://youtu.be/pgdqVYEjZtk) |
+| 37 | `parafusadeiras_profissionais` 📚 | manufatura | 12 | 8 | ROBUSTO 100% | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal) · [vídeo](https://youtube.com/shorts/9SIs3agoZKc) |
+| 38 | `crowdfunding_startups` 📚 | corporativo | 16 | 9 | ROBUSTO 93% | SKARE, M.; GAVUROVA, B.; POLISHCHUK, V. · [DOI](https://doi.org/10.1016/j.jbusres.2023.113719) |
 
 > [!NOTE]
 > As matrizes dos casos são **ilustrativas** — ordens de grandeza públicas e plausíveis, para demonstrar o método. O que **não** é ilustrativo é a **modelagem**: critérios, direções, matriz causal do DEMATEL e matriz de Saaty. É nela que mora o valor. **Substitua os números pela sua cotação, seu edital ou seu ensaio de laboratório** — o motor é o mesmo; os dados é que são seus.
@@ -204,28 +205,29 @@ python3 pipeline.py --listar
 ### 📚 Estudos de caso derivados da literatura
 
 > [!IMPORTANT]
-> Oito dos casos têm os **critérios e a estrutura causal extraídos de artigos e teses revisados** — ações, fundos imobiliários, fintechs, avaliação de imóveis, ordens de serviço, provedores de nuvem, venture capital e ordenação de instrutores. Os critérios não foram inventados: vieram do texto de origem, e a autoria de cada trabalho está preservada no cabeçalho do módulo correspondente. As **matrizes numéricas** são instanciações próprias — nenhum dado dos trabalhos originais foi reproduzido.
+> Os casos da tabela abaixo têm os **critérios e a estrutura causal extraídos dos trabalhos listados** — artigos revisados por pares, teses, anais de congresso e relatórios técnicos. Os critérios não foram inventados: vieram do texto de origem, e a autoria está preservada aqui e no cabeçalho do módulo correspondente. As **matrizes numéricas** são instanciações próprias — nenhum dado dos trabalhos originais foi reproduzido. Onde existe DOI indexado, o link leva ao trabalho; onde não existe, a referência textual completa permite localizá-lo.
 
-| Caso | Domínio | Referência e autoria |
-|---|---|---|
-| `acoes_b3` | financeiro | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
-| `fundos_imobiliarios` | financeiro | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
-| `fintech` | financeiro | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
-| `avaliacao_imoveis` | imobiliário | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
-| `ordens_servico` | operações | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
-| `cloud_providers` | TI | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
-| `venture_capital` | corporativo | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
-| `instrutores` | corporativo | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
-| `cripto_portfolio` | financeiro | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, 9(14):1677, 2021 — **pesos AHP do artigo** |
-| `portfolio_crise` | financeiro | COSTA, I. P. A.; MAÊDA, S. M. N.; TEIXEIRA, L. F. H. S. B.; GOMES, C. F. S.; SANTOS, M. *Finanças em períodos de crise: aplicação do método SAPEVO-M*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — **matriz de decisão do artigo** |
-| `cenarios_va` | automotivo | LI, S.; ZHOU, R.; HUANG, H. *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 |
-| `impressora_3d_energia` | manufatura | OLIVEIRA, V. A. R. et al. *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI, Cidade do México, 2025 — UNESP |
-| `impressoras_juridico` | operações | OLIVEIRA, N. C.; OLIVEIRA, P. F. C.; GOMES, C. F. S.; SANTOS, M. *Aplicação do método AHP TOPSIS 2N: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias*, 2019 |
-| `fundos_hedge` | financeiro | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
-| `modelos_previsao` | TI | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
-| `policultivo_rj` | agronegócio | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
-| `parafusadeiras_domesticas` | consumo | COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! // Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — especificações extraídas da narração |
-| `parafusadeiras_profissionais` | manufatura | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo |
+| Caso | Domínio | Autores | Referência |
+|---|---|---|---|
+| `acoes_b3` | financeiro | COSTA, L. S. da · VÁSQUEZ, J. A.; ESCOBAR, J. W.; MANOTAS, D. F. | *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS* (COSTA, UERJ) · *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks, v.10, n.1, 4, 2022 (Universidad del Valle) · [DOI](https://doi.org/10.3390/risks10010004) |
+| `fundos_imobiliarios` | financeiro | SANTOS, V. V. dos (orient. ALMEIDA FILHO, A. T. de) | *Avaliação do método Random Forest para auxílio à seleção de fundos de investimento imobiliário listados na Bolsa de Valores*. Trabalho de Graduação, Engenharia da Computação, CIn/UFPE, set. 2023 |
+| `fintech` | financeiro | WIBOWO, S.; GRANDHI, L.; GRANDHI, S.; WELLS, M. | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects*. Mathematics, v.10, n.2, 225, 2022 — CQUniversity, Austrália · [DOI](https://doi.org/10.3390/math10020225) |
+| `avaliacao_imoveis` | imobiliário | DUARTE, D. C. de O. · MARQUES, J. P. M. | *Análise multicritério e geoestatística aplicadas na avaliação em massa de imóveis urbanos*. Tese, UFV, 2019 · *As formas de avaliar imóvel em leilão judicial*. Universidade São Judas Tadeu, 2023 |
+| `ordens_servico` | operações | ALENCAR, L. G. de; TAVARES, F. R. M.; MENDONÇA, F. J. S. de F.; DUARTE, A. K. G. | *Priorização de ordens de serviço aplicando métodos de tomada de decisão: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, p.2763-2784, 2022 — URCA, Ceará |
+| `cloud_providers` | TI | SOLOMON, T. | *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model for Provisioning of Enterprise IT Infrastructure in the Cloud*. Praxis (Doctor of Engineering), The George Washington University, 2017 |
+| `venture_capital` | corporativo | BEIM, G.; LÉVESQUE, M. · DHOCHAK, M.; DOLIYA, P. · AFFUL-DADZIE, E.; AFFUL-DADZIE, A.; OPLATKOVÁ, Z. K. | *Selecting projects for venture capital funding: a multiple criteria decision approach* (Case Western Reserve University) · *Valuation of a startup: moving towards strategic approaches*, J. Multi-Criteria Decision Analysis, 2019 · *Assessing commercial viability of technology start-up businesses in a government venture capital under intuitionistic fuzzy environment*, Int. J. Fuzzy Systems, 2016 · [DOI](https://doi.org/10.1002/mcda.1703) · [DOI](https://doi.org/10.1007/s40815-016-0141-9) |
+| `instrutores` | corporativo | SILVA, C. E. J. da; SALLES-NETO, L. L. de; SANTOS, M. dos | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, Juiz de Fora, 2022 — ITA / UNIFESP / IME |
+| `cripto_portfolio` | financeiro | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. | *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, v.9, n.14, 1677, 2021 — University of Split, Croácia — **pesos AHP do artigo** · [DOI](https://doi.org/10.3390/math9141677) |
+| `portfolio_crise` | financeiro | COSTA, I. P. de A.; MAÊDA, S. M. do N.; TEIXEIRA, L. F. H. de S. de B.; GOMES, C. F. S.; SANTOS, M. dos | *Finanças em períodos de crise: aplicação do método SAPEVO-M para composição de portfólios de investimentos*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — UFF / CASNAV / IME — **matriz de decisão do artigo** |
+| `cenarios_va` | automotivo | LI, S.; ZHOU, R.; HUANG, H. | *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 · [DOI](https://doi.org/10.1007/s42154-024-00344-6) |
+| `impressora_3d_energia` | manufatura | OLIVEIRA, V. A. R. de; ALVARADO SILVA, C. A.; OLIVEIRA, G. C. R. de; TAJIMA, F. M.; FARIA NETO, A. dos R.; SALOMON, V. A. P.; GUIDI, E. S. | *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI International Multi-Conference, Cidade do México, 2025 — UNESP / Universidad César Vallejo · [DOI](https://doi.org/10.18687/LACCEI2025.1.1.1193) |
+| `impressoras_juridico` | operações | OLIVEIRA, N. C.; OLIVEIRA, P. F. C. de; GOMES, C. F. S.; SANTOS, M. dos | *Aplicação do método AHP TOPSIS 2N como apoio à tomada de decisão: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias* — UNIGRANRIO / UFF / IME |
+| `fundos_hedge` | financeiro | SILVA, F. P. da; RIBEIRO, C. de O. | *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — Escola Politécnica da USP |
+| `modelos_previsao` | TI | SHAH, S. | *Comparison of Stochastic Forecasting Models*. Stochastic Differential Equations Course Project, Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério sobre eles é deste projeto |
+| `policultivo_rj` | agronegócio | PENEDO, B. | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos em Ambiente Controlado (RJ)*. Relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
+| `parafusadeiras_domesticas` | consumo | COMPROU AVALIOU (canal) | *As 5 Melhores Parafusadeira De 2025*, 14/05/2024 — especificações extraídas da narração · [vídeo](https://youtu.be/pgdqVYEjZtk) |
+| `parafusadeiras_profissionais` | manufatura | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal) | *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo · [vídeo](https://youtube.com/shorts/9SIs3agoZKc) |
+| `crowdfunding_startups` | corporativo | SKARE, M.; GAVUROVA, B.; POLISHCHUK, V. | *A decision-making support model for financing start-up projects by venture capital funds on a crowdfunding platform*. Journal of Business Research, v.158, 113719, 2023 — **critérios e escalas do artigo** · [DOI](https://doi.org/10.1016/j.jbusres.2023.113719) |
 
 ---
 
@@ -313,10 +315,10 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ As nove escolas de decisão — e por que nove
+## ⚖️ As dez escolas de decisão — e por que dez
 
 > [!IMPORTANT]
-> **Cada método é uma teoria diferente sobre o que significa "melhor".** Usar um só é escolher a resposta junto com a pergunta. Rodamos os nove porque a **concordância entre teorias independentes** é a evidência mais forte que um problema de decisão admite.
+> **Cada método é uma teoria diferente sobre o que significa "melhor".** Usar um só é escolher a resposta junto com a pergunta. Rodamos os dez porque a **concordância entre teorias independentes** é a evidência mais forte que um problema de decisão admite.
 
 <div align="center">
 
@@ -331,8 +333,12 @@ python3 gerar_graficos.py --workers 6
 | **VIKOR** | compromisso | utilidade do grupo × arrependimento máximo | quando **compensar é inaceitável** | Opricovic (1979); Opricovic & Tzeng (2002-07) |
 | **TODIM** | Teoria dos Prospectos | perda dói mais que ganho equivalente | decisor avesso a perda — **todos são** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | ordinal multidecisor | julgamento ordinal de vários decisores | **comitê que não concorda entre si** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
+| **TOPSIS Fuzzy** | Fuzzy | que o dado tem uma FAIXA, não um ponto | a medição é imprecisa e você quer saber se o ranking sobrevive a isso | Zadeh (1965); Chen (2000) |
 
 </div>
+
+> [!NOTE]
+> O **TOPSIS Fuzzy** não é o AHP-TOPSIS com ruído: além dos números triangulares, ele troca a normalização (linear em vez de vetorial) e a solução ideal (absoluta em vez de relativa). **Divergir do AHP-TOPSIS 2n é o comportamento esperado**, e mede o quanto o ranking depende dessas escolhas. O **AHP Fuzzy** (Buckley) entra como terceira fonte de peso, ao lado do DEMATEL e do AHP: ele recebe o mesmo julgamento par a par, mas carrega a imprecisão até o fim — com espalhamento uniforme o valor central coincide com o do AHP, e o que ele acrescenta é a **faixa**, que responde se a ordem de prioridade sobrevive à imprecisão do próprio decisor.
 
 <details>
 <summary><b>Por que estes três merecem atenção especial</b></summary>
@@ -353,7 +359,7 @@ Todos os outros métodos exigem um vetor de pesos. **De onde ele vem quando há 
 ### O motor de consenso
 
 ```
-DEMATEL ──► pesos por influência ──► 9 métodos ──► consenso de Borda ──► vencedor
+DEMATEL ──► pesos por influência ──► 10 métodos ──► consenso de Borda ──► vencedor
                                                     │
                         2.000 universos de Dirichlet ─────────────────┘
                                     ▼
@@ -393,7 +399,7 @@ python3 exportar_rust.py
 
 ## 🚀 Performance: 26× mais rápido, mesma resposta
 
-A análise de robustez roda 2.000 universos × 9 métodos. A implementação ingênua levava **42 segundos** por caso.
+A análise de robustez roda 2.000 universos × 10 métodos. A implementação ingênua levava **42 segundos** por caso.
 
 <div align="center">
 
@@ -407,7 +413,7 @@ A análise de robustez roda 2.000 universos × 9 métodos. A implementação ing
 
 > **A otimização que mais rendeu não foi paralelismo nem JIT.** Foi perceber que quatro dos nove métodos são **lineares no vetor de pesos** — o que permite pré-computar tensores e reduzir cada universo a um produto matriz-vetor. **Álgebra antes de infraestrutura.**
 
-E o resultado é **bit a bit idêntico** ao caminho lento — 100 universos × 9 métodos verificados a cada execução da suíte. Otimização que muda resultado é bug, não ganho.
+E o resultado é **bit a bit idêntico** ao caminho lento — 100 universos × 10 métodos verificados a cada execução da suíte. Otimização que muda resultado é bug, não ganho.
 
 <details>
 <summary><b>Política de execução do projeto</b></summary>

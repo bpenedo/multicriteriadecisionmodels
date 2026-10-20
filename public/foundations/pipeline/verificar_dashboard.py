@@ -26,7 +26,9 @@ E-mail: profbruanbima@gmail.com
 """
 import argparse
 import json
+import os
 import re
+from datetime import datetime
 import sqlite3
 import subprocess
 import sys
@@ -37,7 +39,12 @@ from config import ENCODING, EVIDENCE_DIR
 # Acima disto o navegador começa a engasgar — medido no #BUG-028, em que o índice
 # carregava ~16 mil linhas e a página não abria.
 LIMIAR_LINHAS_POR_PAGINA = 3000
-LOG_VITE = Path("/tmp/evidence.log")
+# Mesmo caminho que evidence/subir_servidor.sh grava. Antes era "/tmp/evidence.log"
+# fixo, enquanto o servidor passou a gravar em outro lugar — e o passo [2] seguiu
+# lendo um log de uma subida ANTIGA e aprovando "0 erros". Ver bugs.md #BUG-036.
+LOG_VITE = Path(os.environ.get("MCDM_EVIDENCE_LOG",
+                               str(Path(os.environ.get("TMPDIR", "/tmp")) / "mcdm_evidence.log")))
+SESSAO_SCREEN = "mcdm_evidence"
 
 PROBLEMAS = []
 
@@ -81,7 +88,23 @@ def verificar_compilacao():
     if not LOG_VITE.exists():
         falhar(f"log não encontrado: {LOG_VITE}")
         return
+    # O log tem de ser DESTA subida. subir_servidor.sh recria o arquivo a cada início,
+    # então um log mais antigo que a sessão screen do servidor é resto de outra
+    # execução — e "0 erros" nele não diz nada sobre o servidor que está no ar.
+    ls = subprocess.run(["screen", "-ls"], capture_output=True, text=True).stdout
+    m = re.search(rf"\d+\.{SESSAO_SCREEN}\s+\((\d\d/\d\d/\d{{4}} \d\d:\d\d:\d\d [AP]M)\)", ls)
+    if not m:
+        falhar(f"sessão screen '{SESSAO_SCREEN}' não encontrada — suba com evidence/subir_servidor.sh")
+        return
+    inicio = datetime.strptime(m.group(1), "%m/%d/%Y %I:%M:%S %p").timestamp()
+    if LOG_VITE.stat().st_mtime + 5 < inicio:
+        falhar(f"log {LOG_VITE} é anterior à sessão do servidor — é de outra execução")
+        return
     texto = LOG_VITE.read_text(encoding=ENCODING, errors="replace")
+    # Log sem nenhuma linha do servidor não prova ausência de erro — prova ausência de log.
+    if not re.search(r"localhost:\d+|ready in|Evaluated sources", texto):
+        falhar(f"log {LOG_VITE} não contém saída do servidor — '0 erros' seria vazio")
+        return
     padrao = re.compile(r"Internal server error|Pre-transform error|Expected valid tag",
                         re.I)
     achados = padrao.findall(texto)

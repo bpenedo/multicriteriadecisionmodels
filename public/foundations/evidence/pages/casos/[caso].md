@@ -131,29 +131,49 @@ select * from mcdm.bcg_resumo where id_caso = '${params.caso}'
 
 <BarChart data={relacao_c} x=origem_rotulo y=intensidade series=destino_rotulo type=stacked title="Influência total exercida por cada critério, decomposta por destino" yAxisTitle="Intensidade acumulada" swapXY=true/>
 
-### Duas famílias de peso sobre o mesmo problema
+### Três famílias de peso sobre o mesmo problema
 
 > O **AHP** pergunta, par a par, quanto um critério importa mais que outro. O **DEMATEL**
 > mede influência sistêmica. **Onde divergem está o efeito de segunda ordem subestimado.**
+>
+> O **AHP Fuzzy** (Buckley, 1985) recebe o mesmo julgamento do AHP, mas não descarta a
+> imprecisão: quem disse "5" quis dizer algo entre 4 e 6, e essa faixa é carregada até o
+> fim. As colunas `l` e `u` são os limites do número triangular de cada peso.
 
-<img src="/mc/{params.caso}/pesos_dematel_ahp.png" alt="DEMATEL versus AHP" style="width:100%;border-radius:8px;"/>
+<img src="/mc/{params.caso}/pesos_dematel_ahp.png" alt="DEMATEL, AHP e AHP Fuzzy" style="width:100%;border-radius:8px;"/>
 
 <DataTable data={pesos_c} rows=all rowShading=true>
   <Column id=rotulo title="Critério"/>
   <Column id=papel title="Papel"/>
   <Column id=peso_dematel title="DEMATEL" fmt=pct2/>
   <Column id=peso_ahp title="AHP" fmt=pct2/>
-  <Column id=divergencia title="Divergência" fmt=pct2 contentType=colorscale/>
+  <Column id=peso_ahp_fuzzy title="AHP Fuzzy" fmt=pct2/>
+  <Column id=fuzzy_l title="l" fmt=pct2/>
+  <Column id=fuzzy_u title="u" fmt=pct2/>
+  <Column id=divergencia title="DEMATEL - AHP" fmt=pct2 contentType=colorscale/>
   <Column id=cr title="AHP CR" fmt=num4/>
 </DataTable>
 
+> [!NOTE]
+> O AHP Fuzzy **achata os extremos** em relacao ao AHP crisp: a media geometrica com
+> incerteza puxa os pesos para o centro. Um criterio que o AHP coloca em 50% costuma cair,
+> e um que ele deixa em 0,4% costuma subir. Isso nao e correcao de erro, e o que acontece
+> quando se admite que o julgamento tinha uma faixa. Se a ORDEM dos pesos muda entre os
+> dois, a prioridade declarada nao sobrevive a imprecisao do proprio decisor, e isso e
+> informacao para o comite.
+
 ---
 
-## ⚖️ Nove escolas de decisão sobre o mesmo problema
+## ⚖️ Dez escolas de decisão sobre o mesmo problema
 
-> Cada método é uma **teoria diferente sobre o que significa "melhor"**. Quando as nove
+> Cada método é uma **teoria diferente sobre o que significa "melhor"**. Quando as dez
 > concordam, a escolha não é artefato de método. **Quando divergem, a divergência é o achado** —
 > e costuma apontar exatamente onde está o trade-off real.
+>
+> O **TOPSIS Fuzzy** (Chen, 2000) merece leitura à parte: ele não é "o AHP-TOPSIS com ruído".
+> Além dos números triangulares, troca a normalização (linear em vez de vetorial) e a solução
+> ideal (absoluta em vez de relativa). Divergir do AHP-TOPSIS 2n é o comportamento **esperado**,
+> e mede o quanto o ranking depende dessas escolhas.
 
 <img src="/mc/{params.caso}/mapa_metodos.png" alt="Posição por escola de decisão" style="width:100%;border-radius:8px;"/>
 

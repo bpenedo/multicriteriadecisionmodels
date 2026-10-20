@@ -14,9 +14,9 @@ E-mail: profbruanbima@gmail.com
 
 ### स्प्रेडशीट से चुनना बंद कीजिए। प्रमाण से निर्णय लेना शुरू कीजिए।
 
-**निर्णय की नौ विचारधाराएँ। एक विजेता। और — पहली बार — इस बात की प्रायिकता कि वह विजेता सही है।**
+**निर्णय की दस विचारधाराएँ। एक विजेता। और — पहली बार — इस बात की प्रायिकता कि वह विजेता सही है।**
 
-[![MCDM](https://img.shields.io/badge/MCDM_विधियाँ-9-2563eb?style=for-the-badge)](#-निर्णय-की-नौ-विचारधाराएँ--और-नौ-ही-क्यों)
+[![MCDM](https://img.shields.io/badge/MCDM_विधियाँ-10-2563eb?style=for-the-badge)](#-निर्णय-की-नौ-विचारधाराएँ--और-नौ-ही-क्यों)
 [![Engines](https://img.shields.io/badge/इंजन-Python_+_Rust-c2410c?style=for-the-badge)](#-दो-स्वतंत्र-इंजन-प्रति-सत्यापन)
 [![i18n](https://img.shields.io/badge/भाषाएँ-12-16a34a?style=for-the-badge)](#-12-भाषाएँ--sdl-trados-अनुवाद-स्मृति)
 [![Robustez](https://img.shields.io/badge/अनुरूपित_ब्रह्मांड-2.000-8f3d56?style=for-the-badge)](#-वह-प्रश्न-जिसका-उत्तर-कोई-नहीं-देता-यदि-भार-गलत-हों-तो)
@@ -65,9 +65,9 @@ E-mail: profbruanbima@gmail.com
 
 ---
 
-## 💊 समाधान: नौ विचारधाराएँ, एक सर्वसम्मति, और एक विश्वास अंतराल
+## 💊 समाधान: दस विचारधाराएँ, एक सर्वसम्मति, और एक विश्वास अंतराल
 
-**MCDM Studio उसी समस्या पर **नौ स्थापित बहु-मानदंड विधियाँ** चलाता है, उनके बीच की **सर्वसम्मति** से विजेता निकालता है, और फिर वही एक काम करता है जो वास्तव में मायने रखता है:**
+**MCDM Studio उसी समस्या पर **दस स्थापित बहु-मानदंड विधियाँ** चलाता है, उनके बीच की **सर्वसम्मति** से विजेता निकालता है, और फिर वही एक काम करता है जो वास्तव में मायने रखता है:**
 
 > ### 🎲 यह भारों को **2,000 बार** विक्षुब्ध करता है और गिनता है कि कितने ब्रह्मांडों में विजेता जीतता ही रहता है।
 
@@ -98,13 +98,13 @@ E-mail: profbruanbima@gmail.com
 
 > ऊपर के मामले में **प्रौद्योगिकी हस्तांतरण** और **रडार अभिलक्षण** कारण हैं: इन्हें हिलाने से पूरी प्रणाली हिलती है। **बेड़े की उपलब्धता** प्रभाव है — यह थर्मामीटर है, लीवर नहीं। जो निविदा उपलब्धता को अंक देती है और प्रौद्योगिकी हस्तांतरण की उपेक्षा करती है, वह बुखार माप रही है और संक्रमण को अनदेखा कर रही है।
 
-### 2. एक ही समस्या पर नौ विचारधाराएँ
+### 2. एक ही समस्या पर दस विचारधाराएँ
 
 <div align="center"><img src="docs/telas/veiculo_eletrico/mapa_metodos.png" alt="Métodos" width="900"/></div>
 
 **यह जिस पीड़ा को हल करता है:** हर MCDM विधि में यह सिद्धांत अंतर्निहित होता है कि “बेहतर” का अर्थ क्या है — और वही विजेता बदल देता है। एक विधि चुनकर परिणाम प्रस्तुत करना, परिणाम को ही चुन लेना है।
 
-हम नौ की नौ चलाते हैं। जब वे सहमत होती हैं, चयन **विधि की कृति नहीं** होता। जब वे भिन्न होती हैं, **वह भिन्नता ही खोज है**।
+हम दस की दस चलाते हैं। जब वे सहमत होती हैं, चयन **विधि की कृति नहीं** होता। जब वे भिन्न होती हैं, **वह भिन्नता ही खोज है**।
 
 > ऊपर: **प्लग-इन हाइब्रिड** सात विधियों में प्रथम है, पर **ELECTRE I में छठा**। यह शोर नहीं — सूचना है। ELECTRE I *निषेधाधिकार* की अनुमति देता है: वह कहता है कि किसी एक मानदंड पर हाइब्रिड का दोष इतना गंभीर है कि वह बाहर हो जाए, भले ही बाकी सब में कितना ही अच्छा हो। **यही वह प्रश्न है जिसे आप समिति तक ले जाना चाहते हैं।**
 
@@ -155,45 +155,46 @@ E-mail: profbruanbima@gmail.com
 python3 pipeline.py --listar
 ```
 
-| # | प्रकरण | क्षेत्र | विकल्प | मानदंड | निर्णय |
-|--:|---|---|--:|--:|---|
-| 1 | `smartphone` | उपभोक्ता | 6 | 8 | संभावित 85% |
-| 2 | `veiculo_eletrico` | मोटर वाहन | 7 | 8 | सुदृढ़ 96% |
-| 3 | `caca_multifuncao` | रक्षा | 6 | 9 | सुदृढ़ 100% |
-| 4 | `blindado` | रक्षा | 5 | 8 | सुदृढ़ 90% |
-| 5 | `portfolio_startup` | कॉर्पोरेट | 7 | 9 | सुदृढ़ 97% |
-| 6 | `estacao_trabalho` | आईटी | 6 | 8 | सुदृढ़ 98% |
-| 7 | `carros_eletricos` | मोटर वाहन | 38 | 9 | सुदृढ़ 99% |
-| 8 | `smartphones_2026` | उपभोक्ता | 38 | 9 | संभावित 65% |
-| 9 | `tablets` | उपभोक्ता | 34 | 8 | संभावित 62% |
-| 10 | `smartwatches` | उपभोक्ता | 31 | 8 | संभावित 79% |
-| 11 | `notebooks` | आईटी | 32 | 8 | संभावित 76% |
-| 12 | `maquinario_agricola` | कृषि व्यवसाय | 35 | 8 | सुदृढ़ 100% |
-| 13 | `sbc_iot` | आईटी | 33 | 8 | सुदृढ़ 100% |
-| 14 | `mineracao_asic` | अवसंरचना | 31 | 8 | अस्थिर 51% |
-| 15 | `minipcs` | आईटी | 10 | 8 | सुदृढ़ 96% |
-| 16 | `impressoras_3d_miniaturas` | विनिर्माण | 30 | 9 | अस्थिर 35% |
-| 17 | `impressoras_3d_producao` | विनिर्माण | 30 | 9 | अस्थिर 45% |
-| 18 | `plotters_formato` | विनिर्माण | 24 | 9 | संभावित 86% |
-| 19 | `impressoras_3d_miniaturas_triadas` | विनिर्माण | 13 | 9 | सुदृढ़ 100% |
-| 20 | `acoes_b3` 📚 | वित्तीय | 20 | 7 | अस्थिर 52% |
-| 21 | `fundos_imobiliarios` 📚 | वित्तीय | 18 | 8 | संभावित 61% |
-| 22 | `fintech` 📚 | वित्तीय | 16 | 8 | संभावित 78% |
-| 23 | `avaliacao_imoveis` 📚 | रियल एस्टेट | 16 | 8 | सुदृढ़ 96% |
-| 24 | `ordens_servico` 📚 | संचालन | 18 | 8 | सुदृढ़ 92% |
-| 25 | `cloud_providers` 📚 | आईटी | 14 | 8 | सुदृढ़ 100% |
-| 26 | `venture_capital` 📚 | कॉर्पोरेट | 16 | 8 | सुदृढ़ 97% |
-| 27 | `instrutores` 📚 | कॉर्पोरेट | 15 | 8 | सुदृढ़ 100% |
-| 28 | `cripto_portfolio` 📚 | वित्तीय | 9 | 7 | सुदृढ़ 100% |
-| 29 | `portfolio_crise` 📚 | वित्तीय | 8 | 4 | संभावित 71% |
-| 30 | `cenarios_va` 📚 | मोटर वाहन | 16 | 9 | संभावित 75% |
-| 31 | `impressora_3d_energia` 📚 | विनिर्माण | 12 | 7 | संभावित 80% |
-| 32 | `impressoras_juridico` 📚 | संचालन | 12 | 4 | सुदृढ़ 100% |
-| 33 | `fundos_hedge` 📚 | वित्तीय | 20 | 8 | सुदृढ़ 98% |
-| 34 | `modelos_previsao` 📚 | आईटी | 7 | 8 | संभावित 74% |
-| 35 | `policultivo_rj` 📚 | कृषि व्यवसाय | 8 | 8 | सुदृढ़ 100% |
-| 36 | `parafusadeiras_domesticas` 📚 | उपभोक्ता | 14 | 8 | संभावित 86% |
-| 37 | `parafusadeiras_profissionais` 📚 | विनिर्माण | 12 | 8 | सुदृढ़ 100% |
+| # | प्रकरण | क्षेत्र | विकल्प | मानदंड | निर्णय | लेखकत्व / स्रोत |
+|--:|---|---|--:|--:|---|---|
+| 1 | `smartphone` | उपभोक्ता | 6 | 8 | संभावित 63% | स्वयं का प्रतिरूपण |
+| 2 | `veiculo_eletrico` | मोटर वाहन | 7 | 8 | सुदृढ़ 99% | स्वयं का प्रतिरूपण |
+| 3 | `caca_multifuncao` | रक्षा | 6 | 9 | सुदृढ़ 100% | स्वयं का प्रतिरूपण |
+| 4 | `blindado` | रक्षा | 5 | 8 | सुदृढ़ 93% | स्वयं का प्रतिरूपण |
+| 5 | `portfolio_startup` | कॉर्पोरेट | 7 | 9 | सुदृढ़ 96% | स्वयं का प्रतिरूपण |
+| 6 | `estacao_trabalho` | आईटी | 6 | 8 | सुदृढ़ 98% | स्वयं का प्रतिरूपण |
+| 7 | `carros_eletricos` | मोटर वाहन | 38 | 9 | सुदृढ़ 96% | स्वयं का प्रतिरूपण |
+| 8 | `smartphones_2026` | उपभोक्ता | 38 | 9 | संभावित 73% | स्वयं का प्रतिरूपण |
+| 9 | `tablets` | उपभोक्ता | 34 | 8 | संभावित 67% | स्वयं का प्रतिरूपण |
+| 10 | `smartwatches` | उपभोक्ता | 31 | 8 | संभावित 84% | स्वयं का प्रतिरूपण |
+| 11 | `notebooks` | आईटी | 32 | 8 | संभावित 83% | स्वयं का प्रतिरूपण |
+| 12 | `maquinario_agricola` | कृषि व्यवसाय | 35 | 8 | सुदृढ़ 100% | स्वयं का प्रतिरूपण |
+| 13 | `sbc_iot` | आईटी | 33 | 8 | सुदृढ़ 100% | स्वयं का प्रतिरूपण |
+| 14 | `mineracao_asic` | अवसंरचना | 31 | 8 | अस्थिर 50% | स्वयं का प्रतिरूपण |
+| 15 | `minipcs` | आईटी | 10 | 8 | सुदृढ़ 91% | स्वयं का प्रतिरूपण |
+| 16 | `impressoras_3d_miniaturas` | विनिर्माण | 30 | 9 | अस्थिर 48% | स्वयं का प्रतिरूपण |
+| 17 | `impressoras_3d_producao` | विनिर्माण | 30 | 9 | अस्थिर 58% | स्वयं का प्रतिरूपण |
+| 18 | `plotters_formato` | विनिर्माण | 24 | 9 | सुदृढ़ 96% | स्वयं का प्रतिरूपण |
+| 19 | `impressoras_3d_miniaturas_triadas` | विनिर्माण | 13 | 9 | सुदृढ़ 100% | स्वयं का प्रतिरूपण |
+| 20 | `acoes_b3` 📚 | वित्तीय | 20 | 7 | अस्थिर 39% | COSTA, L. S. da · VÁSQUEZ, J. A.; ESCOBAR, J. W.; MANOTAS, D. F. · [DOI](https://doi.org/10.3390/risks10010004) |
+| 21 | `fundos_imobiliarios` 📚 | वित्तीय | 18 | 8 | संभावित 85% | SANTOS, V. V. dos (orient. ALMEIDA FILHO, A. T. de) |
+| 22 | `fintech` 📚 | वित्तीय | 16 | 8 | संभावित 67% | WIBOWO, S.; GRANDHI, L.; GRANDHI, S.; WELLS, M. · [DOI](https://doi.org/10.3390/math10020225) |
+| 23 | `avaliacao_imoveis` 📚 | रियल एस्टेट | 16 | 8 | सुदृढ़ 94% | DUARTE, D. C. de O. · MARQUES, J. P. M. |
+| 24 | `ordens_servico` 📚 | संचालन | 18 | 8 | सुदृढ़ 97% | ALENCAR, L. G. de; TAVARES, F. R. M.; MENDONÇA, F. J. S. de F.; DUARTE, A. K. G. |
+| 25 | `cloud_providers` 📚 | आईटी | 14 | 8 | सुदृढ़ 100% | SOLOMON, T. |
+| 26 | `venture_capital` 📚 | कॉर्पोरेट | 16 | 8 | सुदृढ़ 96% | BEIM, G.; LÉVESQUE, M. · DHOCHAK, M.; DOLIYA, P. · AFFUL-DADZIE, E.; AFFUL-DADZIE, A.; OPLATKOVÁ, Z. K. · [DOI](https://doi.org/10.1002/mcda.1703) |
+| 27 | `instrutores` 📚 | कॉर्पोरेट | 15 | 8 | सुदृढ़ 100% | SILVA, C. E. J. da; SALLES-NETO, L. L. de; SANTOS, M. dos |
+| 28 | `cripto_portfolio` 📚 | वित्तीय | 9 | 7 | सुदृढ़ 100% | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. · [DOI](https://doi.org/10.3390/math9141677) |
+| 29 | `portfolio_crise` 📚 | वित्तीय | 8 | 4 | संभावित 77% | COSTA, I. P. de A.; MAÊDA, S. M. do N.; TEIXEIRA, L. F. H. de S. de B.; GOMES, C. F. S.; SANTOS, M. dos |
+| 30 | `cenarios_va` 📚 | मोटर वाहन | 16 | 9 | संभावित 73% | LI, S.; ZHOU, R.; HUANG, H. · [DOI](https://doi.org/10.1007/s42154-024-00344-6) |
+| 31 | `impressora_3d_energia` 📚 | विनिर्माण | 12 | 7 | संभावित 69% | OLIVEIRA, V. A. R. de; ALVARADO SILVA, C. A.; OLIVEIRA, G. C. R. de; TAJIMA, F. M.; FARIA NETO, A. dos R.; SALOMON, V. A. P.; GUIDI, E. S. · [DOI](https://doi.org/10.18687/LACCEI2025.1.1.1193) |
+| 32 | `impressoras_juridico` 📚 | संचालन | 12 | 4 | सुदृढ़ 100% | OLIVEIRA, N. C.; OLIVEIRA, P. F. C. de; GOMES, C. F. S.; SANTOS, M. dos |
+| 33 | `fundos_hedge` 📚 | वित्तीय | 20 | 8 | सुदृढ़ 94% | SILVA, F. P. da; RIBEIRO, C. de O. |
+| 34 | `modelos_previsao` 📚 | आईटी | 7 | 8 | सुदृढ़ 95% | SHAH, S. |
+| 35 | `policultivo_rj` 📚 | कृषि व्यवसाय | 8 | 8 | संभावित 86% | PENEDO, B. |
+| 36 | `parafusadeiras_domesticas` 📚 | उपभोक्ता | 14 | 8 | संभावित 70% | COMPROU AVALIOU (canal) · [vídeo](https://youtu.be/pgdqVYEjZtk) |
+| 37 | `parafusadeiras_profissionais` 📚 | विनिर्माण | 12 | 8 | सुदृढ़ 100% | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal) · [vídeo](https://youtube.com/shorts/9SIs3agoZKc) |
+| 38 | `crowdfunding_startups` 📚 | कॉर्पोरेट | 16 | 9 | सुदृढ़ 93% | SKARE, M.; GAVUROVA, B.; POLISHCHUK, V. · [DOI](https://doi.org/10.1016/j.jbusres.2023.113719) |
 
 > [!NOTE]
 > प्रकरणों के आव्यूह **उदाहरणात्मक** हैं — विधि प्रदर्शित करने के लिए सार्वजनिक और प्रशंसनीय परिमाण-कोटियाँ। जो **उदाहरणात्मक नहीं** है वह है **मॉडलिंग**: मानदंड, दिशाएँ, DEMATEL कारण आव्यूह और Saaty आव्यूह। मूल्य वहीं बसता है। **संख्याओं को अपने कोटेशन, अपनी निविदा या अपने प्रयोगशाला परीक्षण से बदलिए** — इंजन वही है; डेटा आपका है।
@@ -204,28 +205,29 @@ python3 pipeline.py --listar
 ### 📚 साहित्य से व्युत्पन्न केस स्टडी
 
 > [!IMPORTANT]
-> आठ केस के **मानदंड और कारण-संरचना सहकर्मी-समीक्षित शोधपत्रों और शोध-प्रबंधों से ली गई हैं** — शेयर, रियल-एस्टेट फंड, फिनटेक, संपत्ति मूल्यांकन, अनुरक्षण कार्य-आदेश, क्लाउड प्रदाता, वेंचर कैपिटल और प्रशिक्षक क्रमांकन। मानदंड गढ़े नहीं गए: वे मूल पाठ से आए हैं, और प्रत्येक कार्य का कर्तृत्व संबंधित मॉड्यूल के शीर्ष में सुरक्षित है। **संख्यात्मक आव्यूह** हमारे अपने हैं — मूल कार्यों का कोई डेटा पुनरुत्पादित नहीं किया गया।
+> नीचे दी गई तालिका के केसों के **मानदंड और कारण-संरचना सूचीबद्ध कार्यों से ली गई हैं** — सहकर्मी-समीक्षित शोधपत्र, शोध-प्रबंध, सम्मेलन कार्यवाहियाँ और तकनीकी रिपोर्ट। मानदंड गढ़े नहीं गए: वे मूल पाठ से आए हैं, और लेखकत्व यहाँ तथा संबंधित मॉड्यूल के शीर्ष में सुरक्षित है। **संख्यात्मक आव्यूह** हमारी अपनी रचनाएँ हैं — मूल कार्यों का कोई डेटा पुनरुत्पादित नहीं किया गया। जहाँ अनुक्रमित DOI है, लिंक कार्य तक ले जाता है; जहाँ नहीं है, पूर्ण पाठ्य संदर्भ उसे खोजने के लिए पर्याप्त है।
 
-| प्रकरण | क्षेत्र | संदर्भ एवं कर्तृत्व |
-|---|---|---|
-| `acoes_b3` | वित्तीय | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
-| `fundos_imobiliarios` | वित्तीय | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
-| `fintech` | वित्तीय | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
-| `avaliacao_imoveis` | रियल एस्टेट | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
-| `ordens_servico` | संचालन | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
-| `cloud_providers` | आईटी | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
-| `venture_capital` | कॉर्पोरेट | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
-| `instrutores` | कॉर्पोरेट | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
-| `cripto_portfolio` | वित्तीय | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, 9(14):1677, 2021 — **pesos AHP do artigo** |
-| `portfolio_crise` | वित्तीय | COSTA, I. P. A.; MAÊDA, S. M. N.; TEIXEIRA, L. F. H. S. B.; GOMES, C. F. S.; SANTOS, M. *Finanças em períodos de crise: aplicação do método SAPEVO-M*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — **matriz de decisão do artigo** |
-| `cenarios_va` | मोटर वाहन | LI, S.; ZHOU, R.; HUANG, H. *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 |
-| `impressora_3d_energia` | विनिर्माण | OLIVEIRA, V. A. R. et al. *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI, Cidade do México, 2025 — UNESP |
-| `impressoras_juridico` | संचालन | OLIVEIRA, N. C.; OLIVEIRA, P. F. C.; GOMES, C. F. S.; SANTOS, M. *Aplicação do método AHP TOPSIS 2N: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias*, 2019 |
-| `fundos_hedge` | वित्तीय | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
-| `modelos_previsao` | आईटी | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
-| `policultivo_rj` | कृषि व्यवसाय | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
-| `parafusadeiras_domesticas` | उपभोक्ता | COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! // Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — especificações extraídas da narração |
-| `parafusadeiras_profissionais` | विनिर्माण | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo |
+| प्रकरण | क्षेत्र | लेखक | संदर्भ |
+|---|---|---|---|
+| `acoes_b3` | वित्तीय | COSTA, L. S. da · VÁSQUEZ, J. A.; ESCOBAR, J. W.; MANOTAS, D. F. | *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS* (COSTA, UERJ) · *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks, v.10, n.1, 4, 2022 (Universidad del Valle) · [DOI](https://doi.org/10.3390/risks10010004) |
+| `fundos_imobiliarios` | वित्तीय | SANTOS, V. V. dos (orient. ALMEIDA FILHO, A. T. de) | *Avaliação do método Random Forest para auxílio à seleção de fundos de investimento imobiliário listados na Bolsa de Valores*. Trabalho de Graduação, Engenharia da Computação, CIn/UFPE, set. 2023 |
+| `fintech` | वित्तीय | WIBOWO, S.; GRANDHI, L.; GRANDHI, S.; WELLS, M. | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects*. Mathematics, v.10, n.2, 225, 2022 — CQUniversity, Austrália · [DOI](https://doi.org/10.3390/math10020225) |
+| `avaliacao_imoveis` | रियल एस्टेट | DUARTE, D. C. de O. · MARQUES, J. P. M. | *Análise multicritério e geoestatística aplicadas na avaliação em massa de imóveis urbanos*. Tese, UFV, 2019 · *As formas de avaliar imóvel em leilão judicial*. Universidade São Judas Tadeu, 2023 |
+| `ordens_servico` | संचालन | ALENCAR, L. G. de; TAVARES, F. R. M.; MENDONÇA, F. J. S. de F.; DUARTE, A. K. G. | *Priorização de ordens de serviço aplicando métodos de tomada de decisão: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, p.2763-2784, 2022 — URCA, Ceará |
+| `cloud_providers` | आईटी | SOLOMON, T. | *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model for Provisioning of Enterprise IT Infrastructure in the Cloud*. Praxis (Doctor of Engineering), The George Washington University, 2017 |
+| `venture_capital` | कॉर्पोरेट | BEIM, G.; LÉVESQUE, M. · DHOCHAK, M.; DOLIYA, P. · AFFUL-DADZIE, E.; AFFUL-DADZIE, A.; OPLATKOVÁ, Z. K. | *Selecting projects for venture capital funding: a multiple criteria decision approach* (Case Western Reserve University) · *Valuation of a startup: moving towards strategic approaches*, J. Multi-Criteria Decision Analysis, 2019 · *Assessing commercial viability of technology start-up businesses in a government venture capital under intuitionistic fuzzy environment*, Int. J. Fuzzy Systems, 2016 · [DOI](https://doi.org/10.1002/mcda.1703) · [DOI](https://doi.org/10.1007/s40815-016-0141-9) |
+| `instrutores` | कॉर्पोरेट | SILVA, C. E. J. da; SALLES-NETO, L. L. de; SANTOS, M. dos | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, Juiz de Fora, 2022 — ITA / UNIFESP / IME |
+| `cripto_portfolio` | वित्तीय | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. | *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, v.9, n.14, 1677, 2021 — University of Split, Croácia — **pesos AHP do artigo** · [DOI](https://doi.org/10.3390/math9141677) |
+| `portfolio_crise` | वित्तीय | COSTA, I. P. de A.; MAÊDA, S. M. do N.; TEIXEIRA, L. F. H. de S. de B.; GOMES, C. F. S.; SANTOS, M. dos | *Finanças em períodos de crise: aplicação do método SAPEVO-M para composição de portfólios de investimentos*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — UFF / CASNAV / IME — **matriz de decisão do artigo** |
+| `cenarios_va` | मोटर वाहन | LI, S.; ZHOU, R.; HUANG, H. | *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 · [DOI](https://doi.org/10.1007/s42154-024-00344-6) |
+| `impressora_3d_energia` | विनिर्माण | OLIVEIRA, V. A. R. de; ALVARADO SILVA, C. A.; OLIVEIRA, G. C. R. de; TAJIMA, F. M.; FARIA NETO, A. dos R.; SALOMON, V. A. P.; GUIDI, E. S. | *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI International Multi-Conference, Cidade do México, 2025 — UNESP / Universidad César Vallejo · [DOI](https://doi.org/10.18687/LACCEI2025.1.1.1193) |
+| `impressoras_juridico` | संचालन | OLIVEIRA, N. C.; OLIVEIRA, P. F. C. de; GOMES, C. F. S.; SANTOS, M. dos | *Aplicação do método AHP TOPSIS 2N como apoio à tomada de decisão: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias* — UNIGRANRIO / UFF / IME |
+| `fundos_hedge` | वित्तीय | SILVA, F. P. da; RIBEIRO, C. de O. | *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — Escola Politécnica da USP |
+| `modelos_previsao` | आईटी | SHAH, S. | *Comparison of Stochastic Forecasting Models*. Stochastic Differential Equations Course Project, Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério sobre eles é deste projeto |
+| `policultivo_rj` | कृषि व्यवसाय | PENEDO, B. | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos em Ambiente Controlado (RJ)*. Relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
+| `parafusadeiras_domesticas` | उपभोक्ता | COMPROU AVALIOU (canal) | *As 5 Melhores Parafusadeira De 2025*, 14/05/2024 — especificações extraídas da narração · [vídeo](https://youtu.be/pgdqVYEjZtk) |
+| `parafusadeiras_profissionais` | विनिर्माण | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal) | *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo · [vídeo](https://youtube.com/shorts/9SIs3agoZKc) |
+| `crowdfunding_startups` | कॉर्पोरेट | SKARE, M.; GAVUROVA, B.; POLISHCHUK, V. | *A decision-making support model for financing start-up projects by venture capital funds on a crowdfunding platform*. Journal of Business Research, v.158, 113719, 2023 — **critérios e escalas do artigo** · [DOI](https://doi.org/10.1016/j.jbusres.2023.113719) |
 
 ---
 
@@ -313,10 +315,10 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ निर्णय की नौ विचारधाराएँ — और नौ ही क्यों
+## ⚖️ निर्णय की दस विचारधाराएँ — और दस ही क्यों
 
 > [!IMPORTANT]
-> **प्रत्येक विधि इस बारे में एक भिन्न सिद्धांत है कि “बेहतर” का अर्थ क्या है।** केवल एक का उपयोग करना, प्रश्न के साथ ही उत्तर चुन लेना है। हम नौ की नौ चलाते हैं क्योंकि **स्वतंत्र सिद्धांतों के बीच सहमति** ही वह सबसे प्रबल प्रमाण है जिसे कोई निर्णय-समस्या स्वीकार कर सकती है।
+> **प्रत्येक विधि इस बारे में एक भिन्न सिद्धांत है कि “बेहतर” का अर्थ क्या है।** केवल एक का उपयोग करना, प्रश्न के साथ ही उत्तर चुन लेना है। हम दस की दस चलाते हैं क्योंकि **स्वतंत्र सिद्धांतों के बीच सहमति** ही वह सबसे प्रबल प्रमाण है जिसे कोई निर्णय-समस्या स्वीकार कर सकती है।
 
 <div align="center">
 
@@ -331,8 +333,12 @@ python3 gerar_graficos.py --workers 6
 | **VIKOR** | समझौता | समूह उपयोगिता × अधिकतम पश्चाताप | जब **प्रतिपूर्ति अस्वीकार्य हो** | Opricovic (1979); Opricovic & Tzeng (2002-07) |
 | **TODIM** | प्रॉस्पेक्ट सिद्धांत | हानि समतुल्य लाभ से अधिक पीड़ा देती है | हानि-विमुख निर्णयकर्ता — **सभी होते हैं** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | क्रमसूचक बहु-निर्णयकर्ता | कई निर्णयकर्ताओं का क्रमसूचक निर्णय | **वह समिति जो सहमत नहीं होती** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
+| **TOPSIS Fuzzy** | फ़ज़ी | कि आँकड़ा एक बिंदु नहीं, एक **परास** है | मापन अपरिशुद्ध है और आप जानना चाहते हैं कि रैंकिंग टिकती है या नहीं | Zadeh (1965); Chen (2000) |
 
 </div>
+
+> [!NOTE]
+> **फ़ज़ी TOPSIS** शोर मिला हुआ AHP-TOPSIS नहीं है: त्रिकोणीय संख्याओं के अलावा यह सामान्यीकरण (सदिश के बजाय रैखिक) और आदर्श हल (सापेक्ष के बजाय निरपेक्ष) भी बदलता है। **AHP-TOPSIS 2n से भिन्न होना अपेक्षित व्यवहार है**, और यह मापता है कि रैंकिंग उन चयनों पर कितनी निर्भर है। **फ़ज़ी AHP** (Buckley) DEMATEL और AHP के साथ तीसरे भार-स्रोत के रूप में जुड़ता है: वही युग्मवार निर्णय लेता है पर अनिश्चितता को अंत तक ले जाता है — एकसमान विस्तार में केंद्रीय मान AHP जैसा ही रहता है, और यह जो जोड़ता है वह **परास** है, जो बताती है कि प्राथमिकता-क्रम स्वयं निर्णायक की अनिश्चितता में टिकता है या नहीं।
 
 <details>
 <summary><b>ये तीन विशेष ध्यान क्यों माँगते हैं</b></summary>
@@ -353,7 +359,7 @@ Kahneman और Tversky के **प्रॉस्पेक्ट सिद्�
 ### सर्वसम्मति इंजन
 
 ```
-DEMATEL ──► प्रभाव आधारित भार ──► 9 विधियाँ ──► बोर्डा सर्वसम्मति ──► विजेता
+DEMATEL ──► प्रभाव आधारित भार ──► 10 विधियाँ ──► बोर्डा सर्वसम्मति ──► विजेता
                                                     │
                         2,000 डिरिक्ले ब्रह्मांड ─────────────────┘
                                     ▼
@@ -393,7 +399,7 @@ python3 exportar_rust.py
 
 ## 🚀 प्रदर्शन: 26× तेज़, वही उत्तर
 
-मजबूती विश्लेषण 2,000 ब्रह्मांड × 9 विधियाँ चलाता है। सरल कार्यान्वयन प्रति प्रकरण **42 सेकंड** लेता था।
+मजबूती विश्लेषण 2,000 ब्रह्मांड × 10 विधियाँ चलाता है। सरल कार्यान्वयन प्रति प्रकरण **42 सेकंड** लेता था।
 
 <div align="center">
 
@@ -405,9 +411,9 @@ python3 exportar_rust.py
 
 </div>
 
-> **सबसे अधिक लाभ देने वाला अनुकूलन न समांतरता था, न JIT।** वह यह समझना था कि नौ में से चार विधियाँ **भार-सदिश में रैखिक** हैं — जिससे टेंसरों की पूर्व-गणना कर हर ब्रह्मांड को एक आव्यूह-सदिश गुणन तक घटाया जा सकता है। **अवसंरचना से पहले बीजगणित।**
+> **सबसे अधिक लाभ देने वाला अनुकूलन न समांतरता था, न JIT।** वह यह समझना था कि दस में से चार विधियाँ **भार-सदिश में रैखिक** हैं — जिससे टेंसरों की पूर्व-गणना कर हर ब्रह्मांड को एक आव्यूह-सदिश गुणन तक घटाया जा सकता है। **अवसंरचना से पहले बीजगणित।**
 
-और परिणाम धीमे मार्ग से **बिट-दर-बिट समान** है — सुइट के हर निष्पादन में 100 ब्रह्मांड × 9 विधियाँ सत्यापित होती हैं। जो अनुकूलन परिणाम बदल दे वह दोष है, लाभ नहीं।
+और परिणाम धीमे मार्ग से **बिट-दर-बिट समान** है — सुइट के हर निष्पादन में 100 ब्रह्मांड × 10 विधियाँ सत्यापित होती हैं। जो अनुकूलन परिणाम बदल दे वह दोष है, लाभ नहीं।
 
 <details>
 <summary><b>परियोजना की निष्पादन नीति</b></summary>

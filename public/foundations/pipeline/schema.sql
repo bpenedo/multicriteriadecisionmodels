@@ -117,6 +117,64 @@ CREATE TABLE IF NOT EXISTS ahp_peso (
     PRIMARY KEY (id_caso, criterio)
 );
 
+-- AHP Fuzzy — Buckley (1985). Terceira fonte de pesos, ao lado do DEMATEL e do
+-- AHP crisp. Guarda o TFN inteiro (l, m, u), não só o centroide: é o espalhamento
+-- que diz se a ordem dos pesos sobrevive à imprecisão do julgamento. Descartar
+-- l e u aqui jogaria fora exatamente a informação que motivou rodar fuzzy.
+CREATE TABLE IF NOT EXISTS ahp_fuzzy_peso (
+    id_caso    TEXT NOT NULL,
+    criterio   TEXT NOT NULL,
+    peso       REAL,    -- centroide (l+m+u)/3, normalizado para somar 1
+    l          REAL,    -- limite inferior do TFN
+    m          REAL,    -- valor modal
+    u          REAL,    -- limite superior do TFN
+    fator      REAL,    -- fator geométrico g do espalhamento (1 = sem espalhamento)
+    fuzziness  REAL,    -- Φ = Σ(u−l)/Σm — o mesmo para todo o caso
+    PRIMARY KEY (id_caso, criterio)
+);
+
+-- BWM — Rezaei (2015/2016). QUARTA fonte de pesos. O que o distingue das outras
+-- três não é o resultado, é o CUSTO DE ELICITAÇÃO: 2n−3 comparações contra as
+-- n(n−1)/2 do AHP (15 contra 36, para 9 critérios). Guardamos o nº de comparações
+-- junto porque é o argumento do método, não um detalhe.
+CREATE TABLE IF NOT EXISTS bwm_peso (
+    id_caso       TEXT NOT NULL,
+    criterio      TEXT NOT NULL,
+    peso          REAL,
+    melhor        INTEGER,  -- 1 se é o critério eleito MELHOR
+    pior          INTEGER,  -- 1 se é o eleito PIOR
+    ksi           REAL,     -- ξᴸ* do programa linear (0 = julgamento coerente)
+    cr            REAL,     -- razão de consistência ξᴸ*/CI(a_BW)
+    consistente   INTEGER,
+    n_comparacoes INTEGER,  -- 2n−3
+    n_comp_ahp    INTEGER,  -- n(n−1)/2, para contraste
+    PRIMARY KEY (id_caso, criterio)
+);
+
+-- DRSA — Greco, Matarazzo & Słowiński. Não produz score: produz REGRAS legíveis
+-- induzidas das classes observadas, e a qualidade da aproximação γ, que denuncia
+-- violação do princípio de dominância nos próprios dados.
+CREATE TABLE IF NOT EXISTS drsa_regra (
+    id_caso     TEXT NOT NULL,
+    n_regra     INTEGER NOT NULL,
+    classe_min  INTEGER,  -- "ENTÃO classe ≥ classe_min"
+    condicoes   TEXT,     -- texto legível: "maturidade ≥ 15 E time ≥ 8.2"
+    cobertura   INTEGER,  -- quantas alternativas a regra cobre
+    certeza     REAL,     -- 1.0 (só induzimos regras CERTAS)
+    texto       TEXT,     -- a frase inteira, pronta para o relatório
+    PRIMARY KEY (id_caso, n_regra)
+);
+
+-- DRSA — diagnóstico por caso (uma linha), separado das regras.
+CREATE TABLE IF NOT EXISTS drsa_qualidade (
+    id_caso      TEXT PRIMARY KEY,
+    gamma        REAL,     -- fração não ambígua; γ < 1 = inconsistência NOS DADOS
+    n_classes    INTEGER,
+    n_ambiguas   INTEGER,
+    n_violacoes  INTEGER,  -- pares em que o dominante foi classificado pior
+    n_regras     INTEGER
+);
+
 -- AHP-TOPSIS 2N: coeficiente de proximidade nas duas normalizações.
 CREATE TABLE IF NOT EXISTS decisao_topsis (
     id_caso     TEXT NOT NULL,

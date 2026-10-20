@@ -25,8 +25,11 @@ from casos.catalogo import _saaty
 # 1. PRÉ-SELEÇÃO DE AÇÕES — TOPSIS
 # Fonte: COSTA, Leandro Santos da. "Uma metodologia para a pré-seleção de ações
 #        utilizando o método multicritério TOPSIS" [114755_0.pdf]
-#        + "AHP–TOPSIS Methodology for Stock Portfolio Investments"
-#          (Risks, 10(4):4, 2022) [risks-10-00004.pdf]
+#        (UERJ) [114755_0.pdf]
+#        + VÁSQUEZ, J. A.; ESCOBAR, J. W.; MANOTAS, D. F. "AHP–TOPSIS
+#          Methodology for Stock Portfolio Investments" (Risks, v.10, n.1,
+#          art.4, 2022; Universidad del Valle)
+#          doi:10.3390/risks10010004 [risks-10-00004.pdf]
 # Critérios do trabalho: Liquidez Geral · Dividend Yield · Volatilidade ·
 #                        Governança Corporativa · 1/(P/L) · P/VPA · ROE
 # ===========================================================================
@@ -99,7 +102,10 @@ ACOES = {
 
 # ===========================================================================
 # 2. FUNDOS IMOBILIÁRIOS
-# Fonte: SANTOS, Victor Vianna dos. TCC, Engenharia da Computação, UFPE
+# Fonte: SANTOS, Victor Vianna dos. "Avaliação do método Random Forest para
+#        auxílio à seleção de fundos de investimento imobiliário listados na
+#        Bolsa de Valores". Trabalho de Graduação, Engenharia da Computação,
+#        CIn/UFPE, set. 2023. Orient.: ALMEIDA FILHO, Adiel Teixeira de.
 #        [Fundo Imobiliário TCC Victor Vianna dos Santos.pdf]
 # Critérios do trabalho: Dividend Yield · P/VP · Vacância física · Vacância
 #        financeira · Liquidez · Cap rate · Nº de ativos · Patrimônio líquido
@@ -175,8 +181,10 @@ FII = {
 
 # ===========================================================================
 # 3. SELEÇÃO DE FINTECH
-# Fonte: "A Fuzzy Multicriteria Group Decision Making Approach for Evaluating
-#        and Selecting Fintech Projects" (Mathematics / JRFM)
+# Fonte: WIBOWO, S.; GRANDHI, L.; GRANDHI, S.; WELLS, M. "A Fuzzy
+#        Multicriteria Group Decision Making Approach for Evaluating and
+#        Selecting Fintech Projects" (Mathematics, v.10, n.2, art.225, 2022;
+#        CQUniversity) doi:10.3390/math10020225
 #        [A fuzzy multicriteria group decision making...pdf, Fintech.pdf]
 # ===========================================================================
 FINTECH = {
@@ -322,8 +330,9 @@ IMOVEIS = {
 
 # ===========================================================================
 # 5. PRIORIZAÇÃO DE ORDENS DE SERVIÇO — AHP integrado ao PROMETHEE
-# Fonte: "Priorização de ordens de serviço aplicando métodos de tomada de
-#        decisão: o AHP integrado ao PROMETHEE". Revista Produção Online,
+# Fonte: ALENCAR, L. G. de; TAVARES, F. R. M.; MENDONÇA, F. J. S. de F.;
+#        DUARTE, A. K. G. (URCA). "Priorização de ordens de serviço aplicando
+#        métodos de tomada de decisão: o AHP integrado ao PROMETHEE". RPO,
 #        v.22, n.2, p.2763-2784, 2022. [4637-Texto do Artigo...pdf]
 # ===========================================================================
 ORDENS_SERVICO = {
@@ -396,9 +405,10 @@ ORDENS_SERVICO = {
 
 # ===========================================================================
 # 6. PROVEDORES DE NUVEM — Dynamic TOPSIS
-# Fonte: SOLOMON, "Ranking of Cloud Service Providers Using a Dynamic TOPSIS
-#        Model for Provisioning of Enterprise IT Infrastructure in the Cloud"
-#        (The George Washington University) [@SAAS Solomon_gwu_0075A_13791.pdf]
+# Fonte: SOLOMON, Tomas. "Ranking of Cloud Service Providers Using a Dynamic
+#        TOPSIS Model for Provisioning of Enterprise IT Infrastructure in the
+#        Cloud". Praxis (Doctor of Engineering), The George Washington
+#        University, 2017. [@SAAS Solomon_gwu_0075A_13791.pdf]
 # ===========================================================================
 CLOUD = {
     "id_caso": "cloud_providers",
@@ -470,10 +480,13 @@ CLOUD = {
 #     a multiple criteria decision approach" [beim-and-levesque-vc...pdf]
 #   "Multi criteria decision making for assisting business angels in
 #     investments" (Technological and Economic Development) [angels.pdf]
-#   DHOCHAK, M. et al. (2019) — critérios de VC por AHP [dhochak2019.pdf]
-#   AFFUL-DADZIE, E. et al. "Assessing commercial viability of technology
-#     start-up businesses in a government venture capital under fuzzy
-#     environment" (Int. J. Fuzzy Syst.) [afful-dadzie2016.pdf]
+#   DHOCHAK, M.; DOLIYA, P. "Valuation of a startup: moving towards strategic
+#     approaches" (J. Multi-Criteria Decision Analysis, 2019)
+#     doi:10.1002/mcda.1703 [dhochak2019.pdf]
+#   AFFUL-DADZIE, E.; AFFUL-DADZIE, A.; OPLATKOVÁ, Z. K. "Assessing commercial
+#     viability of technology start-up businesses in a government venture
+#     capital under intuitionistic fuzzy environment" (Int. J. Fuzzy Syst.,
+#     2016) doi:10.1007/s40815-016-0141-9 [afful-dadzie2016.pdf]
 #   MILKOVA/ANDREICHIKOV, "Venture capitalists decision making: applying ANP"
 #     (IJAHP) [egray...511-Article...pdf]
 # ===========================================================================
@@ -545,8 +558,10 @@ VENTURE_CAPITAL = {
 
 # ===========================================================================
 # 8. ORDENAÇÃO DE INSTRUTORES — AHP e TOPSIS
-# Fonte: "Modelagem matemática com os métodos AHP e TOPSIS para ordenação de
-#        instrutores em uma escola da FAB". LIV SBPO, Juiz de Fora, MG, 2022.
+# Fonte: SILVA, C. E. J. da (ITA/UNIFESP); SALLES-NETO, L. L. de (UNIFESP);
+#        SANTOS, M. dos (IME). "Modelagem matemática com os métodos AHP e
+#        TOPSIS para ordenação de instrutores em uma escola da FAB".
+#        LIV SBPO, Juiz de Fora, MG, 2022.
 #        [ModelagemmatemticacomosmtodosAHPeTOPSIS...pdf]
 # ===========================================================================
 INSTRUTORES = {

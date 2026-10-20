@@ -938,6 +938,11 @@ pub fn todim(x: &Matriz, w: &[f64], direcoes: &[Direcao], theta: f64) -> Result<
 /// Faz parte do método — "não faz sentido que um critério possua peso nulo".
 pub const FRACAO_PESO_MINIMO: f64 = 0.01;
 
+/// Banda proporcional da fuzzificação: x → (x(1−α), x, x(1+α)).
+/// Espelha `FUZZY_ALPHA` do `config.py`. Os dois precisam andar juntos: um motor
+/// com α diferente do outro produz divergência que PARECE erro de algoritmo.
+pub const FUZZY_ALPHA: f64 = 0.10;
+
 /// Normalização do SAPEVO-M, incluindo o tratamento do peso nulo.
 pub fn normalizar_sapevo(v: &[f64]) -> Vec<f64> {
     let lo = v.iter().cloned().fold(f64::INFINITY, f64::min);
@@ -983,6 +988,175 @@ pub fn sapevo_m_pesos(matrizes: &[Matriz]) -> Result<Vec<f64>, String> {
     let pesos = normalizar_sapevo(&v);
     let soma: f64 = pesos.iter().sum();
     Ok(pesos.iter().map(|x| x / soma).collect())
+}
+
+/// SAPEVO-M adaptado a uma matriz de decisão CARDINAL.
+///
+/// O método nasceu para julgamentos ORDINAIS; aqui as comparações par a par são
+/// derivadas do desempenho observado e discretizadas na escala de sete pontos
+/// {-3..3}. É uma ADAPTAÇÃO deste projeto, não o método como publicado — a forma
+/// fiel, com julgamento de decisores, é `sapevo_m_pesos`.
+///
+/// Espelha `metodos_br.sapevo_m_de_matriz`. Existe para que a verificação cruzada
+/// cubra os dez métodos: até a versão anterior o SAPEVO-M não tinha contraparte
+/// em Rust e passava despercebido pelo comparador. Ver bugs.md #BUG-041.
+pub fn sapevo_m_de_matriz(
+    x: &Matriz,
+    w: &[f64],
+    direcoes: &[Direcao],
+) -> Result<Vec<f64>, String> {
+    let w = normalizar_pesos(w, x.colunas)?;
+    let g = orientar(x, direcoes)?;
+    let (m, k) = (g.linhas, g.colunas);
+    let mut mat = Matriz::nova(m, k);
+    for j in 0..k {
+        let mut soma = vec![0.0; m];
+        for a in 0..m {
+            for b in 0..m {
+                if a == b {
+                    continue;
+                }
+                // round-half-away-from-zero, como o np.round do NumPy NÃO faz:
+                // o NumPy usa banker's rounding. A diferença só aparece em .5
+                // exato, que aqui vem de diferenças como 1/6 — por isso o
+                // arredondamento é replicado explicitamente, não aproximado.
+                let d = (g.get(a, j) - g.get(b, j)) * 3.0;
+                let r = arredondar_par(d);
+                soma[a] += r.clamp(-3.0, 3.0);
+            }
+        }
+        let coluna = normalizar_sapevo(&soma);
+        for a in 0..m {
+            mat.set(a, j, coluna[a]);
+        }
+    }
+    Ok((0..m)
+        .map(|a| (0..k).map(|j| mat.get(a, j) * w[j]).sum())
+        .collect())
+}
+
+/// Arredondamento para o par mais próximo (banker's rounding), igual ao `np.round`.
+///
+/// `f64::round` do Rust arredonda 0,5 para longe do zero; o NumPy arredonda para o
+/// par. Com `0.5 → 1` em vez de `0.5 → 0`, um grau do SAPEVO muda e o ranking pode
+/// virar. Replicar a regra é o que mantém os dois motores comparáveis.
+fn arredondar_par(x: f64) -> f64 {
+    let r = x.round();
+    // Comparação EXATA com 0,5 — sem tolerância, de propósito.
+    //
+    // 0,5 é representável exatamente em binário, e a regra do par só vale para o
+    // empate exato. A primeira versão usava `< 1e-12`, e isso capturava valores
+    // como 1,4999999999999998 — que `round()` já havia levado para 1 — para
+    // subtrair 1 de novo, devolvendo 0. Um grau do SAPEVO mudava de 1 para 0 em
+    // 22 dos 38 casos. Ver bugs.md #BUG-042.
+    if x.fract().abs() == 0.5 && (r % 2.0) != 0.0 {
+        r - x.signum()
+    } else {
+        r
+    }
+}
+
+// ===========================================================================
+// TOPSIS Fuzzy — Chen (2000).
+// ===========================================================================
+
+/// TOPSIS Fuzzy com números triangulares (l, m, u), conforme Chen (2000).
+///
+/// A matriz crisp é fuzzificada com banda PROPORCIONAL ±alpha e normalizada de
+/// forma linear; os ideais são ABSOLUTOS — (1,1,1) e (0,0,0). São três escolhas
+/// distintas das do `topsis_2n` (normalização vetorial, ideais relativos), e por
+/// isso os dois podem divergir: é diferença de método, não erro.
+///
+/// No critério de CUSTO os extremos trocam de lado — o maior u vira o menor l —,
+/// e é por isso que o `l` do resultado divide pelo `u` da entrada. Normalizar
+/// componente a componente sem a troca produz um triângulo invertido que continua
+/// parecendo válido.
+pub fn fuzzy_topsis(
+    x: &Matriz,
+    w: &[f64],
+    direcoes: &[Direcao],
+    alpha: f64,
+) -> Result<Vec<f64>, String> {
+    if alpha < 0.0 {
+        return Err("TOPSIS Fuzzy: alpha deve ser ≥ 0".into());
+    }
+    let w = normalizar_pesos(w, x.colunas)?;
+    if direcoes.len() != x.colunas {
+        return Err("TOPSIS Fuzzy: direções incompatíveis com a matriz".into());
+    }
+    let (m, k) = (x.linhas, x.colunas);
+
+    // Fuzzificação: x → (x(1−α), x, x(1+α)), ordenada (valores negativos trocam).
+    let mut tri = vec![[0.0f64; 3]; m * k];
+    for i in 0..m {
+        for j in 0..k {
+            let v = x.get(i, j);
+            let mut t = [v * (1.0 - alpha), v, v * (1.0 + alpha)];
+            t.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
+            tri[i * k + j] = t;
+        }
+    }
+
+    // Translação das colunas não-positivas, igual ao lado Python.
+    //
+    // A normalização de Chen é multiplicativa e só é definida para dados > 0. Com
+    // l⁻ ≤ 0 num critério de custo, as razões invertem a ordem dos vértices e o
+    // triângulo sai com l > u. Dados reais têm zero e negativo (VPL negativo,
+    // vacância 0%), então a coluna é deslocada por 1% da amplitude acima de zero.
+    // A translação preserva ordem e diferenças, mas NÃO as razões — e isso está
+    // declarado no relatório. Ver bugs.md #BUG-044.
+    for j in 0..k {
+        let lo = (0..m).map(|i| tri[i * k + j][0]).fold(f64::INFINITY, f64::min);
+        if lo <= 0.0 {
+            let hi = (0..m).map(|i| tri[i * k + j][2]).fold(f64::NEG_INFINITY, f64::max);
+            let amp = hi - lo;
+            let eps = if amp > 0.0 { amp * 0.01 } else { 1.0 };
+            let desloc = -lo + eps;
+            for i in 0..m {
+                for c in 0..3 {
+                    tri[i * k + j][c] += desloc;
+                }
+            }
+        }
+    }
+
+    // Normalização linear de Chen.
+    let mut r = vec![[0.0f64; 3]; m * k];
+    for j in 0..k {
+        match direcoes[j] {
+            Direcao::Beneficio => {
+                let upos = (0..m).map(|i| tri[i * k + j][2]).fold(f64::NEG_INFINITY, f64::max);
+                let d = if upos == 0.0 { 1.0 } else { upos };
+                for i in 0..m {
+                    let t = tri[i * k + j];
+                    r[i * k + j] = [t[0] / d, t[1] / d, t[2] / d];
+                }
+            }
+            Direcao::Custo => {
+                let lneg = (0..m).map(|i| tri[i * k + j][0]).fold(f64::INFINITY, f64::min);
+                for i in 0..m {
+                    let t = tri[i * k + j];
+                    // 1/0 → 0 (e não infinito), igual ao lado Python.
+                    let inv = |d: f64| if d == 0.0 { 0.0 } else { lneg / d };
+                    r[i * k + j] = [inv(t[2]), inv(t[1]), inv(t[0])];
+                }
+            }
+        }
+    }
+
+    // Ponderação, distância vertex aos ideais absolutos e proximidade.
+    Ok((0..m)
+        .map(|i| {
+            let (mut dp, mut dn) = (0.0, 0.0);
+            for j in 0..k {
+                let v: Vec<f64> = r[i * k + j].iter().map(|c| c * w[j]).collect();
+                dp += (v.iter().map(|c| (c - 1.0).powi(2)).sum::<f64>() / 3.0).sqrt();
+                dn += (v.iter().map(|c| c * c).sum::<f64>() / 3.0).sqrt();
+            }
+            let soma = dp + dn;
+            if soma == 0.0 { 0.0 } else { dn / soma }
+        })
+        .collect())
 }
 
 // ===========================================================================
@@ -1187,5 +1361,56 @@ mod testes {
         assert!(normalizar_pesos(&[1.0, -1.0], 2).is_err());
         assert!(normalizar_pesos(&[0.0, 0.0], 2).is_err());
         assert!(normalizar_pesos(&[1.0], 2).is_err());
+    }
+}
+
+#[cfg(test)]
+mod testes_sapevo_fuzzy {
+    use super::*;
+
+    fn caso() -> (Matriz, Vec<Direcao>, Vec<f64>) {
+        let mut x = Matriz::nova(4, 3);
+        let d = [[25.0, 40.0, 4.2], [15.0, 35.0, 3.5], [5.0, 40.0, 8.8], [25.0, 30.0, 2.5]];
+        for i in 0..4 { for j in 0..3 { x.set(i, j, d[i][j]); } }
+        (x, vec![Direcao::Beneficio, Direcao::Beneficio, Direcao::Custo], vec![0.5, 0.3, 0.2])
+    }
+
+    #[test]
+    fn sapevo_cardinal_bate_com_python() {
+        let (x, dirs, w) = caso();
+        let s = sapevo_m_de_matriz(&x, &w, &dirs).unwrap();
+        // Valores MEDIDOS em metodos_br.sapevo_m_de_matriz(X, dirs, w), 12 casas.
+        // A primeira versão deste teste trazia números escritos de cabeça, e o
+        // teste "pegou" um defeito que não existia. Valor esperado de teste se
+        // calcula na implementação de referência — nunca se estima.
+        let esperado = [0.950000000000, 0.552564102564, 0.303807692308, 0.701384615385];
+        for (a, b) in s.iter().zip(esperado.iter()) {
+            assert!((a - b).abs() < 1e-9, "SAPEVO: {:?} != {:?}", s, esperado);
+        }
+    }
+
+    #[test]
+    fn fuzzy_topsis_bate_com_python() {
+        let (x, dirs, w) = caso();
+        let s = fuzzy_topsis(&x, &w, &dirs, 0.10).unwrap();
+        // Medidos em fuzzy.fuzzy_topsis_de_crisp(X, w, dirs), alpha = 0,10.
+        let esperado = [0.278894906636, 0.214113302841, 0.138751836800, 0.280626003534];
+        for (a, b) in s.iter().zip(esperado.iter()) {
+            assert!((a - b).abs() < 1e-8, "TOPSIS Fuzzy: {:?} != {:?}", s, esperado);
+        }
+    }
+
+    #[test]
+    fn arredondamento_segue_o_numpy() {
+        for (x, esp) in [(0.5, 0.0), (1.5, 2.0), (2.5, 2.0), (-0.5, 0.0), (-2.5, -2.0),
+                         (3.5, 4.0), (-1.5, -2.0), (1.2, 1.0), (-1.2, -1.0)] {
+            assert_eq!(arredondar_par(x), esp, "arredondar_par({x})");
+        }
+        // Quase-empates: NÃO são empate, e a regra do par não se aplica a eles.
+        // Era exatamente aqui que a tolerância de 1e-12 errava (#BUG-042).
+        for (x, esp) in [(1.4999999999999998, 1.0), (0.4999999999999999, 0.0),
+                         (2.5000000000000004, 3.0), (-1.4999999999999998, -1.0)] {
+            assert_eq!(arredondar_par(x), esp, "quase-empate arredondar_par({x})");
+        }
     }
 }

@@ -14,9 +14,9 @@ E-mail: profbruanbima@gmail.com
 
 ### 别再用电子表格做选择。开始用证据做决策。
 
-**九大决策学派。一个优胜方案。而且——这是第一次——附带该方案正确的概率。**
+**十大决策学派。一个优胜方案。而且——这是第一次——附带该方案正确的概率。**
 
-[![MCDM](https://img.shields.io/badge/MCDM方法-9-2563eb?style=for-the-badge)](#-九大决策学派以及为何是九个)
+[![MCDM](https://img.shields.io/badge/MCDM方法-10-2563eb?style=for-the-badge)](#-九大决策学派以及为何是九个)
 [![Engines](https://img.shields.io/badge/引擎-Python_+_Rust-c2410c?style=for-the-badge)](#-两个独立引擎交叉验证)
 [![i18n](https://img.shields.io/badge/语言-12-16a34a?style=for-the-badge)](#-12种语言--sdl-trados翻译记忆库)
 [![Robustez](https://img.shields.io/badge/模拟宇宙-2.000-8f3d56?style=for-the-badge)](#-无人回答的问题如果权重错了怎么办)
@@ -65,7 +65,7 @@ E-mail: profbruanbima@gmail.com
 
 ---
 
-## 💊 解法：九大学派、一个共识，外加一个置信区间
+## 💊 解法：十大学派、一个共识，外加一个置信区间
 
 **MCDM Studio 在同一个问题上运行**九种成熟的多准则方法**，从它们之间的**共识**中得出优胜方案，然后做那件真正重要的事：**
 
@@ -98,7 +98,7 @@ E-mail: profbruanbima@gmail.com
 
 > 在上图中，**技术转让**与**雷达特征**是原因：动它们就会牵动整个系统。**机队可用率**是结果——它是温度计，不是杠杆。一份为可用率打分却忽略技术转让的招标书，是在量体温而无视感染。
 
-### 2. 九大学派面对同一个问题
+### 2. 十大学派面对同一个问题
 
 <div align="center"><img src="docs/telas/veiculo_eletrico/mapa_metodos.png" alt="Métodos" width="900"/></div>
 
@@ -155,45 +155,46 @@ E-mail: profbruanbima@gmail.com
 python3 pipeline.py --listar
 ```
 
-| # | 案例 | 领域 | 备选方案 | 准则 | 结论 |
-|--:|---|---|--:|--:|---|
-| 1 | `smartphone` | 消费 | 6 | 8 | 可能 85% |
-| 2 | `veiculo_eletrico` | 汽车 | 7 | 8 | 稳健 96% |
-| 3 | `caca_multifuncao` | 国防 | 6 | 9 | 稳健 100% |
-| 4 | `blindado` | 国防 | 5 | 8 | 稳健 90% |
-| 5 | `portfolio_startup` | 企业 | 7 | 9 | 稳健 97% |
-| 6 | `estacao_trabalho` | 信息技术 | 6 | 8 | 稳健 98% |
-| 7 | `carros_eletricos` | 汽车 | 38 | 9 | 稳健 99% |
-| 8 | `smartphones_2026` | 消费 | 38 | 9 | 可能 65% |
-| 9 | `tablets` | 消费 | 34 | 8 | 可能 62% |
-| 10 | `smartwatches` | 消费 | 31 | 8 | 可能 79% |
-| 11 | `notebooks` | 信息技术 | 32 | 8 | 可能 76% |
-| 12 | `maquinario_agricola` | 农业 | 35 | 8 | 稳健 100% |
-| 13 | `sbc_iot` | 信息技术 | 33 | 8 | 稳健 100% |
-| 14 | `mineracao_asic` | 基础设施 | 31 | 8 | 脆弱 51% |
-| 15 | `minipcs` | 信息技术 | 10 | 8 | 稳健 96% |
-| 16 | `impressoras_3d_miniaturas` | 制造 | 30 | 9 | 脆弱 35% |
-| 17 | `impressoras_3d_producao` | 制造 | 30 | 9 | 脆弱 45% |
-| 18 | `plotters_formato` | 制造 | 24 | 9 | 可能 86% |
-| 19 | `impressoras_3d_miniaturas_triadas` | 制造 | 13 | 9 | 稳健 100% |
-| 20 | `acoes_b3` 📚 | 金融 | 20 | 7 | 脆弱 52% |
-| 21 | `fundos_imobiliarios` 📚 | 金融 | 18 | 8 | 可能 61% |
-| 22 | `fintech` 📚 | 金融 | 16 | 8 | 可能 78% |
-| 23 | `avaliacao_imoveis` 📚 | 房地产 | 16 | 8 | 稳健 96% |
-| 24 | `ordens_servico` 📚 | 运营 | 18 | 8 | 稳健 92% |
-| 25 | `cloud_providers` 📚 | 信息技术 | 14 | 8 | 稳健 100% |
-| 26 | `venture_capital` 📚 | 企业 | 16 | 8 | 稳健 97% |
-| 27 | `instrutores` 📚 | 企业 | 15 | 8 | 稳健 100% |
-| 28 | `cripto_portfolio` 📚 | 金融 | 9 | 7 | 稳健 100% |
-| 29 | `portfolio_crise` 📚 | 金融 | 8 | 4 | 可能 71% |
-| 30 | `cenarios_va` 📚 | 汽车 | 16 | 9 | 可能 75% |
-| 31 | `impressora_3d_energia` 📚 | 制造 | 12 | 7 | 可能 80% |
-| 32 | `impressoras_juridico` 📚 | 运营 | 12 | 4 | 稳健 100% |
-| 33 | `fundos_hedge` 📚 | 金融 | 20 | 8 | 稳健 98% |
-| 34 | `modelos_previsao` 📚 | 信息技术 | 7 | 8 | 可能 74% |
-| 35 | `policultivo_rj` 📚 | 农业 | 8 | 8 | 稳健 100% |
-| 36 | `parafusadeiras_domesticas` 📚 | 消费 | 14 | 8 | 可能 86% |
-| 37 | `parafusadeiras_profissionais` 📚 | 制造 | 12 | 8 | 稳健 100% |
+| # | 案例 | 领域 | 备选方案 | 准则 | 结论 | 作者 / 来源 |
+|--:|---|---|--:|--:|---|---|
+| 1 | `smartphone` | 消费 | 6 | 8 | 可能 63% | 自建模型 |
+| 2 | `veiculo_eletrico` | 汽车 | 7 | 8 | 稳健 99% | 自建模型 |
+| 3 | `caca_multifuncao` | 国防 | 6 | 9 | 稳健 100% | 自建模型 |
+| 4 | `blindado` | 国防 | 5 | 8 | 稳健 93% | 自建模型 |
+| 5 | `portfolio_startup` | 企业 | 7 | 9 | 稳健 96% | 自建模型 |
+| 6 | `estacao_trabalho` | 信息技术 | 6 | 8 | 稳健 98% | 自建模型 |
+| 7 | `carros_eletricos` | 汽车 | 38 | 9 | 稳健 96% | 自建模型 |
+| 8 | `smartphones_2026` | 消费 | 38 | 9 | 可能 73% | 自建模型 |
+| 9 | `tablets` | 消费 | 34 | 8 | 可能 67% | 自建模型 |
+| 10 | `smartwatches` | 消费 | 31 | 8 | 可能 84% | 自建模型 |
+| 11 | `notebooks` | 信息技术 | 32 | 8 | 可能 83% | 自建模型 |
+| 12 | `maquinario_agricola` | 农业 | 35 | 8 | 稳健 100% | 自建模型 |
+| 13 | `sbc_iot` | 信息技术 | 33 | 8 | 稳健 100% | 自建模型 |
+| 14 | `mineracao_asic` | 基础设施 | 31 | 8 | 脆弱 50% | 自建模型 |
+| 15 | `minipcs` | 信息技术 | 10 | 8 | 稳健 91% | 自建模型 |
+| 16 | `impressoras_3d_miniaturas` | 制造 | 30 | 9 | 脆弱 48% | 自建模型 |
+| 17 | `impressoras_3d_producao` | 制造 | 30 | 9 | 脆弱 58% | 自建模型 |
+| 18 | `plotters_formato` | 制造 | 24 | 9 | 稳健 96% | 自建模型 |
+| 19 | `impressoras_3d_miniaturas_triadas` | 制造 | 13 | 9 | 稳健 100% | 自建模型 |
+| 20 | `acoes_b3` 📚 | 金融 | 20 | 7 | 脆弱 39% | COSTA, L. S. da · VÁSQUEZ, J. A.; ESCOBAR, J. W.; MANOTAS, D. F. · [DOI](https://doi.org/10.3390/risks10010004) |
+| 21 | `fundos_imobiliarios` 📚 | 金融 | 18 | 8 | 可能 85% | SANTOS, V. V. dos (orient. ALMEIDA FILHO, A. T. de) |
+| 22 | `fintech` 📚 | 金融 | 16 | 8 | 可能 67% | WIBOWO, S.; GRANDHI, L.; GRANDHI, S.; WELLS, M. · [DOI](https://doi.org/10.3390/math10020225) |
+| 23 | `avaliacao_imoveis` 📚 | 房地产 | 16 | 8 | 稳健 94% | DUARTE, D. C. de O. · MARQUES, J. P. M. |
+| 24 | `ordens_servico` 📚 | 运营 | 18 | 8 | 稳健 97% | ALENCAR, L. G. de; TAVARES, F. R. M.; MENDONÇA, F. J. S. de F.; DUARTE, A. K. G. |
+| 25 | `cloud_providers` 📚 | 信息技术 | 14 | 8 | 稳健 100% | SOLOMON, T. |
+| 26 | `venture_capital` 📚 | 企业 | 16 | 8 | 稳健 96% | BEIM, G.; LÉVESQUE, M. · DHOCHAK, M.; DOLIYA, P. · AFFUL-DADZIE, E.; AFFUL-DADZIE, A.; OPLATKOVÁ, Z. K. · [DOI](https://doi.org/10.1002/mcda.1703) |
+| 27 | `instrutores` 📚 | 企业 | 15 | 8 | 稳健 100% | SILVA, C. E. J. da; SALLES-NETO, L. L. de; SANTOS, M. dos |
+| 28 | `cripto_portfolio` 📚 | 金融 | 9 | 7 | 稳健 100% | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. · [DOI](https://doi.org/10.3390/math9141677) |
+| 29 | `portfolio_crise` 📚 | 金融 | 8 | 4 | 可能 77% | COSTA, I. P. de A.; MAÊDA, S. M. do N.; TEIXEIRA, L. F. H. de S. de B.; GOMES, C. F. S.; SANTOS, M. dos |
+| 30 | `cenarios_va` 📚 | 汽车 | 16 | 9 | 可能 73% | LI, S.; ZHOU, R.; HUANG, H. · [DOI](https://doi.org/10.1007/s42154-024-00344-6) |
+| 31 | `impressora_3d_energia` 📚 | 制造 | 12 | 7 | 可能 69% | OLIVEIRA, V. A. R. de; ALVARADO SILVA, C. A.; OLIVEIRA, G. C. R. de; TAJIMA, F. M.; FARIA NETO, A. dos R.; SALOMON, V. A. P.; GUIDI, E. S. · [DOI](https://doi.org/10.18687/LACCEI2025.1.1.1193) |
+| 32 | `impressoras_juridico` 📚 | 运营 | 12 | 4 | 稳健 100% | OLIVEIRA, N. C.; OLIVEIRA, P. F. C. de; GOMES, C. F. S.; SANTOS, M. dos |
+| 33 | `fundos_hedge` 📚 | 金融 | 20 | 8 | 稳健 94% | SILVA, F. P. da; RIBEIRO, C. de O. |
+| 34 | `modelos_previsao` 📚 | 信息技术 | 7 | 8 | 稳健 95% | SHAH, S. |
+| 35 | `policultivo_rj` 📚 | 农业 | 8 | 8 | 可能 86% | PENEDO, B. |
+| 36 | `parafusadeiras_domesticas` 📚 | 消费 | 14 | 8 | 可能 70% | COMPROU AVALIOU (canal) · [vídeo](https://youtu.be/pgdqVYEjZtk) |
+| 37 | `parafusadeiras_profissionais` 📚 | 制造 | 12 | 8 | 稳健 100% | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal) · [vídeo](https://youtube.com/shorts/9SIs3agoZKc) |
+| 38 | `crowdfunding_startups` 📚 | 企业 | 16 | 9 | 稳健 93% | SKARE, M.; GAVUROVA, B.; POLISHCHUK, V. · [DOI](https://doi.org/10.1016/j.jbusres.2023.113719) |
 
 > [!NOTE]
 > 案例矩阵是**示意性的**——采用公开且合理的数量级，用于演示方法。**并非**示意性的是**建模本身**：准则、方向、DEMATEL因果矩阵与Saaty矩阵。价值正在于此。**请把数字替换成你的报价、你的招标书或你的实验室测试结果**——引擎不变，数据是你的。
@@ -204,28 +205,29 @@ python3 pipeline.py --listar
 ### 📚 源自文献的案例研究
 
 > [!IMPORTANT]
-> 其中八个案例的**准则与因果结构取自经同行评审的论文与学位论文**——股票、房地产基金、金融科技、房产估值、维修工单、云服务商、风险投资与教员排序。准则并非杜撰：它们出自原文，各项工作的著作权信息保留在对应模块的文件头中。**数值矩阵**为我们自行构造——未复制原始论文中的任何数据。
+> 下表各案例的**准则与因果结构取自所列文献**——同行评审论文、学位论文、会议论文集与技术报告。准则并非杜撰：它们出自原文，著作权信息保留在此处及对应模块的文件头中。**数值矩阵**为我们自行构造——未复制原作中的任何数据。凡有收录 DOI 者，链接直达原文；无 DOI 者，完整的文字著录足以查找。
 
-| 案例 | 领域 | 文献与著作权 |
-|---|---|---|
-| `acoes_b3` | 金融 | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
-| `fundos_imobiliarios` | 金融 | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
-| `fintech` | 金融 | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
-| `avaliacao_imoveis` | 房地产 | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
-| `ordens_servico` | 运营 | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
-| `cloud_providers` | 信息技术 | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
-| `venture_capital` | 企业 | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
-| `instrutores` | 企业 | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
-| `cripto_portfolio` | 金融 | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, 9(14):1677, 2021 — **pesos AHP do artigo** |
-| `portfolio_crise` | 金融 | COSTA, I. P. A.; MAÊDA, S. M. N.; TEIXEIRA, L. F. H. S. B.; GOMES, C. F. S.; SANTOS, M. *Finanças em períodos de crise: aplicação do método SAPEVO-M*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — **matriz de decisão do artigo** |
-| `cenarios_va` | 汽车 | LI, S.; ZHOU, R.; HUANG, H. *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 |
-| `impressora_3d_energia` | 制造 | OLIVEIRA, V. A. R. et al. *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI, Cidade do México, 2025 — UNESP |
-| `impressoras_juridico` | 运营 | OLIVEIRA, N. C.; OLIVEIRA, P. F. C.; GOMES, C. F. S.; SANTOS, M. *Aplicação do método AHP TOPSIS 2N: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias*, 2019 |
-| `fundos_hedge` | 金融 | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
-| `modelos_previsao` | 信息技术 | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
-| `policultivo_rj` | 农业 | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
-| `parafusadeiras_domesticas` | 消费 | COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! // Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — especificações extraídas da narração |
-| `parafusadeiras_profissionais` | 制造 | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo |
+| 案例 | 领域 | 作者 | 参考文献 |
+|---|---|---|---|
+| `acoes_b3` | 金融 | COSTA, L. S. da · VÁSQUEZ, J. A.; ESCOBAR, J. W.; MANOTAS, D. F. | *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS* (COSTA, UERJ) · *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks, v.10, n.1, 4, 2022 (Universidad del Valle) · [DOI](https://doi.org/10.3390/risks10010004) |
+| `fundos_imobiliarios` | 金融 | SANTOS, V. V. dos (orient. ALMEIDA FILHO, A. T. de) | *Avaliação do método Random Forest para auxílio à seleção de fundos de investimento imobiliário listados na Bolsa de Valores*. Trabalho de Graduação, Engenharia da Computação, CIn/UFPE, set. 2023 |
+| `fintech` | 金融 | WIBOWO, S.; GRANDHI, L.; GRANDHI, S.; WELLS, M. | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects*. Mathematics, v.10, n.2, 225, 2022 — CQUniversity, Austrália · [DOI](https://doi.org/10.3390/math10020225) |
+| `avaliacao_imoveis` | 房地产 | DUARTE, D. C. de O. · MARQUES, J. P. M. | *Análise multicritério e geoestatística aplicadas na avaliação em massa de imóveis urbanos*. Tese, UFV, 2019 · *As formas de avaliar imóvel em leilão judicial*. Universidade São Judas Tadeu, 2023 |
+| `ordens_servico` | 运营 | ALENCAR, L. G. de; TAVARES, F. R. M.; MENDONÇA, F. J. S. de F.; DUARTE, A. K. G. | *Priorização de ordens de serviço aplicando métodos de tomada de decisão: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, p.2763-2784, 2022 — URCA, Ceará |
+| `cloud_providers` | 信息技术 | SOLOMON, T. | *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model for Provisioning of Enterprise IT Infrastructure in the Cloud*. Praxis (Doctor of Engineering), The George Washington University, 2017 |
+| `venture_capital` | 企业 | BEIM, G.; LÉVESQUE, M. · DHOCHAK, M.; DOLIYA, P. · AFFUL-DADZIE, E.; AFFUL-DADZIE, A.; OPLATKOVÁ, Z. K. | *Selecting projects for venture capital funding: a multiple criteria decision approach* (Case Western Reserve University) · *Valuation of a startup: moving towards strategic approaches*, J. Multi-Criteria Decision Analysis, 2019 · *Assessing commercial viability of technology start-up businesses in a government venture capital under intuitionistic fuzzy environment*, Int. J. Fuzzy Systems, 2016 · [DOI](https://doi.org/10.1002/mcda.1703) · [DOI](https://doi.org/10.1007/s40815-016-0141-9) |
+| `instrutores` | 企业 | SILVA, C. E. J. da; SALLES-NETO, L. L. de; SANTOS, M. dos | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, Juiz de Fora, 2022 — ITA / UNIFESP / IME |
+| `cripto_portfolio` | 金融 | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. | *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, v.9, n.14, 1677, 2021 — University of Split, Croácia — **pesos AHP do artigo** · [DOI](https://doi.org/10.3390/math9141677) |
+| `portfolio_crise` | 金融 | COSTA, I. P. de A.; MAÊDA, S. M. do N.; TEIXEIRA, L. F. H. de S. de B.; GOMES, C. F. S.; SANTOS, M. dos | *Finanças em períodos de crise: aplicação do método SAPEVO-M para composição de portfólios de investimentos*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — UFF / CASNAV / IME — **matriz de decisão do artigo** |
+| `cenarios_va` | 汽车 | LI, S.; ZHOU, R.; HUANG, H. | *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 · [DOI](https://doi.org/10.1007/s42154-024-00344-6) |
+| `impressora_3d_energia` | 制造 | OLIVEIRA, V. A. R. de; ALVARADO SILVA, C. A.; OLIVEIRA, G. C. R. de; TAJIMA, F. M.; FARIA NETO, A. dos R.; SALOMON, V. A. P.; GUIDI, E. S. | *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI International Multi-Conference, Cidade do México, 2025 — UNESP / Universidad César Vallejo · [DOI](https://doi.org/10.18687/LACCEI2025.1.1.1193) |
+| `impressoras_juridico` | 运营 | OLIVEIRA, N. C.; OLIVEIRA, P. F. C. de; GOMES, C. F. S.; SANTOS, M. dos | *Aplicação do método AHP TOPSIS 2N como apoio à tomada de decisão: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias* — UNIGRANRIO / UFF / IME |
+| `fundos_hedge` | 金融 | SILVA, F. P. da; RIBEIRO, C. de O. | *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — Escola Politécnica da USP |
+| `modelos_previsao` | 信息技术 | SHAH, S. | *Comparison of Stochastic Forecasting Models*. Stochastic Differential Equations Course Project, Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério sobre eles é deste projeto |
+| `policultivo_rj` | 农业 | PENEDO, B. | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos em Ambiente Controlado (RJ)*. Relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
+| `parafusadeiras_domesticas` | 消费 | COMPROU AVALIOU (canal) | *As 5 Melhores Parafusadeira De 2025*, 14/05/2024 — especificações extraídas da narração · [vídeo](https://youtu.be/pgdqVYEjZtk) |
+| `parafusadeiras_profissionais` | 制造 | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal) | *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo · [vídeo](https://youtube.com/shorts/9SIs3agoZKc) |
+| `crowdfunding_startups` | 企业 | SKARE, M.; GAVUROVA, B.; POLISHCHUK, V. | *A decision-making support model for financing start-up projects by venture capital funds on a crowdfunding platform*. Journal of Business Research, v.158, 113719, 2023 — **critérios e escalas do artigo** · [DOI](https://doi.org/10.1016/j.jbusres.2023.113719) |
 
 ---
 
@@ -313,7 +315,7 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ 九大决策学派——以及为何是九个
+## ⚖️ 十大决策学派——以及为何是九个
 
 > [!IMPORTANT]
 > **每种方法都是关于“更好”意味着什么的不同理论。** 只用一种，等于在选定问题的同时选定了答案。我们运行全部九种，因为**独立理论之间的一致**是决策问题所能提供的最强证据。
@@ -331,8 +333,12 @@ python3 gerar_graficos.py --workers 6
 | **VIKOR** | 折中 | 群体效用 × 最大后悔 | 当**补偿不可接受**时 | Opricovic (1979); Opricovic & Tzeng (2002-07) |
 | **TODIM** | 前景理论 | 损失之痛大于等量收益之喜 | 厌恶损失的决策者——**人人如此** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | 多决策者序数法 | 多位决策者的序数判断 | **内部无法达成一致的委员会** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
+| **TOPSIS Fuzzy** | 模糊 | 数据是一个**区间**，而非一个点 | 测量不精确，而你想知道排名是否经得起这种不确定 | Zadeh (1965); Chen (2000) |
 
 </div>
+
+> [!NOTE]
+> **模糊 TOPSIS** 不是「加了噪声的 AHP-TOPSIS」：除三角模糊数外，它还更换了归一化方式（线性而非向量）与理想解（绝对而非相对）。**与 AHP-TOPSIS 2n 产生分歧是预期行为**，它衡量排名对这些选择的依赖程度。**模糊 AHP**（Buckley）作为第三种权重来源，与 DEMATEL、AHP 并列：它接受同样的两两判断，但把不确定性一路带到最后——在均匀展幅下中心值与 AHP 一致，它新增的是**区间**，用以回答优先次序能否经得起决策者自身的不确定。
 
 <details>
 <summary><b>为何这三种值得特别关注</b></summary>
@@ -353,7 +359,7 @@ VIKOR 计算**两个**度量：`S`（群体效用——加权和，**接受**某
 ### 共识引擎
 
 ```
-DEMATEL ──► 按影响力得出的权重 ──► 9种方法 ──► 波达共识 ──► 优胜方案
+DEMATEL ──► 按影响力得出的权重 ──► 10种方法 ──► 波达共识 ──► 优胜方案
                                                     │
                         2000个狄利克雷宇宙 ─────────────────┘
                                     ▼
@@ -393,7 +399,7 @@ python3 exportar_rust.py
 
 ## 🚀 性能：快26倍，结果不变
 
-稳健性分析要运行2000个宇宙 × 9种方法。朴素实现每个案例耗时**42秒**。
+稳健性分析要运行2000个宇宙 × 10种方法。朴素实现每个案例耗时**42秒**。
 
 <div align="center">
 
@@ -407,7 +413,7 @@ python3 exportar_rust.py
 
 > **收益最大的优化既不是并行，也不是JIT。** 而是意识到九种方法中有四种**对权重向量是线性的**——这使得可以预先计算张量，把每个宇宙化简为一次矩阵-向量乘法。**代数优先于基础设施。**
 
-而且结果与慢速路径**逐位完全一致**——每次运行测试套件都会验证100个宇宙 × 9种方法。改变结果的优化是缺陷，不是收益。
+而且结果与慢速路径**逐位完全一致**——每次运行测试套件都会验证100个宇宙 × 10种方法。改变结果的优化是缺陷，不是收益。
 
 <details>
 <summary><b>项目执行策略</b></summary>

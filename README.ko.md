@@ -14,9 +14,9 @@ E-mail: profbruanbima@gmail.com
 
 ### 스프레드시트로 고르는 일을 멈추십시오. 증거로 결정하십시오.
 
-**아홉 개의 의사결정 학파. 하나의 선정안. 그리고 — 처음으로 — 그 선정안이 옳을 확률.**
+**열 개의 의사결정 학파. 하나의 선정안. 그리고 — 처음으로 — 그 선정안이 옳을 확률.**
 
-[![MCDM](https://img.shields.io/badge/MCDM_방법-9-2563eb?style=for-the-badge)](#-아홉-개의-의사결정-학파--그리고-왜-아홉인가)
+[![MCDM](https://img.shields.io/badge/MCDM_방법-10-2563eb?style=for-the-badge)](#-아홉-개의-의사결정-학파--그리고-왜-아홉인가)
 [![Engines](https://img.shields.io/badge/엔진-Python_+_Rust-c2410c?style=for-the-badge)](#-두-개의-독립-엔진-교차-검증)
 [![i18n](https://img.shields.io/badge/언어-12-16a34a?style=for-the-badge)](#-12개-언어--sdl-trados-번역-메모리)
 [![Robustez](https://img.shields.io/badge/시뮬레이션_세계-2.000-8f3d56?style=for-the-badge)](#-아무도-답하지-않는-질문-가중치가-틀렸다면)
@@ -65,9 +65,9 @@ E-mail: profbruanbima@gmail.com
 
 ---
 
-## 💊 해법: 아홉 학파, 하나의 합의, 그리고 신뢰구간
+## 💊 해법: 열 학파, 하나의 합의, 그리고 신뢰구간
 
-**MCDM Studio는 같은 문제에 대해 **정립된 아홉 가지 다기준 방법**을 실행하고, 그 사이의 **합의**로부터 선정안을 도출한 뒤, 정말 중요한 단 한 가지를 수행합니다:**
+**MCDM Studio는 같은 문제에 대해 **정립된 열 가지 다기준 방법**을 실행하고, 그 사이의 **합의**로부터 선정안을 도출한 뒤, 정말 중요한 단 한 가지를 수행합니다:**
 
 > ### 🎲 가중치를 **2,000번** 교란하고, 몇 개의 세계에서 그 선정안이 계속 이기는지 셉니다.
 
@@ -98,13 +98,13 @@ E-mail: profbruanbima@gmail.com
 
 > 위 사례에서 **기술이전**과 **레이더 반사면적**은 원인입니다: 이들을 움직이면 시스템 전체가 움직입니다. **함대 가동률**은 결과입니다 — 지렛대가 아니라 온도계입니다. 가동률에 점수를 매기면서 기술이전을 무시하는 입찰공고는 열을 재면서 감염을 무시하는 것입니다.
 
-### 2. 같은 문제에 대한 아홉 학파
+### 2. 같은 문제에 대한 열 학파
 
 <div align="center"><img src="docs/telas/veiculo_eletrico/mapa_metodos.png" alt="Métodos" width="900"/></div>
 
 **이것이 해결하는 고통:** 모든 MCDM 방법에는 “더 낫다”가 무엇을 뜻하는지에 관한 이론이 내장되어 있으며 — 그것이 선정안을 바꿉니다. 방법 하나를 고르고 결과를 제시하는 것은 결과를 고르는 일입니다.
 
-우리는 아홉 가지를 모두 실행합니다. 일치할 때 그 선택은 **방법의 산물이 아닙니다**. 갈릴 때는 **그 갈림 자체가 발견**입니다.
+우리는 열 가지를 모두 실행합니다. 일치할 때 그 선택은 **방법의 산물이 아닙니다**. 갈릴 때는 **그 갈림 자체가 발견**입니다.
 
 > 위: **플러그인 하이브리드**는 일곱 방법에서 1위지만 **ELECTRE I에서는 6위**입니다. 잡음이 아니라 정보입니다. ELECTRE I은 *거부권*을 허용합니다: 다른 면이 아무리 좋아도, 어떤 기준에서 탈락시킬 만큼 심각한 열위가 있다고 말하는 것입니다. **바로 그것이 위원회에 가져가고 싶은 질문입니다.**
 
@@ -155,45 +155,46 @@ E-mail: profbruanbima@gmail.com
 python3 pipeline.py --listar
 ```
 
-| # | 사례 | 영역 | 대안 | 기준 | 판정 |
-|--:|---|---|--:|--:|---|
-| 1 | `smartphone` | 소비재 | 6 | 8 | 유력 85% |
-| 2 | `veiculo_eletrico` | 자동차 | 7 | 8 | 견고 96% |
-| 3 | `caca_multifuncao` | 국방 | 6 | 9 | 견고 100% |
-| 4 | `blindado` | 국방 | 5 | 8 | 견고 90% |
-| 5 | `portfolio_startup` | 기업 | 7 | 9 | 견고 97% |
-| 6 | `estacao_trabalho` | IT | 6 | 8 | 견고 98% |
-| 7 | `carros_eletricos` | 자동차 | 38 | 9 | 견고 99% |
-| 8 | `smartphones_2026` | 소비재 | 38 | 9 | 유력 65% |
-| 9 | `tablets` | 소비재 | 34 | 8 | 유력 62% |
-| 10 | `smartwatches` | 소비재 | 31 | 8 | 유력 79% |
-| 11 | `notebooks` | IT | 32 | 8 | 유력 76% |
-| 12 | `maquinario_agricola` | 농업 | 35 | 8 | 견고 100% |
-| 13 | `sbc_iot` | IT | 33 | 8 | 견고 100% |
-| 14 | `mineracao_asic` | 인프라 | 31 | 8 | 취약 51% |
-| 15 | `minipcs` | IT | 10 | 8 | 견고 96% |
-| 16 | `impressoras_3d_miniaturas` | 제조 | 30 | 9 | 취약 35% |
-| 17 | `impressoras_3d_producao` | 제조 | 30 | 9 | 취약 45% |
-| 18 | `plotters_formato` | 제조 | 24 | 9 | 유력 86% |
-| 19 | `impressoras_3d_miniaturas_triadas` | 제조 | 13 | 9 | 견고 100% |
-| 20 | `acoes_b3` 📚 | 금융 | 20 | 7 | 취약 52% |
-| 21 | `fundos_imobiliarios` 📚 | 금융 | 18 | 8 | 유력 61% |
-| 22 | `fintech` 📚 | 금융 | 16 | 8 | 유력 78% |
-| 23 | `avaliacao_imoveis` 📚 | 부동산 | 16 | 8 | 견고 96% |
-| 24 | `ordens_servico` 📚 | 운영 | 18 | 8 | 견고 92% |
-| 25 | `cloud_providers` 📚 | IT | 14 | 8 | 견고 100% |
-| 26 | `venture_capital` 📚 | 기업 | 16 | 8 | 견고 97% |
-| 27 | `instrutores` 📚 | 기업 | 15 | 8 | 견고 100% |
-| 28 | `cripto_portfolio` 📚 | 금융 | 9 | 7 | 견고 100% |
-| 29 | `portfolio_crise` 📚 | 금융 | 8 | 4 | 유력 71% |
-| 30 | `cenarios_va` 📚 | 자동차 | 16 | 9 | 유력 75% |
-| 31 | `impressora_3d_energia` 📚 | 제조 | 12 | 7 | 유력 80% |
-| 32 | `impressoras_juridico` 📚 | 운영 | 12 | 4 | 견고 100% |
-| 33 | `fundos_hedge` 📚 | 금융 | 20 | 8 | 견고 98% |
-| 34 | `modelos_previsao` 📚 | IT | 7 | 8 | 유력 74% |
-| 35 | `policultivo_rj` 📚 | 농업 | 8 | 8 | 견고 100% |
-| 36 | `parafusadeiras_domesticas` 📚 | 소비재 | 14 | 8 | 유력 86% |
-| 37 | `parafusadeiras_profissionais` 📚 | 제조 | 12 | 8 | 견고 100% |
+| # | 사례 | 영역 | 대안 | 기준 | 판정 | 저자 / 출처 |
+|--:|---|---|--:|--:|---|---|
+| 1 | `smartphone` | 소비재 | 6 | 8 | 유력 63% | 자체 모델링 |
+| 2 | `veiculo_eletrico` | 자동차 | 7 | 8 | 견고 99% | 자체 모델링 |
+| 3 | `caca_multifuncao` | 국방 | 6 | 9 | 견고 100% | 자체 모델링 |
+| 4 | `blindado` | 국방 | 5 | 8 | 견고 93% | 자체 모델링 |
+| 5 | `portfolio_startup` | 기업 | 7 | 9 | 견고 96% | 자체 모델링 |
+| 6 | `estacao_trabalho` | IT | 6 | 8 | 견고 98% | 자체 모델링 |
+| 7 | `carros_eletricos` | 자동차 | 38 | 9 | 견고 96% | 자체 모델링 |
+| 8 | `smartphones_2026` | 소비재 | 38 | 9 | 유력 73% | 자체 모델링 |
+| 9 | `tablets` | 소비재 | 34 | 8 | 유력 67% | 자체 모델링 |
+| 10 | `smartwatches` | 소비재 | 31 | 8 | 유력 84% | 자체 모델링 |
+| 11 | `notebooks` | IT | 32 | 8 | 유력 83% | 자체 모델링 |
+| 12 | `maquinario_agricola` | 농업 | 35 | 8 | 견고 100% | 자체 모델링 |
+| 13 | `sbc_iot` | IT | 33 | 8 | 견고 100% | 자체 모델링 |
+| 14 | `mineracao_asic` | 인프라 | 31 | 8 | 취약 50% | 자체 모델링 |
+| 15 | `minipcs` | IT | 10 | 8 | 견고 91% | 자체 모델링 |
+| 16 | `impressoras_3d_miniaturas` | 제조 | 30 | 9 | 취약 48% | 자체 모델링 |
+| 17 | `impressoras_3d_producao` | 제조 | 30 | 9 | 취약 58% | 자체 모델링 |
+| 18 | `plotters_formato` | 제조 | 24 | 9 | 견고 96% | 자체 모델링 |
+| 19 | `impressoras_3d_miniaturas_triadas` | 제조 | 13 | 9 | 견고 100% | 자체 모델링 |
+| 20 | `acoes_b3` 📚 | 금융 | 20 | 7 | 취약 39% | COSTA, L. S. da · VÁSQUEZ, J. A.; ESCOBAR, J. W.; MANOTAS, D. F. · [DOI](https://doi.org/10.3390/risks10010004) |
+| 21 | `fundos_imobiliarios` 📚 | 금융 | 18 | 8 | 유력 85% | SANTOS, V. V. dos (orient. ALMEIDA FILHO, A. T. de) |
+| 22 | `fintech` 📚 | 금융 | 16 | 8 | 유력 67% | WIBOWO, S.; GRANDHI, L.; GRANDHI, S.; WELLS, M. · [DOI](https://doi.org/10.3390/math10020225) |
+| 23 | `avaliacao_imoveis` 📚 | 부동산 | 16 | 8 | 견고 94% | DUARTE, D. C. de O. · MARQUES, J. P. M. |
+| 24 | `ordens_servico` 📚 | 운영 | 18 | 8 | 견고 97% | ALENCAR, L. G. de; TAVARES, F. R. M.; MENDONÇA, F. J. S. de F.; DUARTE, A. K. G. |
+| 25 | `cloud_providers` 📚 | IT | 14 | 8 | 견고 100% | SOLOMON, T. |
+| 26 | `venture_capital` 📚 | 기업 | 16 | 8 | 견고 96% | BEIM, G.; LÉVESQUE, M. · DHOCHAK, M.; DOLIYA, P. · AFFUL-DADZIE, E.; AFFUL-DADZIE, A.; OPLATKOVÁ, Z. K. · [DOI](https://doi.org/10.1002/mcda.1703) |
+| 27 | `instrutores` 📚 | 기업 | 15 | 8 | 견고 100% | SILVA, C. E. J. da; SALLES-NETO, L. L. de; SANTOS, M. dos |
+| 28 | `cripto_portfolio` 📚 | 금융 | 9 | 7 | 견고 100% | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. · [DOI](https://doi.org/10.3390/math9141677) |
+| 29 | `portfolio_crise` 📚 | 금융 | 8 | 4 | 유력 77% | COSTA, I. P. de A.; MAÊDA, S. M. do N.; TEIXEIRA, L. F. H. de S. de B.; GOMES, C. F. S.; SANTOS, M. dos |
+| 30 | `cenarios_va` 📚 | 자동차 | 16 | 9 | 유력 73% | LI, S.; ZHOU, R.; HUANG, H. · [DOI](https://doi.org/10.1007/s42154-024-00344-6) |
+| 31 | `impressora_3d_energia` 📚 | 제조 | 12 | 7 | 유력 69% | OLIVEIRA, V. A. R. de; ALVARADO SILVA, C. A.; OLIVEIRA, G. C. R. de; TAJIMA, F. M.; FARIA NETO, A. dos R.; SALOMON, V. A. P.; GUIDI, E. S. · [DOI](https://doi.org/10.18687/LACCEI2025.1.1.1193) |
+| 32 | `impressoras_juridico` 📚 | 운영 | 12 | 4 | 견고 100% | OLIVEIRA, N. C.; OLIVEIRA, P. F. C. de; GOMES, C. F. S.; SANTOS, M. dos |
+| 33 | `fundos_hedge` 📚 | 금융 | 20 | 8 | 견고 94% | SILVA, F. P. da; RIBEIRO, C. de O. |
+| 34 | `modelos_previsao` 📚 | IT | 7 | 8 | 견고 95% | SHAH, S. |
+| 35 | `policultivo_rj` 📚 | 농업 | 8 | 8 | 유력 86% | PENEDO, B. |
+| 36 | `parafusadeiras_domesticas` 📚 | 소비재 | 14 | 8 | 유력 70% | COMPROU AVALIOU (canal) · [vídeo](https://youtu.be/pgdqVYEjZtk) |
+| 37 | `parafusadeiras_profissionais` 📚 | 제조 | 12 | 8 | 견고 100% | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal) · [vídeo](https://youtube.com/shorts/9SIs3agoZKc) |
+| 38 | `crowdfunding_startups` 📚 | 기업 | 16 | 9 | 견고 93% | SKARE, M.; GAVUROVA, B.; POLISHCHUK, V. · [DOI](https://doi.org/10.1016/j.jbusres.2023.113719) |
 
 > [!NOTE]
 > 사례 행렬은 **예시**입니다 — 방법을 보여 주기 위한 공개적이고 타당한 크기 수준입니다. **예시가 아닌 것**은 **모델링**입니다: 기준, 방향, DEMATEL 인과행렬, Saaty 행렬. 가치는 거기에 있습니다. **숫자를 당신의 견적서, 입찰공고, 실험 결과로 바꾸십시오** — 엔진은 같고, 데이터는 당신의 것입니다.
@@ -204,28 +205,29 @@ python3 pipeline.py --listar
 ### 📚 문헌에서 도출한 사례 연구
 
 > [!IMPORTANT]
-> 여덟 개 사례는 **기준과 인과 구조를 동료 심사 논문 및 학위논문에서 가져왔습니다** — 주식, 부동산 펀드, 핀테크, 부동산 감정, 정비 작업지시, 클라우드 사업자, 벤처 캐피털, 강사 순위. 기준은 지어낸 것이 아니라 원문에서 온 것이며, 각 연구의 저작자 정보는 해당 모듈 헤더에 보존되어 있습니다. **수치 행렬**은 자체 구성으로, 원 논문의 데이터는 재현하지 않았습니다.
+> 아래 표의 사례들은 **기준과 인과 구조를 목록의 문헌에서 가져왔습니다** — 동료 심사 논문, 학위논문, 학술대회 논문집, 기술 보고서. 기준은 지어낸 것이 아니라 원문에서 나왔으며, 저자 정보는 이 표와 해당 모듈 헤더에 보존되어 있습니다. **수치 행렬**은 자체 구성이며 원 문헌의 데이터를 그대로 옮기지 않았습니다. 색인된 DOI가 있는 경우 링크가 원문으로 연결되고, 없는 경우 완전한 서지 정보로 찾을 수 있습니다.
 
-| 사례 | 영역 | 출처 및 저작자 |
-|---|---|---|
-| `acoes_b3` | 금융 | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
-| `fundos_imobiliarios` | 금융 | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
-| `fintech` | 금융 | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
-| `avaliacao_imoveis` | 부동산 | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
-| `ordens_servico` | 운영 | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
-| `cloud_providers` | IT | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
-| `venture_capital` | 기업 | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
-| `instrutores` | 기업 | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
-| `cripto_portfolio` | 금융 | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, 9(14):1677, 2021 — **pesos AHP do artigo** |
-| `portfolio_crise` | 금융 | COSTA, I. P. A.; MAÊDA, S. M. N.; TEIXEIRA, L. F. H. S. B.; GOMES, C. F. S.; SANTOS, M. *Finanças em períodos de crise: aplicação do método SAPEVO-M*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — **matriz de decisão do artigo** |
-| `cenarios_va` | 자동차 | LI, S.; ZHOU, R.; HUANG, H. *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 |
-| `impressora_3d_energia` | 제조 | OLIVEIRA, V. A. R. et al. *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI, Cidade do México, 2025 — UNESP |
-| `impressoras_juridico` | 운영 | OLIVEIRA, N. C.; OLIVEIRA, P. F. C.; GOMES, C. F. S.; SANTOS, M. *Aplicação do método AHP TOPSIS 2N: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias*, 2019 |
-| `fundos_hedge` | 금융 | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
-| `modelos_previsao` | IT | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
-| `policultivo_rj` | 농업 | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
-| `parafusadeiras_domesticas` | 소비재 | COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! // Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — especificações extraídas da narração |
-| `parafusadeiras_profissionais` | 제조 | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo |
+| 사례 | 영역 | 저자 | 참고문헌 |
+|---|---|---|---|
+| `acoes_b3` | 금융 | COSTA, L. S. da · VÁSQUEZ, J. A.; ESCOBAR, J. W.; MANOTAS, D. F. | *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS* (COSTA, UERJ) · *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks, v.10, n.1, 4, 2022 (Universidad del Valle) · [DOI](https://doi.org/10.3390/risks10010004) |
+| `fundos_imobiliarios` | 금융 | SANTOS, V. V. dos (orient. ALMEIDA FILHO, A. T. de) | *Avaliação do método Random Forest para auxílio à seleção de fundos de investimento imobiliário listados na Bolsa de Valores*. Trabalho de Graduação, Engenharia da Computação, CIn/UFPE, set. 2023 |
+| `fintech` | 금융 | WIBOWO, S.; GRANDHI, L.; GRANDHI, S.; WELLS, M. | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects*. Mathematics, v.10, n.2, 225, 2022 — CQUniversity, Austrália · [DOI](https://doi.org/10.3390/math10020225) |
+| `avaliacao_imoveis` | 부동산 | DUARTE, D. C. de O. · MARQUES, J. P. M. | *Análise multicritério e geoestatística aplicadas na avaliação em massa de imóveis urbanos*. Tese, UFV, 2019 · *As formas de avaliar imóvel em leilão judicial*. Universidade São Judas Tadeu, 2023 |
+| `ordens_servico` | 운영 | ALENCAR, L. G. de; TAVARES, F. R. M.; MENDONÇA, F. J. S. de F.; DUARTE, A. K. G. | *Priorização de ordens de serviço aplicando métodos de tomada de decisão: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, p.2763-2784, 2022 — URCA, Ceará |
+| `cloud_providers` | IT | SOLOMON, T. | *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model for Provisioning of Enterprise IT Infrastructure in the Cloud*. Praxis (Doctor of Engineering), The George Washington University, 2017 |
+| `venture_capital` | 기업 | BEIM, G.; LÉVESQUE, M. · DHOCHAK, M.; DOLIYA, P. · AFFUL-DADZIE, E.; AFFUL-DADZIE, A.; OPLATKOVÁ, Z. K. | *Selecting projects for venture capital funding: a multiple criteria decision approach* (Case Western Reserve University) · *Valuation of a startup: moving towards strategic approaches*, J. Multi-Criteria Decision Analysis, 2019 · *Assessing commercial viability of technology start-up businesses in a government venture capital under intuitionistic fuzzy environment*, Int. J. Fuzzy Systems, 2016 · [DOI](https://doi.org/10.1002/mcda.1703) · [DOI](https://doi.org/10.1007/s40815-016-0141-9) |
+| `instrutores` | 기업 | SILVA, C. E. J. da; SALLES-NETO, L. L. de; SANTOS, M. dos | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, Juiz de Fora, 2022 — ITA / UNIFESP / IME |
+| `cripto_portfolio` | 금융 | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. | *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, v.9, n.14, 1677, 2021 — University of Split, Croácia — **pesos AHP do artigo** · [DOI](https://doi.org/10.3390/math9141677) |
+| `portfolio_crise` | 금융 | COSTA, I. P. de A.; MAÊDA, S. M. do N.; TEIXEIRA, L. F. H. de S. de B.; GOMES, C. F. S.; SANTOS, M. dos | *Finanças em períodos de crise: aplicação do método SAPEVO-M para composição de portfólios de investimentos*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — UFF / CASNAV / IME — **matriz de decisão do artigo** |
+| `cenarios_va` | 자동차 | LI, S.; ZHOU, R.; HUANG, H. | *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 · [DOI](https://doi.org/10.1007/s42154-024-00344-6) |
+| `impressora_3d_energia` | 제조 | OLIVEIRA, V. A. R. de; ALVARADO SILVA, C. A.; OLIVEIRA, G. C. R. de; TAJIMA, F. M.; FARIA NETO, A. dos R.; SALOMON, V. A. P.; GUIDI, E. S. | *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI International Multi-Conference, Cidade do México, 2025 — UNESP / Universidad César Vallejo · [DOI](https://doi.org/10.18687/LACCEI2025.1.1.1193) |
+| `impressoras_juridico` | 운영 | OLIVEIRA, N. C.; OLIVEIRA, P. F. C. de; GOMES, C. F. S.; SANTOS, M. dos | *Aplicação do método AHP TOPSIS 2N como apoio à tomada de decisão: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias* — UNIGRANRIO / UFF / IME |
+| `fundos_hedge` | 금융 | SILVA, F. P. da; RIBEIRO, C. de O. | *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — Escola Politécnica da USP |
+| `modelos_previsao` | IT | SHAH, S. | *Comparison of Stochastic Forecasting Models*. Stochastic Differential Equations Course Project, Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério sobre eles é deste projeto |
+| `policultivo_rj` | 농업 | PENEDO, B. | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos em Ambiente Controlado (RJ)*. Relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
+| `parafusadeiras_domesticas` | 소비재 | COMPROU AVALIOU (canal) | *As 5 Melhores Parafusadeira De 2025*, 14/05/2024 — especificações extraídas da narração · [vídeo](https://youtu.be/pgdqVYEjZtk) |
+| `parafusadeiras_profissionais` | 제조 | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal) | *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo · [vídeo](https://youtube.com/shorts/9SIs3agoZKc) |
+| `crowdfunding_startups` | 기업 | SKARE, M.; GAVUROVA, B.; POLISHCHUK, V. | *A decision-making support model for financing start-up projects by venture capital funds on a crowdfunding platform*. Journal of Business Research, v.158, 113719, 2023 — **critérios e escalas do artigo** · [DOI](https://doi.org/10.1016/j.jbusres.2023.113719) |
 
 ---
 
@@ -313,10 +315,10 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ 아홉 개의 의사결정 학파 — 그리고 왜 아홉인가
+## ⚖️ 열 개의 의사결정 학파 — 그리고 왜 열인가
 
 > [!IMPORTANT]
-> **각 방법은 “더 낫다”가 무엇을 뜻하는지에 관한 서로 다른 이론입니다.** 하나만 쓰는 것은 질문과 함께 답을 고르는 일입니다. 아홉 가지를 모두 실행하는 이유는 **독립적인 이론들 사이의 일치**야말로 의사결정 문제가 허용하는 가장 강한 증거이기 때문입니다.
+> **각 방법은 “더 낫다”가 무엇을 뜻하는지에 관한 서로 다른 이론입니다.** 하나만 쓰는 것은 질문과 함께 답을 고르는 일입니다. 열 가지를 모두 실행하는 이유는 **독립적인 이론들 사이의 일치**야말로 의사결정 문제가 허용하는 가장 강한 증거이기 때문입니다.
 
 <div align="center">
 
@@ -331,8 +333,12 @@ python3 gerar_graficos.py --workers 6
 | **VIKOR** | 절충 | 집단 효용 × 최대 후회 | **보상이 용납되지 않을** 때 | Opricovic (1979); Opricovic & Tzeng (2002-07) |
 | **TODIM** | 전망이론 | 손실이 같은 크기의 이득보다 더 아프다 | 손실 회피적 의사결정자 — **모두가 그렇다** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | 다의사결정자 서수법 | 여러 의사결정자의 서수적 판단 | **스스로 합의하지 못하는 위원회** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
+| **TOPSIS Fuzzy** | 퍼지 | 데이터가 점이 아니라 **구간**이라는 것 | 측정이 부정확하고, 그래도 순위가 유지되는지 알고 싶을 때 | Zadeh (1965); Chen (2000) |
 
 </div>
+
+> [!NOTE]
+> **퍼지 TOPSIS**는 잡음을 더한 AHP-TOPSIS가 아닙니다. 삼각퍼지수 외에도 정규화(벡터 대신 선형)와 이상해(상대 대신 절대)를 바꿉니다. **AHP-TOPSIS 2n과 달라지는 것이 예상된 동작**이며, 순위가 그 선택들에 얼마나 의존하는지를 측정합니다. **퍼지 AHP**(Buckley)는 DEMATEL, AHP와 나란히 세 번째 가중치 원천으로 들어갑니다. 같은 쌍대비교 판단을 받되 불확실성을 끝까지 운반하며, 균일한 퍼짐에서는 중심값이 AHP와 일치하고 새로 더하는 것은 **구간**입니다. 그 구간이 우선순위가 의사결정자 자신의 불확실성을 견디는지 답합니다.
 
 <details>
 <summary><b>이 셋이 특별한 주목을 받는 이유</b></summary>
@@ -353,7 +359,7 @@ Kahneman과 Tversky의 **전망이론**에 기반합니다: 주행거리 10점�
 ### 합의 엔진
 
 ```
-DEMATEL ──► 영향력 기반 가중치 ──► 9개 방법 ──► 보르다 합의 ──► 선정안
+DEMATEL ──► 영향력 기반 가중치 ──► 10개 방법 ──► 보르다 합의 ──► 선정안
                                                     │
                         2,000개 디리클레 세계 ─────────────────┘
                                     ▼
@@ -393,7 +399,7 @@ python3 exportar_rust.py
 
 ## 🚀 성능: 26배 빠르게, 같은 답
 
-견고성 분석은 2,000개 세계 × 9개 방법을 실행합니다. 소박한 구현은 사례당 **42초**가 걸렸습니다.
+견고성 분석은 2,000개 세계 × 10개 방법을 실행합니다. 소박한 구현은 사례당 **42초**가 걸렸습니다.
 
 <div align="center">
 
@@ -405,9 +411,9 @@ python3 exportar_rust.py
 
 </div>
 
-> **가장 큰 이득을 준 최적화는 병렬화도 JIT도 아니었습니다.** 아홉 방법 중 넷이 **가중치 벡터에 대해 선형**임을 알아챈 것이었습니다 — 덕분에 텐서를 미리 계산해 각 세계를 행렬-벡터 곱 하나로 줄일 수 있었습니다. **인프라보다 대수가 먼저입니다.**
+> **가장 큰 이득을 준 최적화는 병렬화도 JIT도 아니었습니다.** 열 방법 중 넷이 **가중치 벡터에 대해 선형**임을 알아챈 것이었습니다 — 덕분에 텐서를 미리 계산해 각 세계를 행렬-벡터 곱 하나로 줄일 수 있었습니다. **인프라보다 대수가 먼저입니다.**
 
-그리고 결과는 느린 경로와 **비트 단위로 동일**합니다 — 스위트를 실행할 때마다 100개 세계 × 9개 방법을 검증합니다. 결과를 바꾸는 최적화는 이득이 아니라 결함입니다.
+그리고 결과는 느린 경로와 **비트 단위로 동일**합니다 — 스위트를 실행할 때마다 100개 세계 × 10개 방법을 검증합니다. 결과를 바꾸는 최적화는 이득이 아니라 결함입니다.
 
 <details>
 <summary><b>프로젝트 실행 정책</b></summary>

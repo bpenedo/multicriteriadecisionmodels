@@ -231,6 +231,8 @@ fn main() {
     rodar!("MCDA-C", mcda_c(&p.matriz, &pesos, &p.direcoes, 0.25, 0.75));
     rodar!("PROMETHEE II", promethee_ii(&p.matriz, &pesos, &p.direcoes, FuncaoPreferencia::Linear));
     rodar!("TODIM", todim(&p.matriz, &pesos, &p.direcoes, 1.0));
+    rodar!("SAPEVO-M", sapevo_m_de_matriz(&p.matriz, &pesos, &p.direcoes));
+    rodar!("TOPSIS Fuzzy", fuzzy_topsis(&p.matriz, &pesos, &p.direcoes, FUZZY_ALPHA));
     let saida_vikor = match vikor(&p.matriz, &pesos, &p.direcoes, 0.5) {
         Ok(s) => s,
         Err(e) => {

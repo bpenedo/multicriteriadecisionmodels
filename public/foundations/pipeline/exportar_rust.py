@@ -24,9 +24,10 @@ import numpy as np
 from casos import CATALOGO, obter
 from config import ENCODING, FOUNDATIONS_DIR
 from db import carregar_caso, get_conn
-from nucleo import (ahp_topsis_2n, dematel, electre_i, maut, mcda_c,
+from nucleo import (METODOS, ahp_topsis_2n, dematel, electre_i, maut, mcda_c,
                     promethee_ii, ranks)
-from metodos_br import electre_ii, todim, vikor
+from fuzzy import fuzzy_topsis_de_crisp
+from metodos_br import (electre_ii, sapevo_m_de_matriz, todim, vikor)
 
 RUST_DIR = FOUNDATIONS_DIR / "rust" / "mcdm_core"
 BINARIO = RUST_DIR / "target" / "release" / "mcdm"
@@ -88,7 +89,22 @@ def conferir(conn, id_caso: str) -> dict:
         "PROMETHEE II":  promethee_ii(X, pesos, direcoes),
         "TODIM":         todim(X, pesos, direcoes)[0],
         "VIKOR":         vikor(X, pesos, direcoes)[0],
+        "SAPEVO-M":      sapevo_m_de_matriz(X, direcoes, pesos),
+        "TOPSIS Fuzzy":  fuzzy_topsis_de_crisp(X, pesos, direcoes),
     }
+
+    # A lista acima era FIXA e tinha 8 entradas enquanto METODOS tinha 9: o
+    # SAPEVO-M nunca foi comparado, e a mensagem final dizia "concordam em TODOS
+    # os métodos". Agora a cobertura é conferida contra METODOS dos dois lados, e
+    # qualquer método sem contraparte falha alto. Ver bugs.md #BUG-041.
+    faltam_py = set(METODOS) - set(py)
+    faltam_rs = set(METODOS) - set(rust["metodos"])
+    if faltam_py or faltam_rs:
+        raise RuntimeError(
+            "cobertura incompleta da verificação cruzada — "
+            f"sem lado Python: {sorted(faltam_py) or 'nenhum'}; "
+            f"sem lado Rust: {sorted(faltam_rs) or 'nenhum'}. "
+            "Um método fora da comparação é um método NÃO verificado.")
 
     divergencias = []
     max_delta_peso = float(np.abs(np.array(rust["pesos"]) - pesos).max())

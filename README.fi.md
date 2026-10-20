@@ -14,9 +14,9 @@ E-mail: profbruanbima@gmail.com
 
 ### Lopeta valitseminen taulukkolaskennalla. Ala päättää todisteiden pohjalta.
 
-**Yhdeksän päätöksenteon koulukuntaa. Yksi voittaja. Ja — ensimmäistä kertaa — todennäköisyys sille, että voittaja on oikea.**
+**Kymmenen päätöksenteon koulukuntaa. Yksi voittaja. Ja — ensimmäistä kertaa — todennäköisyys sille, että voittaja on oikea.**
 
-[![MCDM](https://img.shields.io/badge/MCDM_menetelmät-9-2563eb?style=for-the-badge)](#-yhdeksän-päätöksenteon-koulukuntaa--ja-miksi-yhdeksän)
+[![MCDM](https://img.shields.io/badge/MCDM_menetelmät-10-2563eb?style=for-the-badge)](#-kymmenen-päätöksenteon-koulukuntaa--ja-miksi-kymmenen)
 [![Engines](https://img.shields.io/badge/Moottorit-Python_+_Rust-c2410c?style=for-the-badge)](#-kaksi-riippumatonta-moottoria-ristiintarkistus)
 [![i18n](https://img.shields.io/badge/Kielet-12-16a34a?style=for-the-badge)](#-12-kieltä--sdl-trados-käännösmuisti)
 [![Robustez](https://img.shields.io/badge/Simuloidut_universumit-2.000-8f3d56?style=for-the-badge)](#-kysymys-johon-kukaan-ei-vastaa-entä-jos-painot-ovat-väärin)
@@ -65,7 +65,7 @@ Se ”voittaja” ei koskaan ollut voittaja. Se oli **kalibrointisi artefakti** 
 
 ---
 
-## 💊 Ratkaisu: yhdeksän koulukuntaa, yksi konsensus ja luottamusväli
+## 💊 Ratkaisu: kymmenen koulukuntaa, yksi konsensus ja luottamusväli
 
 **MCDM Studio ajaa **yhdeksän vakiintunutta monikriteerimenetelmää** samaan ongelmaan, johtaa voittajan niiden välisestä **konsensuksesta** ja tekee sitten sen ainoan asian, jolla on todella väliä:**
 
@@ -98,7 +98,7 @@ Tuomio lakkaa olemasta luku ja muuttuu **lauseeksi, joka kestää komitean**:
 
 > Yllä olevassa tapauksessa **teknologiansiirto** ja **tutkasignatuuri** ovat SYITÄ: niihin koskeminen liikuttaa koko järjestelmää. **Kaluston käytettävyys** on SEURAUS — lämpömittari, ei vipu. Tarjouspyyntö, joka pisteyttää käytettävyyden ja sivuuttaa teknologiansiirron, mittaa kuumetta ja jättää infektion huomiotta.
 
-### 2. Yhdeksän koulukuntaa samaan ongelmaan
+### 2. Kymmenen koulukuntaa samaan ongelmaan
 
 <div align="center"><img src="docs/telas/veiculo_eletrico/mapa_metodos.png" alt="Métodos" width="900"/></div>
 
@@ -155,45 +155,46 @@ Moottori on **toimialariippumaton**: yksikkö on *päätöstapaus* (vaihtoehdot 
 python3 pipeline.py --listar
 ```
 
-| # | Tapaus | Toimiala | Vaihtoehdot | Kriteerit | Tuomio |
-|--:|---|---|--:|--:|---|
-| 1 | `smartphone` | kuluttaja | 6 | 8 | TODENNÄKÖINEN 85% |
-| 2 | `veiculo_eletrico` | autoala | 7 | 8 | VAKAA 96% |
-| 3 | `caca_multifuncao` | puolustus | 6 | 9 | VAKAA 100% |
-| 4 | `blindado` | puolustus | 5 | 8 | VAKAA 90% |
-| 5 | `portfolio_startup` | yritys | 7 | 9 | VAKAA 97% |
-| 6 | `estacao_trabalho` | IT | 6 | 8 | VAKAA 98% |
-| 7 | `carros_eletricos` | autoala | 38 | 9 | VAKAA 99% |
-| 8 | `smartphones_2026` | kuluttaja | 38 | 9 | TODENNÄKÖINEN 65% |
-| 9 | `tablets` | kuluttaja | 34 | 8 | TODENNÄKÖINEN 62% |
-| 10 | `smartwatches` | kuluttaja | 31 | 8 | TODENNÄKÖINEN 79% |
-| 11 | `notebooks` | IT | 32 | 8 | TODENNÄKÖINEN 76% |
-| 12 | `maquinario_agricola` | maatalous | 35 | 8 | VAKAA 100% |
-| 13 | `sbc_iot` | IT | 33 | 8 | VAKAA 100% |
-| 14 | `mineracao_asic` | infrastruktuuri | 31 | 8 | HAURAS 51% |
-| 15 | `minipcs` | IT | 10 | 8 | VAKAA 96% |
-| 16 | `impressoras_3d_miniaturas` | valmistus | 30 | 9 | HAURAS 35% |
-| 17 | `impressoras_3d_producao` | valmistus | 30 | 9 | HAURAS 45% |
-| 18 | `plotters_formato` | valmistus | 24 | 9 | TODENNÄKÖINEN 86% |
-| 19 | `impressoras_3d_miniaturas_triadas` | valmistus | 13 | 9 | VAKAA 100% |
-| 20 | `acoes_b3` 📚 | rahoitus | 20 | 7 | HAURAS 52% |
-| 21 | `fundos_imobiliarios` 📚 | rahoitus | 18 | 8 | TODENNÄKÖINEN 61% |
-| 22 | `fintech` 📚 | rahoitus | 16 | 8 | TODENNÄKÖINEN 78% |
-| 23 | `avaliacao_imoveis` 📚 | kiinteistöt | 16 | 8 | VAKAA 96% |
-| 24 | `ordens_servico` 📚 | toiminta | 18 | 8 | VAKAA 92% |
-| 25 | `cloud_providers` 📚 | IT | 14 | 8 | VAKAA 100% |
-| 26 | `venture_capital` 📚 | yritys | 16 | 8 | VAKAA 97% |
-| 27 | `instrutores` 📚 | yritys | 15 | 8 | VAKAA 100% |
-| 28 | `cripto_portfolio` 📚 | rahoitus | 9 | 7 | VAKAA 100% |
-| 29 | `portfolio_crise` 📚 | rahoitus | 8 | 4 | TODENNÄKÖINEN 71% |
-| 30 | `cenarios_va` 📚 | autoala | 16 | 9 | TODENNÄKÖINEN 75% |
-| 31 | `impressora_3d_energia` 📚 | valmistus | 12 | 7 | TODENNÄKÖINEN 80% |
-| 32 | `impressoras_juridico` 📚 | toiminta | 12 | 4 | VAKAA 100% |
-| 33 | `fundos_hedge` 📚 | rahoitus | 20 | 8 | VAKAA 98% |
-| 34 | `modelos_previsao` 📚 | IT | 7 | 8 | TODENNÄKÖINEN 74% |
-| 35 | `policultivo_rj` 📚 | maatalous | 8 | 8 | VAKAA 100% |
-| 36 | `parafusadeiras_domesticas` 📚 | kuluttaja | 14 | 8 | TODENNÄKÖINEN 86% |
-| 37 | `parafusadeiras_profissionais` 📚 | valmistus | 12 | 8 | VAKAA 100% |
+| # | Tapaus | Toimiala | Vaihtoehdot | Kriteerit | Tuomio | Tekijät / lähde |
+|--:|---|---|--:|--:|---|---|
+| 1 | `smartphone` | kuluttaja | 6 | 8 | TODENNÄKÖINEN 63% | Oma mallinnus |
+| 2 | `veiculo_eletrico` | autoala | 7 | 8 | VAKAA 99% | Oma mallinnus |
+| 3 | `caca_multifuncao` | puolustus | 6 | 9 | VAKAA 100% | Oma mallinnus |
+| 4 | `blindado` | puolustus | 5 | 8 | VAKAA 93% | Oma mallinnus |
+| 5 | `portfolio_startup` | yritys | 7 | 9 | VAKAA 96% | Oma mallinnus |
+| 6 | `estacao_trabalho` | IT | 6 | 8 | VAKAA 98% | Oma mallinnus |
+| 7 | `carros_eletricos` | autoala | 38 | 9 | VAKAA 96% | Oma mallinnus |
+| 8 | `smartphones_2026` | kuluttaja | 38 | 9 | TODENNÄKÖINEN 73% | Oma mallinnus |
+| 9 | `tablets` | kuluttaja | 34 | 8 | TODENNÄKÖINEN 67% | Oma mallinnus |
+| 10 | `smartwatches` | kuluttaja | 31 | 8 | TODENNÄKÖINEN 84% | Oma mallinnus |
+| 11 | `notebooks` | IT | 32 | 8 | TODENNÄKÖINEN 83% | Oma mallinnus |
+| 12 | `maquinario_agricola` | maatalous | 35 | 8 | VAKAA 100% | Oma mallinnus |
+| 13 | `sbc_iot` | IT | 33 | 8 | VAKAA 100% | Oma mallinnus |
+| 14 | `mineracao_asic` | infrastruktuuri | 31 | 8 | HAURAS 50% | Oma mallinnus |
+| 15 | `minipcs` | IT | 10 | 8 | VAKAA 91% | Oma mallinnus |
+| 16 | `impressoras_3d_miniaturas` | valmistus | 30 | 9 | HAURAS 48% | Oma mallinnus |
+| 17 | `impressoras_3d_producao` | valmistus | 30 | 9 | HAURAS 58% | Oma mallinnus |
+| 18 | `plotters_formato` | valmistus | 24 | 9 | VAKAA 96% | Oma mallinnus |
+| 19 | `impressoras_3d_miniaturas_triadas` | valmistus | 13 | 9 | VAKAA 100% | Oma mallinnus |
+| 20 | `acoes_b3` 📚 | rahoitus | 20 | 7 | HAURAS 39% | COSTA, L. S. da · VÁSQUEZ, J. A.; ESCOBAR, J. W.; MANOTAS, D. F. · [DOI](https://doi.org/10.3390/risks10010004) |
+| 21 | `fundos_imobiliarios` 📚 | rahoitus | 18 | 8 | TODENNÄKÖINEN 85% | SANTOS, V. V. dos (orient. ALMEIDA FILHO, A. T. de) |
+| 22 | `fintech` 📚 | rahoitus | 16 | 8 | TODENNÄKÖINEN 67% | WIBOWO, S.; GRANDHI, L.; GRANDHI, S.; WELLS, M. · [DOI](https://doi.org/10.3390/math10020225) |
+| 23 | `avaliacao_imoveis` 📚 | kiinteistöt | 16 | 8 | VAKAA 94% | DUARTE, D. C. de O. · MARQUES, J. P. M. |
+| 24 | `ordens_servico` 📚 | toiminta | 18 | 8 | VAKAA 97% | ALENCAR, L. G. de; TAVARES, F. R. M.; MENDONÇA, F. J. S. de F.; DUARTE, A. K. G. |
+| 25 | `cloud_providers` 📚 | IT | 14 | 8 | VAKAA 100% | SOLOMON, T. |
+| 26 | `venture_capital` 📚 | yritys | 16 | 8 | VAKAA 96% | BEIM, G.; LÉVESQUE, M. · DHOCHAK, M.; DOLIYA, P. · AFFUL-DADZIE, E.; AFFUL-DADZIE, A.; OPLATKOVÁ, Z. K. · [DOI](https://doi.org/10.1002/mcda.1703) |
+| 27 | `instrutores` 📚 | yritys | 15 | 8 | VAKAA 100% | SILVA, C. E. J. da; SALLES-NETO, L. L. de; SANTOS, M. dos |
+| 28 | `cripto_portfolio` 📚 | rahoitus | 9 | 7 | VAKAA 100% | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. · [DOI](https://doi.org/10.3390/math9141677) |
+| 29 | `portfolio_crise` 📚 | rahoitus | 8 | 4 | TODENNÄKÖINEN 77% | COSTA, I. P. de A.; MAÊDA, S. M. do N.; TEIXEIRA, L. F. H. de S. de B.; GOMES, C. F. S.; SANTOS, M. dos |
+| 30 | `cenarios_va` 📚 | autoala | 16 | 9 | TODENNÄKÖINEN 73% | LI, S.; ZHOU, R.; HUANG, H. · [DOI](https://doi.org/10.1007/s42154-024-00344-6) |
+| 31 | `impressora_3d_energia` 📚 | valmistus | 12 | 7 | TODENNÄKÖINEN 69% | OLIVEIRA, V. A. R. de; ALVARADO SILVA, C. A.; OLIVEIRA, G. C. R. de; TAJIMA, F. M.; FARIA NETO, A. dos R.; SALOMON, V. A. P.; GUIDI, E. S. · [DOI](https://doi.org/10.18687/LACCEI2025.1.1.1193) |
+| 32 | `impressoras_juridico` 📚 | toiminta | 12 | 4 | VAKAA 100% | OLIVEIRA, N. C.; OLIVEIRA, P. F. C. de; GOMES, C. F. S.; SANTOS, M. dos |
+| 33 | `fundos_hedge` 📚 | rahoitus | 20 | 8 | VAKAA 94% | SILVA, F. P. da; RIBEIRO, C. de O. |
+| 34 | `modelos_previsao` 📚 | IT | 7 | 8 | VAKAA 95% | SHAH, S. |
+| 35 | `policultivo_rj` 📚 | maatalous | 8 | 8 | TODENNÄKÖINEN 86% | PENEDO, B. |
+| 36 | `parafusadeiras_domesticas` 📚 | kuluttaja | 14 | 8 | TODENNÄKÖINEN 70% | COMPROU AVALIOU (canal) · [vídeo](https://youtu.be/pgdqVYEjZtk) |
+| 37 | `parafusadeiras_profissionais` 📚 | valmistus | 12 | 8 | VAKAA 100% | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal) · [vídeo](https://youtube.com/shorts/9SIs3agoZKc) |
+| 38 | `crowdfunding_startups` 📚 | yritys | 16 | 9 | VAKAA 93% | SKARE, M.; GAVUROVA, B.; POLISHCHUK, V. · [DOI](https://doi.org/10.1016/j.jbusres.2023.113719) |
 
 > [!NOTE]
 > Tapausten matriisit ovat **havainnollistavia** — julkisia ja uskottavia suuruusluokkia menetelmän esittelyyn. **Ei-havainnollistavaa** on **mallinnus**: kriteerit, suunnat, DEMATELin kausaalimatriisi ja Saatyn matriisi. Siinä on arvo. **Korvaa luvut omalla tarjouksellasi, omalla tarjouspyynnölläsi tai omalla laboratoriotestilläsi** — moottori on sama; data on sinun.
@@ -204,28 +205,29 @@ python3 pipeline.py --listar
 ### 📚 Kirjallisuudesta johdetut tapaustutkimukset
 
 > [!IMPORTANT]
-> Kahdeksassa tapauksessa **kriteerit ja kausaalirakenne on otettu vertaisarvioiduista artikkeleista ja opinnäytteistä** — osakkeet, kiinteistörahastot, fintech, kiinteistöarviointi, kunnossapidon työmääräimet, pilvipalveluntarjoajat, riskipääoma ja kouluttajien järjestäminen. Kriteerejä ei ole keksitty: ne tulevat lähdetekstistä, ja kunkin työn tekijyys on säilytetty vastaavan moduulin otsikossa. **Lukumatriisit** ovat omia instansseja — alkuperäisten töiden dataa ei ole toisinnettu.
+> Alla olevan taulukon tapauksissa **kriteerit ja kausaalirakenne on otettu luetelluista töistä** — vertaisarvioiduista artikkeleista, opinnäytteistä, konferenssijulkaisuista ja teknisistä raporteista. Kriteerejä ei ole keksitty: ne tulevat lähdetekstistä, ja tekijyys on säilytetty tässä ja vastaavan moduulin otsikossa. **Lukumatriisit** ovat omia instansseja — mitään alkuperäisten töiden dataa ei ole toisinnettu. Missä indeksoitu DOI on olemassa, linkki vie työhön; missä ei, täydellinen tekstiviite riittää sen löytämiseen.
 
-| Tapaus | Toimiala | Lähde ja tekijyys |
-|---|---|---|
-| `acoes_b3` | rahoitus | COSTA, L. S. *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS*; *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks 10(4):4, 2022 |
-| `fundos_imobiliarios` | rahoitus | SANTOS, V. V. *TCC*, Engenharia da Computação, UFPE |
-| `fintech` | rahoitus | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects* |
-| `avaliacao_imoveis` | kiinteistöt | DUARTE, D. C. O. *Análise multicritério e geoestatística aplicadas na avaliação de imóveis*; MARQUES, J. P. M. |
-| `ordens_servico` | toiminta | *Priorização de ordens de serviço: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, 2022 |
-| `cloud_providers` | IT | SOLOMON. *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model*. The George Washington University |
-| `venture_capital` | yritys | BEIM, G.; LÉVESQUE, M.; DHOCHAK, M. et al. (2019); AFFUL-DADZIE, E. et al.; MILKOVA/ANDREICHIKOV (IJAHP) |
-| `instrutores` | yritys | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, 2022 |
-| `cripto_portfolio` | rahoitus | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, 9(14):1677, 2021 — **pesos AHP do artigo** |
-| `portfolio_crise` | rahoitus | COSTA, I. P. A.; MAÊDA, S. M. N.; TEIXEIRA, L. F. H. S. B.; GOMES, C. F. S.; SANTOS, M. *Finanças em períodos de crise: aplicação do método SAPEVO-M*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — **matriz de decisão do artigo** |
-| `cenarios_va` | autoala | LI, S.; ZHOU, R.; HUANG, H. *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 |
-| `impressora_3d_energia` | valmistus | OLIVEIRA, V. A. R. et al. *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI, Cidade do México, 2025 — UNESP |
-| `impressoras_juridico` | toiminta | OLIVEIRA, N. C.; OLIVEIRA, P. F. C.; GOMES, C. F. S.; SANTOS, M. *Aplicação do método AHP TOPSIS 2N: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias*, 2019 |
-| `fundos_hedge` | rahoitus | SILVA, F. P.; RIBEIRO, C. O. *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — USP |
-| `modelos_previsao` | IT | SHAH, S. *Comparison of Stochastic Forecasting Models*. Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério é deste projeto |
-| `policultivo_rj` | maatalous | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos (RJ)*, relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
-| `parafusadeiras_domesticas` | kuluttaja | COMPROU AVALIOU (canal). *As 5 Melhores Parafusadeira De 2025! // Tem Boa e Barata, 20V, De Impacto e Outras*, 14/05/2024 — especificações extraídas da narração |
-| `parafusadeiras_profissionais` | valmistus | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal). *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo |
+| Tapaus | Toimiala | Tekijät | Lähdeviite |
+|---|---|---|---|
+| `acoes_b3` | rahoitus | COSTA, L. S. da · VÁSQUEZ, J. A.; ESCOBAR, J. W.; MANOTAS, D. F. | *Uma metodologia para a pré-seleção de ações utilizando o método multicritério TOPSIS* (COSTA, UERJ) · *AHP–TOPSIS Methodology for Stock Portfolio Investments*, Risks, v.10, n.1, 4, 2022 (Universidad del Valle) · [DOI](https://doi.org/10.3390/risks10010004) |
+| `fundos_imobiliarios` | rahoitus | SANTOS, V. V. dos (orient. ALMEIDA FILHO, A. T. de) | *Avaliação do método Random Forest para auxílio à seleção de fundos de investimento imobiliário listados na Bolsa de Valores*. Trabalho de Graduação, Engenharia da Computação, CIn/UFPE, set. 2023 |
+| `fintech` | rahoitus | WIBOWO, S.; GRANDHI, L.; GRANDHI, S.; WELLS, M. | *A Fuzzy Multicriteria Group Decision Making Approach for Evaluating and Selecting Fintech Projects*. Mathematics, v.10, n.2, 225, 2022 — CQUniversity, Austrália · [DOI](https://doi.org/10.3390/math10020225) |
+| `avaliacao_imoveis` | kiinteistöt | DUARTE, D. C. de O. · MARQUES, J. P. M. | *Análise multicritério e geoestatística aplicadas na avaliação em massa de imóveis urbanos*. Tese, UFV, 2019 · *As formas de avaliar imóvel em leilão judicial*. Universidade São Judas Tadeu, 2023 |
+| `ordens_servico` | toiminta | ALENCAR, L. G. de; TAVARES, F. R. M.; MENDONÇA, F. J. S. de F.; DUARTE, A. K. G. | *Priorização de ordens de serviço aplicando métodos de tomada de decisão: o AHP integrado ao PROMETHEE*. Revista Produção Online, v.22, n.2, p.2763-2784, 2022 — URCA, Ceará |
+| `cloud_providers` | IT | SOLOMON, T. | *Ranking of Cloud Service Providers Using a Dynamic TOPSIS Model for Provisioning of Enterprise IT Infrastructure in the Cloud*. Praxis (Doctor of Engineering), The George Washington University, 2017 |
+| `venture_capital` | yritys | BEIM, G.; LÉVESQUE, M. · DHOCHAK, M.; DOLIYA, P. · AFFUL-DADZIE, E.; AFFUL-DADZIE, A.; OPLATKOVÁ, Z. K. | *Selecting projects for venture capital funding: a multiple criteria decision approach* (Case Western Reserve University) · *Valuation of a startup: moving towards strategic approaches*, J. Multi-Criteria Decision Analysis, 2019 · *Assessing commercial viability of technology start-up businesses in a government venture capital under intuitionistic fuzzy environment*, Int. J. Fuzzy Systems, 2016 · [DOI](https://doi.org/10.1002/mcda.1703) · [DOI](https://doi.org/10.1007/s40815-016-0141-9) |
+| `instrutores` | yritys | SILVA, C. E. J. da; SALLES-NETO, L. L. de; SANTOS, M. dos | *Modelagem matemática com os métodos AHP e TOPSIS para ordenação de instrutores em uma escola da FAB*. LIV SBPO, Juiz de Fora, 2022 — ITA / UNIFESP / IME |
+| `cripto_portfolio` | rahoitus | ALJINOVIĆ, Z.; MARASOVIĆ, B.; ŠESTANOVIĆ, T. | *Cryptocurrency Portfolio Selection — A Multicriteria Approach*. Mathematics, v.9, n.14, 1677, 2021 — University of Split, Croácia — **pesos AHP do artigo** · [DOI](https://doi.org/10.3390/math9141677) |
+| `portfolio_crise` | rahoitus | COSTA, I. P. de A.; MAÊDA, S. M. do N.; TEIXEIRA, L. F. H. de S. de B.; GOMES, C. F. S.; SANTOS, M. dos | *Finanças em períodos de crise: aplicação do método SAPEVO-M para composição de portfólios de investimentos*. Pesquisa Operacional para o Desenvolvimento, v.13, e13004, 2021 — UFF / CASNAV / IME — **matriz de decisão do artigo** |
+| `cenarios_va` | autoala | LI, S.; ZHOU, R.; HUANG, H. | *Multidimensional Evaluation of Autonomous Driving Test Scenarios Based on AHP-EWM-TOPSIS Models*. Automotive Innovation, 2025 · [DOI](https://doi.org/10.1007/s42154-024-00344-6) |
+| `impressora_3d_energia` | valmistus | OLIVEIRA, V. A. R. de; ALVARADO SILVA, C. A.; OLIVEIRA, G. C. R. de; TAJIMA, F. M.; FARIA NETO, A. dos R.; SALOMON, V. A. P.; GUIDI, E. S. | *Multicriteria Analysis for 3D Printer Selection*. 23rd LACCEI International Multi-Conference, Cidade do México, 2025 — UNESP / Universidad César Vallejo · [DOI](https://doi.org/10.18687/LACCEI2025.1.1.1193) |
+| `impressoras_juridico` | toiminta | OLIVEIRA, N. C.; OLIVEIRA, P. F. C. de; GOMES, C. F. S.; SANTOS, M. dos | *Aplicação do método AHP TOPSIS 2N como apoio à tomada de decisão: estudo de caso no departamento jurídico da Secretaria Municipal de Saúde de Duque de Caxias* — UNIGRANRIO / UFF / IME |
+| `fundos_hedge` | rahoitus | SILVA, F. P. da; RIBEIRO, C. de O. | *Análise comparativa de fundos de hedge brasileiros utilizando DEA e bootstrap*. XII SIMPEP, Bauru-SP, 2005 — Escola Politécnica da USP |
+| `modelos_previsao` | IT | SHAH, S. | *Comparison of Stochastic Forecasting Models*. Stochastic Differential Equations Course Project, Johns Hopkins University — o artigo compara os modelos; a modelagem multicritério sobre eles é deste projeto |
+| `policultivo_rj` | maatalous | PENEDO, B. | *AGTech PoliCultivo 4.0 — Otimização de Portfólio de Cultivos em Ambiente Controlado (RJ)*. Relatório técnico, 03/08/2026, seção 14 — **matriz e pesos do relatório** |
+| `parafusadeiras_domesticas` | kuluttaja | COMPROU AVALIOU (canal) | *As 5 Melhores Parafusadeira De 2025*, 14/05/2024 — especificações extraídas da narração · [vídeo](https://youtu.be/pgdqVYEjZtk) |
+| `parafusadeiras_profissionais` | valmistus | FERRAMENTAS EM AÇÃO — ASSIS PIRES (canal) | *As Melhores Parafusadeiras Do Mundo*, 04/01/2024 — modelos e baterias lidos dos quadros do vídeo · [vídeo](https://youtube.com/shorts/9SIs3agoZKc) |
+| `crowdfunding_startups` | yritys | SKARE, M.; GAVUROVA, B.; POLISHCHUK, V. | *A decision-making support model for financing start-up projects by venture capital funds on a crowdfunding platform*. Journal of Business Research, v.158, 113719, 2023 — **critérios e escalas do artigo** · [DOI](https://doi.org/10.1016/j.jbusres.2023.113719) |
 
 ---
 
@@ -313,10 +315,10 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ Yhdeksän päätöksenteon koulukuntaa — ja miksi yhdeksän
+## ⚖️ Yhdeksän päätöksenteon koulukuntaa — ja miksi kymmenen
 
 > [!IMPORTANT]
-> **Jokainen menetelmä on eri teoria siitä, mitä ”parempi” tarkoittaa.** Vain yhden käyttäminen on vastauksen valitsemista yhdessä kysymyksen kanssa. Ajamme kaikki yhdeksän, koska **riippumattomien teorioiden yksimielisyys** on vahvin todiste, jonka päätösongelma sallii.
+> **Jokainen menetelmä on eri teoria siitä, mitä ”parempi” tarkoittaa.** Vain yhden käyttäminen on vastauksen valitsemista yhdessä kysymyksen kanssa. Ajamme kaikki kymmenen, koska **riippumattomien teorioiden yksimielisyys** on vahvin todiste, jonka päätösongelma sallii.
 
 <div align="center">
 
@@ -331,8 +333,12 @@ python3 gerar_graficos.py --workers 6
 | **VIKOR** | kompromissi | ryhmän hyöty × suurin kaduttavuus | kun **kompensaatio on kelvoton** | Opricovic (1979); Opricovic & Tzeng (2002-07) |
 | **TODIM** | prospektiteoria | tappio sattuu enemmän kuin vastaava voitto ilahduttaa | tappiota karttava päättäjä — **niitä ovat kaikki** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | järjestysasteikollinen, monta päättäjää | useiden päättäjien järjestysasteikollinen arvio | **komitea, joka ei ole yksimielinen** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
+| **TOPSIS Fuzzy** | Sumea | että data on VÄLI, ei piste | mittaus on epätarkka ja haluat tietää, kestääkö järjestys sen | Zadeh (1965); Chen (2000) |
 
 </div>
+
+> [!NOTE]
+> **Sumea TOPSIS** ei ole AHP-TOPSIS kohinalla: kolmiolukujen lisäksi se vaihtaa normalisoinnin (lineaarinen vektorin sijaan) ja ihanneratkaisun (absoluuttinen suhteellisen sijaan). **Poikkeaminen AHP-TOPSIS 2n:stä on odotettu käytös**, ja se mittaa, kuinka paljon järjestys riippuu näistä valinnoista. **Sumea AHP** (Buckley) tulee kolmanneksi painolähteeksi DEMATELin ja AHP:n rinnalle: se ottaa saman parittaisen arvion mutta kantaa epätarkkuuden loppuun asti — tasaisella hajonnalla keskiarvo vastaa AHP:n arvoa, ja se lisää **välin**, joka kertoo kestääkö prioriteettijärjestys päättäjän oman epätarkkuuden.
 
 <details>
 <summary><b>Miksi nämä kolme ansaitsevat erityishuomion</b></summary>
@@ -353,7 +359,7 @@ Kaikki muut menetelmät vaativat painovektorin. **Mistä se tulee, kun viisi pä
 ### Konsensusmoottori
 
 ```
-DEMATEL ──► painot vaikutuksen mukaan ──► 9 menetelmää ──► Bordan konsensus ──► voittaja
+DEMATEL ──► painot vaikutuksen mukaan ──► 10 menetelmää ──► Bordan konsensus ──► voittaja
                                                     │
                         2 000 Dirichlet-universumia ─────────────────┘
                                     ▼
@@ -393,7 +399,7 @@ python3 exportar_rust.py
 
 ## 🚀 Suorituskyky: 26× nopeampi, sama vastaus
 
-Robustiusanalyysi ajaa 2 000 universumia × 9 menetelmää. Naiivi toteutus vei **42 sekuntia** tapausta kohden.
+Robustiusanalyysi ajaa 2 000 universumia × 10 menetelmää. Naiivi toteutus vei **42 sekuntia** tapausta kohden.
 
 <div align="center">
 
@@ -407,7 +413,7 @@ Robustiusanalyysi ajaa 2 000 universumia × 9 menetelmää. Naiivi toteutus vei 
 
 > **Eniten tuottanut optimointi ei ollut rinnakkaisuus eikä JIT.** Se oli oivallus, että neljä yhdeksästä menetelmästä on **lineaarisia painovektorin suhteen** — mikä sallii tensorien esilaskennan ja kunkin universumin typistämisen yhdeksi matriisi-vektori-tuloksi. **Algebra ennen infrastruktuuria.**
 
-Ja tulos on **bitilleen identtinen** hitaan reitin kanssa — 100 universumia × 9 menetelmää tarkistetaan jokaisella testisarjan ajolla. Optimointi, joka muuttaa tulosta, on vika eikä hyöty.
+Ja tulos on **bitilleen identtinen** hitaan reitin kanssa — 100 universumia × 10 menetelmää tarkistetaan jokaisella testisarjan ajolla. Optimointi, joka muuttaa tulosta, on vika eikä hyöty.
 
 <details>
 <summary><b>Projektin suorituskäytäntö</b></summary>

@@ -56,6 +56,25 @@ MCDAC_BOM = float(os.environ.get("MCDAC_BOM", "0.75"))
 # AHP — limite de consistência de Saaty.
 AHP_CR_LIMITE = float(os.environ.get("AHP_CR_LIMITE", "0.10"))
 
+# --- extensões fuzzy -------------------------------------------------------
+# Banda PROPORCIONAL aplicada à matriz de decisão crisp para obter TFNs:
+#   x → (x·(1−α), x, x·(1+α)).
+# α = 0 NÃO devolve o TOPSIS clássico: Chen também troca a normalização (linear em
+# vez de vetorial) e os ideais (absolutos em vez de relativos). Ver fuzzy.py.
+# 10% é incerteza de medição plausível para preço de catálogo, nota 0-10 e
+# especificação de ficha técnica — e está DECLARADA no relatório de cada caso,
+# porque é hipótese nossa e não dado do caso.
+FUZZY_ALPHA = float(os.environ.get("FUZZY_ALPHA", "0.10"))
+
+# Espalhamento GEOMÉTRICO dos julgamentos: a_ij → (a_ij/g, a_ij, a_ij·g).
+# g = 1,5 significa "quem disse 5 quis dizer entre 3,3 e 7,5". g = 1 desliga o
+# espalhamento e reduz o AHP Fuzzy ao AHP crisp.
+#
+# Geométrico e não aditivo porque as matrizes deste projeto são razões em
+# progressão geométrica e excedem a escala de Saaty [1/9, 9] em 35 dos 38 casos;
+# o espalhamento aditivo com recorte corrompia o valor modal. Ver fuzzy.py.
+FUZZY_FATOR_SAATY = float(os.environ.get("FUZZY_FATOR_SAATY", "1.5"))
+
 # --- Robustez (perturbação de Dirichlet nos pesos) --------------------------
 # w' ~ Dirichlet(κ·w). E[w'] = w; Var(w_i) = w_i(1-w_i)/(κ+1).
 ROBUSTEZ_ITER = int(os.environ.get("ROBUSTEZ_ITER", "2000"))    # universos de preferência

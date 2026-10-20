@@ -33,7 +33,7 @@ E-mail: profbruanbima@gmail.com
 """
 import numpy as np
 
-from config import (AHP_CR_LIMITE, ELECTRE_C, ELECTRE_D, MAUT_AVERSAO,
+from config import (FUZZY_ALPHA, AHP_CR_LIMITE, ELECTRE_C, ELECTRE_D, MAUT_AVERSAO,
                     MCDAC_BOM, MCDAC_NEUTRO, PROMETHEE_P, PROMETHEE_Q,
                     PROMETHEE_TIPO, USAR_NUMBA)
 
@@ -438,9 +438,9 @@ def _ranks_kernel(score):
 def ranks(score):
     """Posição 1 = melhor (maior score). Empates recebem posições distintas e estáveis.
 
-    Chamado 6 vezes por universo de preferência (5 métodos + consenso) sobre vetores
-    de poucas dezenas de elementos: é o regime em que o overhead de despacho do NumPy
-    supera a conta em si, e o JIT do numba paga.
+    Chamado uma vez por método mais uma pelo consenso, a cada universo de preferência
+    (hoje `len(METODOS) + 1`), sobre vetores de poucas dezenas de elementos: é o regime
+    em que o overhead de despacho do NumPy supera a conta em si, e o JIT do numba paga.
     """
     return _ranks_kernel(np.ascontiguousarray(score, dtype=np.float64))
 
@@ -454,23 +454,48 @@ def borda(matriz_ranks, n_alternativas):
 def pontuar_todos(X, w, direcoes):
     """Score de TODOS os métodos para um vetor de pesos. Maior = melhor, sempre.
 
-    É a função que o ProcessPoolExecutor distribui na análise de robustez, por isso
-    é pura: recebe arrays, devolve dict de arrays, não toca em banco nem em disco.
+    É o CAMINHO LENTO: chama cada método direto, sem o pré-cômputo de
+    `ProblemaPreparado`. A robustez usa `prep.pontuar()`; esta função existe para
+    duas situações em que o caminho rápido não serve — a suíte, que compara os dois
+    para provar que a otimização não mudou resultado, e o caso grande demais para o
+    tensor de preferência, para onde o `MemoryError` de `ProblemaPreparado` aponta.
+
+    Por isso ela **tem de cobrir `METODOS` inteiro**: um caminho de fuga que devolve
+    menos métodos que o normal entrega uma análise incompleta a quem já está num
+    cenário degradado — e sem erro nenhum (#BUG-049).
+
+    Pura: recebe arrays, devolve dict de arrays, não toca em banco nem em disco.
     """
+    from fuzzy import fuzzy_topsis_de_crisp
+    from metodos_br import electre_ii, sapevo_m_de_matriz, todim, vikor
     _, _, ci_final = ahp_topsis_2n(X, w, direcoes)
-    return {
+    pontos = {
         "ELECTRE I":     electre_i(X, w, direcoes)[0],
+        "ELECTRE II":    electre_ii(X, w, direcoes)[0],
         "PROMETHEE II":  promethee_ii(X, w, direcoes),
         "MAUT":          maut(X, w, direcoes),
         "MCDA-C":        mcda_c(X, w, direcoes),
         "AHP-TOPSIS 2n": ci_final,
+        "VIKOR":         vikor(X, w, direcoes)[0],
+        "TODIM":         todim(X, w, direcoes)[0],
+        "SAPEVO-M":      sapevo_m_de_matriz(X, direcoes, w),
+        "TOPSIS Fuzzy":  fuzzy_topsis_de_crisp(X, w, direcoes),
     }
+    faltando = set(METODOS) - set(pontos)
+    if faltando:                      # método novo em METODOS sem par aqui
+        raise RuntimeError(f"pontuar_todos não cobre {sorted(faltando)}")
+    return pontos
 
 
-# Nove escolas de decisão. Cinco vêm da literatura clássica internacional e quatro
-# da escola brasileira de AMD (ver metodos_br.py para a procedência de cada uma).
+# Dez escolas de decisão: cinco da literatura clássica internacional, quatro da
+# escola brasileira de AMD (ver metodos_br.py) e uma da família fuzzy (ver fuzzy.py).
+#
+# O TOPSIS Fuzzy NÃO é "o TOPSIS com ruído": além dos números triangulares, ele
+# troca a normalização (linear em vez de vetorial) e a solução ideal (absoluta em
+# vez de relativa). Divergir do AHP-TOPSIS 2n é o comportamento esperado — e é
+# informação sobre a sensibilidade do caso, não defeito.
 METODOS = ("ELECTRE I", "ELECTRE II", "PROMETHEE II", "MAUT", "MCDA-C",
-           "AHP-TOPSIS 2n", "VIKOR", "TODIM", "SAPEVO-M")
+           "AHP-TOPSIS 2n", "VIKOR", "TODIM", "SAPEVO-M", "TOPSIS Fuzzy")
 CONSENSO = "CONSENSO (Borda)"
 
 
@@ -485,7 +510,7 @@ if __name__ == "__main__":
 # CAMINHO RÁPIDO — pré-compilação do problema (performance tuning)
 # ===========================================================================
 # OBSERVAÇÃO QUE MUDA TUDO: na análise de robustez, X e as direções são FIXOS;
-# só o vetor de pesos w varia entre os 2.000 universos. E os quatro métodos são
+# só o vetor de pesos w varia entre os 2.000 universos. E os métodos são
 # LINEARES em w:
 #
 #   ELECTRE I    C(a,b) = Σⱼ wⱼ·1[Gₐⱼ ≥ G_bⱼ]      → C = tensordot(w, MASC)
@@ -517,7 +542,8 @@ class ProblemaPreparado:
 
     __slots__ = ("X", "direcoes", "G", "m", "k", "masc_conc", "disc",
                  "pref", "mat_maut", "mat_mcdac", "r_vector", "sinal_vector",
-                 "c_limiar", "d_limiar", "conc_pesada", "mat_sapevo", "dif")
+                 "c_limiar", "d_limiar", "conc_pesada", "mat_sapevo", "dif",
+                 "r_fuzzy")
 
     def __init__(self, X, direcoes, tipo_preferencia=PROMETHEE_TIPO,
                  aversao=MAUT_AVERSAO, q_neutro=MCDAC_NEUTRO, q_bom=MCDAC_BOM,
@@ -581,6 +607,14 @@ class ProblemaPreparado:
         self.r_vector = self.X / np.where(norma == 0, 1.0, norma)
         self.sinal_vector = np.array(
             [1.0 if dd == "benefit" else -1.0 for dd in self.direcoes])
+
+        # --- TOPSIS Fuzzy: a normalização de Chen não depende de w -----------
+        # Fuzzificar e normalizar é O(mk) e constante entre universos; só a
+        # ponderação ṽ = r̃ ⊗ w̃ muda. Fica aqui pelo mesmo motivo de todo o resto
+        # desta classe: 2.000 universos não podem refazer o que não muda.
+        from fuzzy import fuzzificar_matriz, normalizar_fuzzy_chen
+        self.r_fuzzy = normalizar_fuzzy_chen(
+            fuzzificar_matriz(self.X, FUZZY_ALPHA), self.direcoes)   # (m, k, 3)
 
         # --- TODIM: as diferenças por critério não dependem de w -------------
         self.dif = dif                                       # (k, m, m)
@@ -659,6 +693,14 @@ class ProblemaPreparado:
         """SAPEVO-M adaptado a matriz cardinal (ver metodos_br.sapevo_m_de_matriz)."""
         return self.mat_sapevo @ w
 
+    def topsis_fuzzy(self, w):
+        """TOPSIS Fuzzy — Chen (2000), sobre a matriz já fuzzificada e normalizada."""
+        V = self.r_fuzzy * w[None, :, None]
+        d_pos = np.sqrt(((V - 1.0) ** 2).sum(axis=2) / 3.0).sum(axis=1)
+        d_neg = np.sqrt((V ** 2).sum(axis=2) / 3.0).sum(axis=1)
+        soma = d_pos + d_neg
+        return d_neg / np.where(soma == 0, 1.0, soma)
+
     def pontuar(self, w):
         """Score de todos os métodos para um vetor de pesos. Maior = melhor."""
         w = _normalizar_pesos(w, self.k)
@@ -672,6 +714,7 @@ class ProblemaPreparado:
             "VIKOR":         self.vikor(w),
             "TODIM":         self.todim(w),
             "SAPEVO-M":      self.sapevo(w),
+            "TOPSIS Fuzzy":  self.topsis_fuzzy(w),
         }
 
 

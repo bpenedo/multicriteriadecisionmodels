@@ -8,7 +8,7 @@ Gráficos da decisão multicritério — as cinco telas que sustentam o veredito
      Divergência entre escolas de decisão é INFORMAÇÃO, não ruído.
   3. robustez            — em quantos universos de preferência cada alternativa vence.
   4. distribuicao        — histograma completo das posições do consenso.
-  5. pesos_dematel_ahp   — DEMATEL (influência sistêmica) × AHP (julgamento par a par).
+  5. pesos_dematel_ahp   — DEMATEL × AHP × AHP Fuzzy (com a faixa do julgamento).
      Onde as duas famílias de peso divergem é onde a decisão merece um humano.
 
 Saída: evidence/static/mc/<caso>/*.png  e cópia em _private/foundations/telas/<caso>/
@@ -37,6 +37,7 @@ CAUSA, EFEITO = "#c0392b", "#1f77b4"
 # fica curta demais para ser lida; acima, vira parede de zeros (bugs.md #BUG-021).
 MIN_BARRAS_ROBUSTEZ = 15
 COR_DEMATEL, COR_AHP = "#236aa4", "#f4b548"
+COR_FUZZY = "#7c3aed"      # roxo: a terceira família de peso (AHP Fuzzy)
 plt.rcParams.update({"font.size": 10, "axes.titlesize": 12, "figure.autolayout": False})
 
 
@@ -433,25 +434,58 @@ def distribuicao_posicoes(conn, id_caso, destino):
 
 
 def pesos_dematel_ahp(conn, id_caso, destino):
+    """Três famílias de peso: DEMATEL, AHP e AHP Fuzzy — a última com a faixa (l, u).
+
+    A barra de erro do AHP Fuzzy não é enfeite: é o espalhamento do julgamento que o
+    AHP crisp descarta. Quando ela cobre o peso de um critério vizinho, a ordem de
+    prioridade declarada NÃO sobrevive à imprecisão do próprio decisor — e isso é o
+    achado, não um detalhe de apresentação.
+    """
     linhas = conn.execute(
-        "SELECT d.rotulo, d.peso AS p_dematel, h.peso AS p_ahp, h.cr, d.papel "
-        "FROM dematel_criterio d JOIN ahp_peso h "
-        "  ON h.id_caso = d.id_caso AND h.criterio = d.criterio "
+        "SELECT d.rotulo, d.peso AS p_dematel, h.peso AS p_ahp, h.cr, d.papel, "
+        "       f.peso AS p_fuzzy, f.l AS f_l, f.u AS f_u, f.fuzziness "
+        "FROM dematel_criterio d "
+        "JOIN ahp_peso h ON h.id_caso = d.id_caso AND h.criterio = d.criterio "
+        "LEFT JOIN ahp_fuzzy_peso f ON f.id_caso = d.id_caso AND f.criterio = d.criterio "
         "WHERE d.id_caso = ? ORDER BY d.peso DESC", (id_caso,)).fetchall()
     if not linhas:
         return None
     rot = [r["rotulo"] for r in linhas]
     pd_ = np.array([r["p_dematel"] for r in linhas]) * 100
     pa = np.array([r["p_ahp"] for r in linhas]) * 100
+    tem_fuzzy = linhas[0]["p_fuzzy"] is not None
     cr = linhas[0]["cr"]
     y = np.arange(len(rot))
 
-    fig, ax = plt.subplots(figsize=(9.6, 0.66 * len(rot) + 2.8))
-    ax.barh(y - 0.2, pd_, height=0.38, color=COR_DEMATEL, label="DEMATEL (influência sistêmica)")
-    ax.barh(y + 0.2, pa, height=0.38, color=COR_AHP, label="AHP (julgamento par a par)")
+    altura = 0.26 if tem_fuzzy else 0.38
+    desloc = 0.27 if tem_fuzzy else 0.20
+    fig, ax = plt.subplots(figsize=(10.4, 0.80 * len(rot) + 3.0))
+    ax.barh(y - desloc, pd_, height=altura, color=COR_DEMATEL,
+            label="DEMATEL (influência sistêmica)")
+    ax.barh(y, pa, height=altura, color=COR_AHP, label="AHP (julgamento par a par)")
     for i in range(len(rot)):
-        ax.text(pd_[i] + 0.6, y[i] - 0.2, f"{pd_[i]:.1f}%", va="center", fontsize=8.5)
-        ax.text(pa[i] + 0.6, y[i] + 0.2, f"{pa[i]:.1f}%", va="center", fontsize=8.5)
+        ax.text(pd_[i] + 0.6, y[i] - desloc, f"{pd_[i]:.1f}%", va="center", fontsize=8.5)
+        ax.text(pa[i] + 0.6, y[i], f"{pa[i]:.1f}%", va="center", fontsize=8.5)
+
+    sub = ""
+    if tem_fuzzy:
+        pf = np.array([r["p_fuzzy"] for r in linhas]) * 100
+        fl = np.array([r["f_l"] for r in linhas]) * 100
+        fu = np.array([r["f_u"] for r in linhas]) * 100
+        phi = linhas[0]["fuzziness"]
+        ax.barh(y + desloc, pf, height=altura, color=COR_FUZZY,
+                label="AHP Fuzzy (Buckley) — barra = faixa (l, u)")
+        # xerr assimétrico: distâncias ATÉ l e ATÉ u, nunca os valores absolutos.
+        # Passar (l, u) direto desenharia a barra a partir da origem.
+        ax.errorbar(pf, y + desloc, xerr=[np.maximum(pf - fl, 0), np.maximum(fu - pf, 0)],
+                    fmt="none", ecolor="#4b5563", elinewidth=1.1, capsize=3, zorder=5)
+        for i in range(len(rot)):
+            ax.text(fu[i] + 0.6, y[i] + desloc, f"{pf[i]:.1f}%", va="center", fontsize=8.5)
+        # Ordem preservada entre AHP e AHP Fuzzy? É a pergunta que o gráfico responde.
+        mesma_ordem = np.array_equal(np.argsort(-pa), np.argsort(-pf))
+        sub = (f" · Φ = {phi:.2f} · ordem AHP {'PRESERVADA' if mesma_ordem else 'ALTERADA'} "
+               f"pelo fuzzy")
+
     div = int(np.argmax(np.abs(pd_ - pa)))
     ax.axhspan(div - 0.45, div + 0.45, color="#dc2626", alpha=0.08, zorder=0)
     ax.set_yticks(y)
@@ -459,10 +493,10 @@ def pesos_dematel_ahp(conn, id_caso, destino):
                         for r, l in zip(rot, linhas)], fontsize=9.5)
     ax.invert_yaxis()
     ax.set_xlabel("Peso do critério (%)", fontsize=10.5)
-    ax.set_title("Duas famílias de peso sobre o mesmo problema\n"
+    ax.set_title(("Três" if tem_fuzzy else "Duas") + " famílias de peso sobre o mesmo problema\n"
                  f"maior divergência: {rot[div]} "
                  f"({pd_[div]:.1f}% × {pa[div]:.1f}%) · AHP CR = {cr:.4f}"
-                 + ("" if cr < 0.10 else "  ⚠️ INCONSISTENTE"), fontweight="bold")
+                 + ("" if cr < 0.10 else "  ⚠️ INCONSISTENTE") + sub, fontweight="bold")
     ax.legend(loc="lower right", fontsize=9)
     ax.grid(axis="x", alpha=0.25, linestyle=":")
     ax.set_axisbelow(True)
