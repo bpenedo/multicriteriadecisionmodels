@@ -4,7 +4,7 @@ title: MCDM Studio — Decisão Multi기준
 
 <div style="text-align:center;">
 
-🌐 [Português](/) · [English](/en) · [Español](/es) · [Français](/fr) · [Deutsch](/de) · [中文](/zh) · **한국어** · [हिन्दी](/hi) · [עברית](/he) · [Русский](/ru) · [Svenska](/sv) · [Suomi](/fi)
+🌐 [Português](/) · [English](/en/) · [Español](/es/) · [Français](/fr/) · [Deutsch](/de/) · [中文](/zh/) · **한국어** · [हिन्दी](/hi/) · [עברית](/he/) · [Русский](/ru/) · [Svenska](/sv/) · [Suomi](/fi/)
 
 <div style="text-align:center;margin:1.2rem 0 1.6rem;">
   <img src="/img/logo_capa.png" alt="ProfBru" width="200" style="display:inline-block;"/>
@@ -24,7 +24,7 @@ _MCDM Studio — Modelos Multi기준 de Decisão · Autor: **ProfBru - Bruno Pen
 -->
 
 ```sql casos
-select *, '/casos/' || id_caso as link from mcdm.casos
+select *, '/ko/casos/' || id_caso as link from mcdm.casos
 ```
 ```sql bcg_geral
 select * from mcdm.bcg_resumo
@@ -114,16 +114,16 @@ from mcdm.casos group by dominio order by casos desc
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
 | **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre 기준s | 기준 quantitativos, decisor único |
-| **ELECTRE I** | 우위관계 | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
-| **ELECTRE II** | 우위관계 | Limiares forte e fraco | Ordenação completa com veto |
-| **PROMETHEE II** | 우위관계 | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
+| **ELECTRE I** | 우월함ção | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
+| **ELECTRE II** | 우월함ção | Limiares forte e fraco | Ordenação completa com veto |
+| **PROMETHEE II** | 우월함ção | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
 | **MAUT** | Utilidade | Independência aditiva + 위험 회피 | Decisão sob incerteza |
 | **MCDA-C** | Construtivista | Níveis Neutro/Bom ancorados | Diagnóstico absoluto, não só ranking |
 | **VIKOR** | Compromisso | Utilidade do grupo × arrependimento máximo | Quando compensar é inaceitável |
 | **TODIM** | Teoria dos Prospectos | Perda dói mais que ganho equivalente | Decisor avesso a perda (todos são) |
 | **SAPEVO-M** | Ordinal multidecisor | Julgamento ordinal de vários decisores | Comitê que não concorda entre si |
 
-## 🎯 견고성 — 의사결정 자체의 신뢰구간
+## 🎯 견고성 — 결정 그 자체의 신뢰구간
 
 > **문제.** 모든 MCDM 방법은 암묵적으로 100% 확신을 지닌 선정안을 내놓습니다. 그러나 가중치는 결코 정확하지 않습니다 — 선호의 추정치입니다. 어떤 기준의 가중치가 2퍼센트포인트 움직여 1위와 2위가 바뀐다면, 그 “선정안”은 집합에 관한 사실이 아니라 보정의 산물입니다. 아무도 이것을 보고하지 않습니다. **결정이 위원회에서 죽는 지점이 바로 여기입니다.**
 >

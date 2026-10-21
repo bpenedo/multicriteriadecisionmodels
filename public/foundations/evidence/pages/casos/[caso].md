@@ -78,6 +78,8 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
   <div style="font-weight:700;margin-top:0.45rem;">ProfBru © 2026</div>
 </div>
 
+🌐 **Português** · [English](/en/casos/{params.caso}) · [Español](/es/casos/{params.caso}) · [Français](/fr/casos/{params.caso}) · [Deutsch](/de/casos/{params.caso}) · [中文](/zh/casos/{params.caso}) · [한국어](/ko/casos/{params.caso}) · [हिन्दी](/hi/casos/{params.caso}) · [עברית](/he/casos/{params.caso}) · [Русский](/ru/casos/{params.caso}) · [Svenska](/sv/casos/{params.caso}) · [Suomi](/fi/casos/{params.caso})
+
 # {caso[0].nome}
 
 > **{caso[0].descricao}**
@@ -95,10 +97,7 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
 
 ## 🧮 DEMATEL — quem é causa e quem é efeito
 
-> Antes de qualquer peso: **os critérios não são independentes**. O DEMATEL monta a matriz
-> de relação total `T = X(I−X)⁻¹` — somando influência direta **e indireta** de qualquer
-> comprimento de caminho — e separa o que você pode **puxar** (CAUSA) do que apenas
-> **mede o resultado** (EFEITO). Os pesos saem daí, por influência sistêmica.
+> Antes de qualquer peso: **os critérios não são independentes**. O DEMATEL monta a matriz de relação total `T = X(I−X)⁻¹` — somando influência direta **e indireta** de qualquer comprimento de caminho — e separa o que você pode **puxar** (CAUSA) do que apenas **mede o resultado** (EFEITO). Os pesos saem daí, por influência sistêmica.
 
 <img src="/mc/{params.caso}/dematel_causa_efeito.png" alt="Diagrama causa-efeito DEMATEL" style="width:100%;border-radius:8px;"/>
 
@@ -120,15 +119,9 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
 
 ### Matriz de relação total — quem influencia quem
 
-> A tabela acima resume cada critério em dois números. **Esta matriz mostra as ligações
-> uma a uma**: `T = X(I − X)⁻¹` soma os caminhos diretos **e indiretos** de qualquer
-> comprimento, e por isso revela influências que o especialista nunca declarou
-> diretamente — A influencia B, B influencia C, logo A influencia C, e a matriz total
-> contabiliza isso.
+> A tabela acima resume cada critério em dois números. **Esta matriz mostra as ligações uma a uma**: `T = X(I − X)⁻¹` soma os caminhos diretos **e indiretos** de qualquer comprimento, e por isso revela influências que o especialista nunca declarou diretamente — A influencia B, B influencia C, logo A influencia C, e a matriz total contabiliza isso.
 >
-> Só aparecem as arestas **acima do limiar α** (a média de T). Abaixo dele, a intensidade
-> é indistinguível de ruído de arredondamento, e um diagrama que desenhasse todas as
-> ligações não informaria nada — toda matriz densa parece igualmente conectada.
+> Só aparecem as arestas **acima do limiar α** (a média de T). Abaixo dele, a intensidade é indistinguível de ruído de arredondamento, e um diagrama que desenhasse todas as ligações não informaria nada — toda matriz densa parece igualmente conectada.
 
 <DataTable data={relacao_c} rows=12 rowShading=true>
   <Column id=origem_rotulo title="Origem (influencia)"/>
@@ -142,17 +135,11 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
 
 ### Quatro famílias de peso sobre o mesmo problema
 
-> O **AHP** pergunta, par a par, quanto um critério importa mais que outro. O **DEMATEL**
-> mede influência sistêmica. **Onde divergem está o efeito de segunda ordem subestimado.**
+> O **AHP** pergunta, par a par, quanto um critério importa mais que outro. O **DEMATEL** mede influência sistêmica. **Onde divergem está o efeito de segunda ordem subestimado.**
 >
-> O **AHP Fuzzy** (Buckley, 1985) recebe o mesmo julgamento do AHP, mas não descarta a
-> imprecisão: quem disse "5" quis dizer algo entre 4 e 6, e essa faixa é carregada até o
-> fim. As colunas `l` e `u` são os limites do número triangular de cada peso.
+> O **AHP Fuzzy** (Buckley, 1985) recebe o mesmo julgamento do AHP, mas não descarta a imprecisão: quem disse "5" quis dizer algo entre 4 e 6, e essa faixa é carregada até o fim. As colunas `l` e `u` são os limites do número triangular de cada peso.
 >
-> O **BWM** (Rezaei, 2015) resolve um problema operacional, não teórico: a matriz de Saaty
-> com 9 critérios exige 36 comparações e **ninguém a preenche com atenção até o fim**. O BWM
-> pede apenas o melhor e o pior critério e deriva o resto — 2n−3 comparações. A coluna
-> `BWM CR` diz se o julgamento resultante é consistente.
+> O **BWM** (Rezaei, 2015) resolve um problema operacional, não teórico: a matriz de Saaty com 9 critérios exige 36 comparações e **ninguém a preenche com atenção até o fim**. O BWM pede apenas o melhor e o pior critério e deriva o resto — 2n−3 comparações. A coluna `BWM CR` diz se o julgamento resultante é consistente.
 
 <img src="/mc/{params.caso}/pesos_dematel_ahp.png" alt="DEMATEL, AHP e AHP Fuzzy" style="width:100%;border-radius:8px;"/>
 
@@ -170,33 +157,17 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
   <Column id=bwm_cr title="BWM CR" fmt=num4/>
 </DataTable>
 
-> [!NOTE]
-> O AHP Fuzzy **achata os extremos** em relação ao AHP crisp: a média geométrica com
-> incerteza puxa os pesos para o centro. Um critério que o AHP coloca em 50% costuma cair,
-> e um que ele deixa em 0,4% costuma subir. Isso não é correção de erro, é o que acontece
-> quando se admite que o julgamento tinha uma faixa. Se a ORDEM dos pesos muda entre os
-> dois, a prioridade declarada não sobrevive à imprecisão do próprio decisor, e isso é
-> informação para o comitê.
+> [!NOTE] O AHP Fuzzy **achata os extremos** em relação ao AHP crisp: a média geométrica com incerteza puxa os pesos para o centro. Um critério que o AHP coloca em 50% costuma cair, e um que ele deixa em 0,4% costuma subir. Isso não é correção de erro, é o que acontece quando se admite que o julgamento tinha uma faixa. Se a ORDEM dos pesos muda entre os dois, a prioridade declarada não sobrevive à imprecisão do próprio decisor, e isso é informação para o comitê.
 
 ---
 
 ## ⚖️ Dez escolas de decisão sobre o mesmo problema
 
-> [!IMPORTANT]
-> **São doze modelos aplicados a este caso, e dez entram neste gráfico.** O **BWM** devolve
-> pesos de critério (veja a tabela das quatro famílias, acima) e o **DRSA** devolve regras
-> (seção própria, adiante) — nenhum dos dois produz posição de alternativa, e por isso o
-> **consenso de Borda e a robustez são calculados sobre estes dez**. Contar os doze aqui
-> faria parecer que o consenso agrega o que ele não agrega.
+> [!IMPORTANT] **São doze modelos aplicados a este caso, e dez entram neste gráfico.** O **BWM** devolve pesos de critério (veja a tabela das quatro famílias, acima) e o **DRSA** devolve regras (seção própria, adiante) — nenhum dos dois produz posição de alternativa, e por isso o **consenso de Borda e a robustez são calculados sobre estes dez**. Contar os doze aqui faria parecer que o consenso agrega o que ele não agrega.
 
-> Cada método é uma **teoria diferente sobre o que significa "melhor"**. Quando as dez
-> concordam, a escolha não é artefato de método. **Quando divergem, a divergência é o achado** —
-> e costuma apontar exatamente onde está o trade-off real.
+> Cada método é uma **teoria diferente sobre o que significa "melhor"**. Quando as dez concordam, a escolha não é artefato de método. **Quando divergem, a divergência é o achado** — e costuma apontar exatamente onde está o trade-off real.
 >
-> O **TOPSIS Fuzzy** (Chen, 2000) merece leitura à parte: ele não é "o AHP-TOPSIS com ruído".
-> Além dos números triangulares, troca a normalização (linear em vez de vetorial) e a solução
-> ideal (absoluta em vez de relativa). Divergir do AHP-TOPSIS 2n é o comportamento **esperado**,
-> e mede o quanto o ranking depende dessas escolhas.
+> O **TOPSIS Fuzzy** (Chen, 2000) merece leitura à parte: ele não é "o AHP-TOPSIS com ruído". Além dos números triangulares, troca a normalização (linear em vez de vetorial) e a solução ideal (absoluta em vez de relativa). Divergir do AHP-TOPSIS 2n é o comportamento **esperado**, e mede o quanto o ranking depende dessas escolhas.
 
 <img src="/mc/{params.caso}/mapa_metodos.png" alt="Posição por escola de decisão" style="width:100%;border-radius:8px;"/>
 
@@ -204,9 +175,7 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
 
 ### ELECTRE I — o núcleo (kernel)
 
-> Antes de ranquear, **elimine**: o núcleo é o conjunto que nenhuma outra alternativa
-> sobreclassifica. Núcleo unitário encerra a decisão; núcleo grande demais indica que os
-> critérios não estão discriminando — e o problema é de modelagem, não de cálculo.
+> Antes de ranquear, **elimine**: o núcleo é o conjunto que nenhuma outra alternativa sobreclassifica. Núcleo unitário encerra a decisão; núcleo grande demais indica que os critérios não estão discriminando — e o problema é de modelagem, não de cálculo.
 
 <DataTable data={nucleo_c} rows=12 rowShading=true>
   <Column id=rotulo title="Alternativa"/>
@@ -217,8 +186,7 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
 
 ### AHP-TOPSIS 2N — a dupla normalização
 
-> O TOPSIS é **sensível à normalização escolhida**. Rodamos as duas (vetorial e min-max)
-> e reportamos a concordância: a coluna **Robusto?** é honestidade metodológica.
+> O TOPSIS é **sensível à normalização escolhida**. Rodamos as duas (vetorial e min-max) e reportamos a concordância: a coluna **Robusto?** é honestidade metodológica.
 
 <DataTable data={topsis_c} rows=12 rowShading=true>
   <Column id=rank_final title="#"/>
@@ -247,11 +215,9 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
 
 ## 🎯 Robustez — o intervalo de confiança da própria decisão
 
-> **O problema.** Os pesos nunca são exatos — são estimativas de preferência. Se dois pontos
-> percentuais trocam o 1º com o 2º colocado, o "vencedor" é artefato da calibração.
+> **O problema.** Os pesos nunca são exatos — são estimativas de preferência. Se dois pontos percentuais trocam o 1º com o 2º colocado, o "vencedor" é artefato da calibração.
 >
-> **A solução.** Perturbamos com `w' ~ Dirichlet(κ·w)` e reranqueamos **2.000 vezes**. A
-> Dirichlet tem suporte exatamente no simplex e satisfaz `E[w'] = w` — perturbamos **sem enviesar**.
+> **A solução.** Perturbamos com `w' ~ Dirichlet(κ·w)` e reranqueamos **2.000 vezes**. A Dirichlet tem suporte exatamente no simplex e satisfaz `E[w'] = w` — perturbamos **sem enviesar**.
 
 <BigValue data={robustez_top} value=rotulo title="Líder sob pesos perturbados"/>
 <BigValue data={robustez_top} value=prob_vitoria title="Vence em (%)" fmt=num1/>
@@ -270,8 +236,7 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
 
 ### Distribuição completa das posições
 
-> Uma barra inteiramente verde é uma posição que **não depende dos pesos**. Uma barra
-> manchada é posição em disputa.
+> Uma barra inteiramente verde é uma posição que **não depende dos pesos**. Uma barra manchada é posição em disputa.
 
 <img src="/mc/{params.caso}/distribuicao_posicoes.png" alt="Distribuição das posições" style="width:100%;border-radius:8px;"/>
 
@@ -279,19 +244,13 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
 
 ## 🎲 Matriz BCG — que TIPO de aposta é cada alternativa
 
-> O consenso responde **qual escolher**. A BCG responde **que tipo de aposta cada uma é** —
-> pergunta diferente, e igualmente decisiva na hora de assinar.
+> O consenso responde **qual escolher**. A BCG responde **que tipo de aposta cada uma é** — pergunta diferente, e igualmente decisiva na hora de assinar.
 >
-> Dois eixos, ambos derivados dos **mesmos pesos do DEMATEL** que alimentam os dez métodos
-> (renormalizados por grupo, de modo que a BCG é um segundo corte da mesma modelagem, não
-> uma segunda modelagem):
+> Dois eixos, ambos derivados dos **mesmos pesos do DEMATEL** que alimentam os dez métodos (renormalizados por grupo, de modo que a BCG é um segundo corte da mesma modelagem, não uma segunda modelagem):
 >
-> - **Atratividade** (Y) — desempenho ponderado nos critérios de **benefício**
-> - **Posição de custo** (X) — quanto entrega por unidade de **sacrifício**
+> - **Atratividade** (Y) — desempenho ponderado nos critérios de **benefício** - **Posição de custo** (X) — quanto entrega por unidade de **sacrifício**
 >
-> Os cortes são as **medianas** de cada eixo, não o ponto médio: mediana divide o conjunto
-> em duas metades reais, enquanto 0,5 deixaria quadrantes vazios num conjunto assimétrico —
-> e quadrante vazio não informa nada.
+> Os cortes são as **medianas** de cada eixo, não o ponto médio: mediana divide o conjunto em duas metades reais, enquanto 0,5 deixaria quadrantes vazios num conjunto assimétrico — e quadrante vazio não informa nada.
 
 <BigValue data={bcg_res_c} value=estrelas title="⭐ Estrelas" fmt=num0/>
 <BigValue data={bcg_res_c} value=vacas title="🐄 Vacas leiteiras" fmt=num0/>
@@ -307,9 +266,7 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
 | ❓ **Interrogação** | Desempenho alto a **preço alto**. Só se justifica se o prêmio for necessário. |
 | 🐕 **Abacaxi** | Nem entrega, nem é barata. **Descartar.** |
 
-> **O cruzamento é onde mora o achado.** Um 2º colocado que é 🐄 Vaca costuma ser a escolha
-> real de quem tem restrição orçamentária; um 2º colocado ❓ Interrogação só compensa se você
-> precisa do prêmio de desempenho que ele cobra.
+> **O cruzamento é onde mora o achado.** Um 2º colocado que é 🐄 Vaca costuma ser a escolha real de quem tem restrição orçamentária; um 2º colocado ❓ Interrogação só compensa se você precisa do prêmio de desempenho que ele cobra.
 
 <DataTable data={bcg_c} rows=15 rowShading=true>
   <Column id=rank_consenso title="#" contentType=colorscale/>
@@ -324,11 +281,7 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
 
 ## 📏 DRSA — a regra que explica as decisões passadas
 
-> Os outros onze modelos pedem preferências **declaradas**: pesos, comparações, limiares.
-> O **DRSA** (Greco, Matarazzo & Słowiński) faz o caminho inverso — recebe as decisões já
-> tomadas e devolve a **regra** que as explica, em português, para quem não sabe o que é
-> normalização vetorial. É a única família aqui que aprende de histórico em vez de exigir
-> que alguém saiba declarar o que prefere.
+> Os outros onze modelos pedem preferências **declaradas**: pesos, comparações, limiares. O **DRSA** (Greco, Matarazzo & Słowiński) faz o caminho inverso — recebe as decisões já tomadas e devolve a **regra** que as explica, em português, para quem não sabe o que é normalização vetorial. É a única família aqui que aprende de histórico em vez de exigir que alguém saiba declarar o que prefere.
 
 <div class="grid grid-cols-3 gap-4">
 <BigValue data={drsa_q} value=gamma title="γ — qualidade da aproximação" fmt=pct1/>
@@ -343,19 +296,13 @@ select * from mcdm.drsa_regras where id_caso = '${params.caso}'
   <Column id=certeza title="Certeza" fmt=pct0/>
 </DataTable>
 
-> [!NOTE]
-> **γ = 100%** significa que a relação de dominância classifica todas as alternativas sem
-> ambiguidade: o histórico é coerente e as regras o descrevem inteiramente. **γ < 100%** é
-> diagnóstico, não defeito — diz que existem pares em que a alternativa dominada foi
-> preferida, e a coluna *Pares que violam a dominância* conta quantos. Nesse caso a decisão
-> passada tem exceções, e saber disso vale mais que um ranking limpo.
+> [!NOTE] **γ = 100%** significa que a relação de dominância classifica todas as alternativas sem ambiguidade: o histórico é coerente e as regras o descrevem inteiramente. **γ < 100%** é diagnóstico, não defeito — diz que existem pares em que a alternativa dominada foi preferida, e a coluna *Pares que violam a dominância* conta quantos. Nesse caso a decisão passada tem exceções, e saber disso vale mais que um ranking limpo.
 
 ---
 
 ## 📐 Matriz de decisão
 
-> Os dados de entrada. **Substitua pela sua cotação, seu edital ou seu ensaio** — o motor é
-> o mesmo; os dados é que são seus.
+> Os dados de entrada. **Substitua pela sua cotação, seu edital ou seu ensaio** — o motor é o mesmo; os dados é que são seus.
 
 <DataTable data={matriz_c} rows=25 rowShading=true search=true>
   <Column id=alternativa_rotulo title="Alternativa"/>

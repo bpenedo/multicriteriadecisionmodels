@@ -4,7 +4,7 @@ title: MCDM Studio — Decisão MultiKriteeri
 
 <div style="text-align:center;">
 
-🌐 [Português](/) · [English](/en) · [Español](/es) · [Français](/fr) · [Deutsch](/de) · [中文](/zh) · [한국어](/ko) · [हिन्दी](/hi) · [עברית](/he) · [Русский](/ru) · [Svenska](/sv) · **Suomi**
+🌐 [Português](/) · [English](/en/) · [Español](/es/) · [Français](/fr/) · [Deutsch](/de/) · [中文](/zh/) · [한국어](/ko/) · [हिन्दी](/hi/) · [עברית](/he/) · [Русский](/ru/) · [Svenska](/sv/) · **Suomi**
 
 <div style="text-align:center;margin:1.2rem 0 1.6rem;">
   <img src="/img/logo_capa.png" alt="ProfBru" width="200" style="display:inline-block;"/>
@@ -24,7 +24,7 @@ _MCDM Studio — Modelos MultiKriteeri de Decisão · Autor: **ProfBru - Bruno P
 -->
 
 ```sql casos
-select *, '/casos/' || id_caso as link from mcdm.casos
+select *, '/fi/casos/' || id_caso as link from mcdm.casos
 ```
 ```sql bcg_geral
 select * from mcdm.bcg_resumo
@@ -114,16 +114,16 @@ Tämä näkymä ajaa **kymmenen monikriteerimenetelmää** jokaiseen tapaukseen,
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
 | **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre Kriteeris | Kriteerit quantitativos, decisor único |
-| **ELECTRE I** | Ylivertaisuus | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
-| **ELECTRE II** | Ylivertaisuus | Limiares forte e fraco | Ordenação completa com veto |
-| **PROMETHEE II** | Ylivertaisuus | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
+| **ELECTRE I** | Ylittääção | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
+| **ELECTRE II** | Ylittääção | Limiares forte e fraco | Ordenação completa com veto |
+| **PROMETHEE II** | Ylittääção | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
 | **MAUT** | Utilidade | Independência aditiva + Riskinkarttaminen | Decisão sob incerteza |
 | **MCDA-C** | Construtivista | Níveis Neutro/Bom ancorados | Diagnóstico absoluto, não só ranking |
 | **VIKOR** | Compromisso | Utilidade do grupo × arrependimento máximo | Quando compensar é inaceitável |
 | **TODIM** | Teoria dos Prospectos | Perda dói mais que ganho equivalente | Decisor avesso a perda (todos são) |
 | **SAPEVO-M** | Ordinal multidecisor | Julgamento ordinal de vários decisores | Comitê que não concorda entre si |
 
-## 🎯 Robustius — luottamusväli itse päätökselle
+## 🎯 Robustius — itse päätöksen luottamusväli
 
 > **Ongelma.** Jokainen MCDM-menetelmä palauttaa voittajan, jonka implisiittinen varmuus on 100 %. Mutta painot eivät ole koskaan tarkkoja — ne ovat preferenssiarvioita. Jos kaksi prosenttiyksikköä yhden kriteerin painossa vaihtaa ykkösen ja kakkosen, "voittaja" on kalibroinnin artefakti eikä joukkoa koskeva tosiasia. Kukaan ei raportoi tätä. **Siinä päätökset kuolevat toimikunnassa.**
 >

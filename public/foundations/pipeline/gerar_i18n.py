@@ -286,23 +286,51 @@ def gerar_tmx():
 
 
 # ---------------------------------------------------------------------------
-def _seletor_idiomas(atual_curto):
-    """Linha de seleção de idioma: o idioma atual em negrito, os demais como link."""
+def _seletor_idiomas(atual_curto, sufixo=""):
+    """Linha de seleção de idioma: o idioma atual em negrito, os demais como link.
+
+    `sufixo` mantém a página ao trocar de idioma: na página de caso ele é
+    `/casos/{params.caso}`, de modo que quem lê o caso em coreano e clica em
+    "Русский" continua NO MESMO CASO, em vez de ser devolvido ao índice.
+    """
     itens = []
     for _loc, (curto, nome, _d) in LOCALES.items():
         if curto == atual_curto:
             itens.append(f"**{nome}**")
         else:
-            itens.append(f"[{nome}](/{'' if curto == 'pt' else curto})")
+            raiz = "" if curto == "pt" else f"/{curto}"
+            itens.append(f"[{nome}]({raiz}{sufixo or '/'})")
     return "🌐 " + " · ".join(itens)
 
 
 def gerar_paginas():
-    """Gera evidence/pages/<lang>/index.md nos 12 idiomas a partir do index.md em pt."""
-    base = EVIDENCE_DIR / "pages" / "index.md"
+    """Gera cada página de PAGINAS nos 12 idiomas, a partir da versão em pt."""
+    glossario, direitos, unidades, alvos = carregar_tm()
+    gerados = []
+    for relativo in PAGINAS:
+        gerados += _gerar_uma_pagina(relativo, glossario, direitos, unidades, alvos)
+    print(f"✅ {len(gerados)} páginas do dashboard em {EVIDENCE_DIR / 'pages'}")
+    return gerados
+
+
+def _rotas_do_locale(texto, curto):
+    """Reaponta as rotas internas para a árvore do idioma.
+
+    O índice traduzido linkava para `/casos/<id>`, que é a página em português:
+    o leitor navegava em coreano e caía em pt-BR ao clicar num caso. O mesmo vale
+    para o botão de voltar ao índice.
+    """
+    if curto == "pt":
+        return texto
+    texto = texto.replace("'/casos/' ||", f"'/{curto}/casos/' ||")
+    texto = texto.replace("url='/'", f"url='/{curto}'")
+    return texto
+
+
+def _gerar_uma_pagina(relativo, glossario, direitos, unidades, alvos):
+    base = EVIDENCE_DIR / "pages" / relativo
     if not base.exists():
         raise FileNotFoundError(f"página base não encontrada: {base}")
-    glossario, direitos, unidades, alvos = carregar_tm()
     texto_base = base.read_text(encoding=ENCODING)
 
     # Blocos ```sql ... ``` e tags de componente NÃO são traduzidos: protege-os
@@ -349,8 +377,9 @@ def gerar_paginas():
                                           alvos.get(locale, {}))
 
         # Troca o seletor de idiomas pela versão desta página.
-        traduzido = re.sub(r"^🌐 .*$", _seletor_idiomas(curto), traduzido,
-                           count=1, flags=re.M)
+        sufixo = "/casos/{params.caso}" if relativo.startswith("casos/") else ""
+        traduzido = re.sub(r"^🌐 .*$", lambda _m: _seletor_idiomas(curto, sufixo),
+                           traduzido, count=1, flags=re.M)
         # Frase de direitos localizada.
         traduzido = traduzido.replace("TODOS OS DIREITOS RESERVADOS",
                                       direitos.get(locale, direitos[ORIGEM]))
@@ -358,16 +387,29 @@ def gerar_paginas():
             traduzido = traduzido.replace(
                 "---\ntitle:", '---\ndir: rtl\ntitle:', 1)
 
-        destino = (EVIDENCE_DIR / "pages" / "index.md" if curto == "pt"
-                   else EVIDENCE_DIR / "pages" / curto / "index.md")
+        traduzido = _rotas_do_locale(traduzido, curto)
+        destino = (EVIDENCE_DIR / "pages" / relativo if curto == "pt"
+                   else EVIDENCE_DIR / "pages" / curto / relativo)
         destino.parent.mkdir(parents=True, exist_ok=True)
         destino.write_text(traduzido, encoding=ENCODING)
         gerados.append(destino)
-    print(f"✅ {len(gerados)} páginas do dashboard em {EVIDENCE_DIR / 'pages'}")
     return gerados
 
 
 # ---------------------------------------------------------------------------
+# Páginas do dashboard que passam pelo circuito de tradução. O índice estava em
+# doze idiomas havia meses e a página de caso — a que mostra o RESULTADO — em um
+# só, porque o gerador tratava uma página fixa (#BUG-055).
+PAGINAS = ("index.md", "casos/[caso].md")
+
+# Rótulo que é sigla ou símbolo: igual em todo idioma. Cobrá-lo no QA treinaria
+# quem o usa a ignorar o relatório.
+ROTULOS_INVARIANTES = frozenset({
+    "AHP", "BWM", "DEMATEL", "AHP Fuzzy", "DEMATEL - AHP", "AHP CR", "BWM CR",
+    "l", "u", "Top-3 (%)",
+})
+
+
 def _nucleo(rotulo):
     """Rótulo sem o emoji decorativo inicial: "🏆 Vencedor" -> "Vencedor"."""
     return re.sub(r"^[^\w(]+\s*", "", rotulo).strip()
@@ -432,9 +474,9 @@ def _invariante(par):
     return "ProfBru" in par or "TODOS OS DIREITOS RESERVADOS" in par
 
 
-def paginas_em_memoria():
+def paginas_em_memoria(relativo="index.md"):
     """Gera a página de cada locale SEM escrever em disco, para o QA inspecionar."""
-    base = (EVIDENCE_DIR / "pages" / "index.md").read_text(encoding=ENCODING)
+    base = (EVIDENCE_DIR / "pages" / relativo).read_text(encoding=ENCODING)
     glossario, _direitos, unidades, alvos = carregar_tm()
     saida = {}
     for locale in LOCALES:
@@ -531,11 +573,12 @@ def verificar():
     # verificador olhando para um conjunto diferente do que é publicado.
     # Aqui a página de cada locale é gerada em memória e comparada com a de pt:
     # parágrafo de prosa idêntico ao português é parágrafo não traduzido.
-    prosa_pt = [p for p in _paragrafos_de_prosa(
-        (EVIDENCE_DIR / "pages" / "index.md").read_text(encoding=ENCODING))
-        if len(p.split()) >= 6 and not _invariante(p)]
     origens = {re.sub(r"^>\s?", "", t).strip(): tuid for tuid, t in unidades.items()}
-    for locale in LOCALES:
+    for relativo in PAGINAS:
+      prosa_pt = [p for p in _paragrafos_de_prosa(
+          (EVIDENCE_DIR / "pages" / relativo).read_text(encoding=ENCODING))
+          if len(p.split()) >= 4 and not _invariante(p)]
+      for locale in LOCALES:
         if locale == ORIGEM:
             continue
         sem_tu = []
@@ -553,14 +596,19 @@ def verificar():
                 sem_tu.append(par)
         if sem_tu:
             problemas.append(
-                f"[{locale}] página do dashboard: {len(sem_tu)}/{len(prosa_pt)} "
-                f"parágrafo(s) sem target de tradução: {sem_tu[0][:60]!r}")
+                f"[{locale}] {relativo}: {len(sem_tu)}/{len(prosa_pt)} "
+                f"parágrafo(s) sem target: {sem_tu[0][:55]!r}")
 
     # 8. rótulos visíveis dentro das tags de componente (title="...").
-    pagina_pt = (EVIDENCE_DIR / "pages" / "index.md").read_text(encoding=ENCODING)
-    rotulos = sorted(set(re.findall(r'title="([^"]+)"', pagina_pt)))
-    # Emoji sozinho é o próprio rótulo em qualquer idioma.
-    rotulos = [r for r in rotulos if re.search(r"[A-Za-zÀ-ÿ]", r)]
+    rotulos = set()
+    for relativo in PAGINAS:
+        rotulos |= set(re.findall(
+            r'title="([^"]+)"',
+            (EVIDENCE_DIR / "pages" / relativo).read_text(encoding=ENCODING)))
+    # Emoji sozinho, sigla e símbolo são o próprio rótulo em qualquer idioma.
+    rotulos = sorted(r for r in rotulos
+                     if re.search(r"[A-Za-zÀ-ÿ]", r)
+                     and _nucleo(r) not in ROTULOS_INVARIANTES)
     for locale in LOCALES:
         if locale == ORIGEM:
             continue

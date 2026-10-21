@@ -4,7 +4,7 @@ title: MCDM Studio — Decisão MultiCriterion
 
 <div style="text-align:center;">
 
-🌐 [Português](/) · **English** · [Español](/es) · [Français](/fr) · [Deutsch](/de) · [中文](/zh) · [한국어](/ko) · [हिन्दी](/hi) · [עברית](/he) · [Русский](/ru) · [Svenska](/sv) · [Suomi](/fi)
+🌐 [Português](/) · **English** · [Español](/es/) · [Français](/fr/) · [Deutsch](/de/) · [中文](/zh/) · [한국어](/ko/) · [हिन्दी](/hi/) · [עברית](/he/) · [Русский](/ru/) · [Svenska](/sv/) · [Suomi](/fi/)
 
 <div style="text-align:center;margin:1.2rem 0 1.6rem;">
   <img src="/img/logo_capa.png" alt="ProfBru" width="200" style="display:inline-block;"/>
@@ -24,7 +24,7 @@ _MCDM Studio — Modelos MultiCriterion de Decisão · Autor: **ProfBru - Bruno 
 -->
 
 ```sql casos
-select *, '/casos/' || id_caso as link from mcdm.casos
+select *, '/en/casos/' || id_caso as link from mcdm.casos
 ```
 ```sql bcg_geral
 select * from mcdm.bcg_resumo
@@ -114,16 +114,16 @@ This dashboard runs **ten multi-criteria methods** on every case, draws the winn
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
 | **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre Criterions | Criteria quantitativos, decisor único |
-| **ELECTRE I** | Outranking | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
-| **ELECTRE II** | Outranking | Limiares forte e fraco | Ordenação completa com veto |
-| **PROMETHEE II** | Outranking | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
+| **ELECTRE I** | Outranksção | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
+| **ELECTRE II** | Outranksção | Limiares forte e fraco | Ordenação completa com veto |
+| **PROMETHEE II** | Outranksção | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
 | **MAUT** | Utilidade | Independência aditiva + Risk aversion | Decisão sob incerteza |
 | **MCDA-C** | Construtivista | Níveis Neutro/Bom ancorados | Diagnóstico absoluto, não só ranking |
 | **VIKOR** | Compromisso | Utilidade do grupo × arrependimento máximo | Quando compensar é inaceitável |
 | **TODIM** | Teoria dos Prospectos | Perda dói mais que ganho equivalente | Decisor avesso a perda (todos são) |
 | **SAPEVO-M** | Ordinal multidecisor | Julgamento ordinal de vários decisores | Comitê que não concorda entre si |
 
-## 🎯 Robustness — a confidence interval on the decision itself
+## 🎯 Robustness — the confidence interval of the decision itself
 
 > **The problem.** Every MCDM method returns a winner with an implicit confidence of 100%. But weights are never exact — they are preference estimates. If two percentage points in one criterion's weight swap first and second place, the "winner" is an artefact of the calibration, not a fact about the set. Nobody reports this. **It is where decisions die in committee.**
 >

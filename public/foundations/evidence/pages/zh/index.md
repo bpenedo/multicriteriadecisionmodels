@@ -4,7 +4,7 @@ title: MCDM Studio — Decisão Multi准则
 
 <div style="text-align:center;">
 
-🌐 [Português](/) · [English](/en) · [Español](/es) · [Français](/fr) · [Deutsch](/de) · **中文** · [한국어](/ko) · [हिन्दी](/hi) · [עברית](/he) · [Русский](/ru) · [Svenska](/sv) · [Suomi](/fi)
+🌐 [Português](/) · [English](/en/) · [Español](/es/) · [Français](/fr/) · [Deutsch](/de/) · **中文** · [한국어](/ko/) · [हिन्दी](/hi/) · [עברית](/he/) · [Русский](/ru/) · [Svenska](/sv/) · [Suomi](/fi/)
 
 <div style="text-align:center;margin:1.2rem 0 1.6rem;">
   <img src="/img/logo_capa.png" alt="ProfBru" width="200" style="display:inline-block;"/>
@@ -24,7 +24,7 @@ _MCDM Studio — Modelos Multi准则 de Decisão · Autor: **ProfBru - Bruno Pen
 -->
 
 ```sql casos
-select *, '/casos/' || id_caso as link from mcdm.casos
+select *, '/zh/casos/' || id_caso as link from mcdm.casos
 ```
 ```sql bcg_geral
 select * from mcdm.bcg_resumo
@@ -114,16 +114,16 @@ from mcdm.casos group by dominio order by casos desc
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
 | **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre 准则s | 准则 quantitativos, decisor único |
-| **ELECTRE I** | 级别高于关系 | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
-| **ELECTRE II** | 级别高于关系 | Limiares forte e fraco | Ordenação completa com veto |
-| **PROMETHEE II** | 级别高于关系 | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
+| **ELECTRE I** | 超越ção | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
+| **ELECTRE II** | 超越ção | Limiares forte e fraco | Ordenação completa com veto |
+| **PROMETHEE II** | 超越ção | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
 | **MAUT** | Utilidade | Independência aditiva + 风险厌恶 | Decisão sob incerteza |
 | **MCDA-C** | Construtivista | Níveis Neutro/Bom ancorados | Diagnóstico absoluto, não só ranking |
 | **VIKOR** | Compromisso | Utilidade do grupo × arrependimento máximo | Quando compensar é inaceitável |
 | **TODIM** | Teoria dos Prospectos | Perda dói mais que ganho equivalente | Decisor avesso a perda (todos são) |
 | **SAPEVO-M** | Ordinal multidecisor | Julgamento ordinal de vários decisores | Comitê que não concorda entre si |
 
-## 🎯 稳健性 — 决策本身的置信区间
+## 🎯 稳健性 — 决策自身的置信区间
 
 > **问题所在。** 任何 MCDM 方法都会给出一个隐含 100% 确信度的优胜方案。但权重从不精确——它们是偏好的估计。如果某个准则的权重变动两个百分点就让第一与第二互换，那么这个“优胜方案”是校准的产物，而非这组备选的事实。没有人报告这一点。**决策正是死在委员会这一步。**
 >

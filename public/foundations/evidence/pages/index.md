@@ -4,7 +4,7 @@ title: MCDM Studio — Decisão Multicritério
 
 <div style="text-align:center;">
 
-🌐 **Português** · [English](/en) · [Español](/es) · [Français](/fr) · [Deutsch](/de) · [中文](/zh) · [한국어](/ko) · [हिन्दी](/hi) · [עברית](/he) · [Русский](/ru) · [Svenska](/sv) · [Suomi](/fi)
+🌐 **Português** · [English](/en/) · [Español](/es/) · [Français](/fr/) · [Deutsch](/de/) · [中文](/zh/) · [한국어](/ko/) · [हिन्दी](/hi/) · [עברית](/he/) · [Русский](/ru/) · [Svenska](/sv/) · [Suomi](/fi/)
 
 <div style="text-align:center;margin:1.2rem 0 1.6rem;">
   <img src="/img/logo_capa.png" alt="ProfBru" width="200" style="display:inline-block;"/>

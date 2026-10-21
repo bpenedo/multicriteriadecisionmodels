@@ -4,7 +4,7 @@ title: MCDM Studio — Decisão Multiमानदंड
 
 <div style="text-align:center;">
 
-🌐 [Português](/) · [English](/en) · [Español](/es) · [Français](/fr) · [Deutsch](/de) · [中文](/zh) · [한국어](/ko) · **हिन्दी** · [עברית](/he) · [Русский](/ru) · [Svenska](/sv) · [Suomi](/fi)
+🌐 [Português](/) · [English](/en/) · [Español](/es/) · [Français](/fr/) · [Deutsch](/de/) · [中文](/zh/) · [한국어](/ko/) · **हिन्दी** · [עברית](/he/) · [Русский](/ru/) · [Svenska](/sv/) · [Suomi](/fi/)
 
 <div style="text-align:center;margin:1.2rem 0 1.6rem;">
   <img src="/img/logo_capa.png" alt="ProfBru" width="200" style="display:inline-block;"/>
@@ -24,7 +24,7 @@ _MCDM Studio — Modelos Multiमानदंड de Decisão · Autor: **ProfBru
 -->
 
 ```sql casos
-select *, '/casos/' || id_caso as link from mcdm.casos
+select *, '/hi/casos/' || id_caso as link from mcdm.casos
 ```
 ```sql bcg_geral
 select * from mcdm.bcg_resumo
@@ -114,9 +114,9 @@ from mcdm.casos group by dominio order by casos desc
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
 | **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre मानदंडs | मानदंड quantitativos, decisor único |
-| **ELECTRE I** | अधिवर्गीकरण | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
-| **ELECTRE II** | अधिवर्गीकरण | Limiares forte e fraco | Ordenação completa com veto |
-| **PROMETHEE II** | अधिवर्गीकरण | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
+| **ELECTRE I** | पराभूत करता हैção | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
+| **ELECTRE II** | पराभूत करता हैção | Limiares forte e fraco | Ordenação completa com veto |
+| **PROMETHEE II** | पराभूत करता हैção | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
 | **MAUT** | Utilidade | Independência aditiva + जोखिम से बचाव | Decisão sob incerteza |
 | **MCDA-C** | Construtivista | Níveis Neutro/Bom ancorados | Diagnóstico absoluto, não só ranking |
 | **VIKOR** | Compromisso | Utilidade do grupo × arrependimento máximo | Quando compensar é inaceitável |

@@ -5,7 +5,7 @@ title: MCDM Studio — Decisão Multiקריטריון
 
 <div style="text-align:center;">
 
-🌐 [Português](/) · [English](/en) · [Español](/es) · [Français](/fr) · [Deutsch](/de) · [中文](/zh) · [한국어](/ko) · [हिन्दी](/hi) · **עברית** · [Русский](/ru) · [Svenska](/sv) · [Suomi](/fi)
+🌐 [Português](/) · [English](/en/) · [Español](/es/) · [Français](/fr/) · [Deutsch](/de/) · [中文](/zh/) · [한국어](/ko/) · [हिन्दी](/hi/) · **עברית** · [Русский](/ru/) · [Svenska](/sv/) · [Suomi](/fi/)
 
 <div style="text-align:center;margin:1.2rem 0 1.6rem;">
   <img src="/img/logo_capa.png" alt="ProfBru" width="200" style="display:inline-block;"/>
@@ -25,7 +25,7 @@ _MCDM Studio — Modelos Multiקריטריון de Decisão · Autor: **ProfBru -
 -->
 
 ```sql casos
-select *, '/casos/' || id_caso as link from mcdm.casos
+select *, '/he/casos/' || id_caso as link from mcdm.casos
 ```
 ```sql bcg_geral
 select * from mcdm.bcg_resumo
@@ -115,16 +115,16 @@ from mcdm.casos group by dominio order by casos desc
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
 | **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre קריטריוןs | קריטריונים quantitativos, decisor único |
-| **ELECTRE I** | דירוג-על | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
-| **ELECTRE II** | דירוג-על | Limiares forte e fraco | Ordenação completa com veto |
-| **PROMETHEE II** | דירוג-על | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
+| **ELECTRE I** | מדרג מעלção | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
+| **ELECTRE II** | מדרג מעלção | Limiares forte e fraco | Ordenação completa com veto |
+| **PROMETHEE II** | מדרג מעלção | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
 | **MAUT** | Utilidade | Independência aditiva + שנאת סיכון | Decisão sob incerteza |
 | **MCDA-C** | Construtivista | Níveis Neutro/Bom ancorados | Diagnóstico absoluto, não só ranking |
 | **VIKOR** | Compromisso | Utilidade do grupo × arrependimento máximo | Quando compensar é inaceitável |
 | **TODIM** | Teoria dos Prospectos | Perda dói mais que ganho equivalente | Decisor avesso a perda (todos são) |
 | **SAPEVO-M** | Ordinal multidecisor | Julgamento ordinal de vários decisores | Comitê que não concorda entre si |
 
-## 🎯 חוסן — רווח בר-סמך על ההחלטה עצמה
+## 🎯 חוסן — רווח בר-הסמך של ההחלטה עצמה
 
 > **הבעיה.** כל שיטת MCDM מחזירה מנצח בביטחון מובלע של 100%. אבל המשקלים מעולם אינם מדויקים — הם אומדני העדפה. אם שתי נקודות אחוז במשקלו של קריטריון מחליפות בין המקום הראשון לשני, ה"מנצח" הוא תוצר של הכיול ולא עובדה על הקבוצה. אף אחד אינו מדווח על כך. **שם ההחלטות מתות בוועדה.**
 >
