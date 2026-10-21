@@ -470,6 +470,17 @@ def pesos_dematel_ahp(conn, id_caso, destino):
     base = -desloc * (n_fam - 1) / 2
     pos = {f: base + i * desloc for i, f in enumerate(
         ["dematel", "ahp"] + (["fuzzy"] if tem_fuzzy else []) + (["bwm"] if tem_bwm else []))}
+    # O eixo é fixado pelas BARRAS — nunca pelos extremos da faixa fuzzy, que não
+    # são normalizados e chegam a 2× o maior peso. Calculado aqui, antes de
+    # desenhar, para que a faixa possa ser cortada com indicação e os rótulos
+    # fiquem dentro da área útil.
+    maiores = [pd_.max(), pa.max()]
+    if tem_fuzzy:
+        maiores.append(np.array([r["p_fuzzy"] for r in linhas]).max() * 100)
+    if tem_bwm:
+        maiores.append(np.array([r["p_bwm"] for r in linhas]).max() * 100)
+    x_max = max(maiores) * 1.16
+
     fig, ax = plt.subplots(figsize=(10.4, 0.92 * len(rot) + 3.2))
     ax.barh(y + pos["dematel"], pd_, height=altura, color=COR_DEMATEL,
             label="DEMATEL (influência sistêmica)")
@@ -485,19 +496,57 @@ def pesos_dematel_ahp(conn, id_caso, destino):
         fl = np.array([r["f_l"] for r in linhas]) * 100
         fu = np.array([r["f_u"] for r in linhas]) * 100
         phi = linhas[0]["fuzziness"]
-        ax.barh(y + pos["fuzzy"], pf, height=altura, color=COR_FUZZY,
-                label="AHP Fuzzy (Buckley) — barra = faixa (l, u)")
-        # xerr assimétrico: distâncias ATÉ l e ATÉ u, nunca os valores absolutos.
-        # Passar (l, u) direto desenharia a barra a partir da origem.
-        ax.errorbar(pf, y + pos["fuzzy"],
-                    xerr=[np.maximum(pf - fl, 0), np.maximum(fu - pf, 0)],
-                    fmt="none", ecolor="#4b5563", elinewidth=1.1, capsize=3, zorder=5)
-        for i in range(len(rot)):
-            ax.text(fu[i] + 0.6, y[i] + pos["fuzzy"], f"{pf[i]:.1f}%", va="center", fontsize=8)
-        # Ordem preservada entre AHP e AHP Fuzzy? É a pergunta que o gráfico responde.
+
+        # Σm = 1, mas Σl ≈ 0,49 e Σu ≈ 2,03: a faixa NÃO é normalizada. Desenhá-la
+        # no eixo das barras (que somam 100%) afirmava que um critério pode valer
+        # 102% do peso total, e esticava o eixo até lá, espremendo todas as barras
+        # no primeiro terço — em 34 dos 38 casos (#BUG-057).
+        #
+        # Pior que o eixo: com fator de fuzzificação ESCALAR, l/m e u/m são os
+        # MESMOS para todo critério. A barra de erro desenhava, por critério, o que
+        # é um fator global — e uma faixa que escala todos os pesos igualmente não
+        # pode reordenar nada. O "ordem PRESERVADA" do subtítulo era tautologia.
+        razao_l, razao_u = fl / np.maximum(pf, 1e-12), fu / np.maximum(pf, 1e-12)
+        uniforme = bool(np.ptp(razao_l) < 1e-9 and np.ptp(razao_u) < 1e-9)
+
+        rotulo_fuzzy = ("AHP Fuzzy (Buckley) — faixa proporcional, ver subtítulo"
+                        if uniforme else "AHP Fuzzy (Buckley) — barra = faixa (l, u)")
+        ax.barh(y + pos["fuzzy"], pf, height=altura, color=COR_FUZZY, label=rotulo_fuzzy)
+
         mesma_ordem = np.array_equal(np.argsort(-pa), np.argsort(-pf))
-        sub = (f" · Φ = {phi:.2f} · ordem AHP {'PRESERVADA' if mesma_ordem else 'ALTERADA'} "
-               f"pelo fuzzy")
+        if uniforme:
+            # Faixa uniforme não discrimina critério: informa-se o multiplicador uma
+            # vez, em vez de repetir a mesma proporção em cada barra.
+            sub = (f" · Φ = {phi:.2f} · faixa fuzzy UNIFORME ×{razao_l[0]:.2f}–×{razao_u[0]:.2f}"
+                   f" (não reordena, por construção)")
+            for i in range(len(rot)):
+                ax.text(pf[i] + 0.6, y[i] + pos["fuzzy"], f"{pf[i]:.1f}%",
+                        va="center", fontsize=8)
+        else:
+            # Faixa variável por critério: aí ela informa, e é desenhada. O eixo é
+            # fixado pelas BARRAS, e a faixa que o excede ganha seta de continuação.
+            # A faixa é cortada no limite do eixo; quem passa dele ganha "▸" e o
+            # valor real anotado, em vez de esticar o eixo ou vazar da moldura.
+            fu_vis = np.minimum(fu, x_max * 0.97)
+            ax.errorbar(pf, y + pos["fuzzy"],
+                        xerr=[np.maximum(pf - fl, 0), np.maximum(fu_vis - pf, 0)],
+                        fmt="none", ecolor="#4b5563", elinewidth=1.1, capsize=3,
+                        zorder=5, clip_on=True)
+            sub = (f" · Φ = {phi:.2f} · ordem AHP "
+                   f"{'PRESERVADA' if mesma_ordem else 'ALTERADA'} pelo fuzzy")
+            for i in range(len(rot)):
+                if fu[i] > x_max * 0.97:
+                    ax.annotate("▸", (x_max * 0.975, y[i] + pos["fuzzy"]),
+                                va="center", ha="left", fontsize=9, color="#4b5563",
+                                annotation_clip=False)
+                    txt = f"{pf[i]:.1f}%  (u={fu[i]:.0f}%)"
+                else:
+                    txt = f"{pf[i]:.1f}%"
+                # O rótulo fica logo após a BARRA, como nas outras famílias, com
+                # fundo branco: a faixa passa atrás dele sem o tornar ilegível.
+                ax.text(pf[i] + 0.6, y[i] + pos["fuzzy"], txt, va="center", fontsize=8,
+                        zorder=6, bbox=dict(boxstyle="square,pad=0.08", fc="white",
+                                            ec="none", alpha=0.85))
 
     sub_bwm = ""
     if tem_bwm:
@@ -525,9 +574,14 @@ def pesos_dematel_ahp(conn, id_caso, destino):
                  f"({pd_[div]:.1f}% × {pa[div]:.1f}%) · AHP CR = {cr:.4f}"
                  + ("" if cr < 0.10 else "  ⚠️ INCONSISTENTE") + sub + sub_bwm,
                  fontweight="bold")
-    ax.legend(loc="lower right", fontsize=8.5)
+    ax.set_xlim(0, x_max)
+    # Legenda ABAIXO do eixo: dentro da área de dados ela era atravessada pela
+    # faixa fuzzy do último critério, que é justamente o mais estreito.
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.10 - 0.02 * (len(rot) > 6)),
+              ncol=2, fontsize=8.5, frameon=False)
     ax.grid(axis="x", alpha=0.25, linestyle=":")
     ax.set_axisbelow(True)
+    fig.subplots_adjust(bottom=0.16 + 0.01 * len(rot))
     return _salvar(fig, destino / "pesos_dematel_ahp.png")
 
 
