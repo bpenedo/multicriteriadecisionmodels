@@ -18,7 +18,7 @@ E-mail: profbruanbima@gmail.com
 
 [![MCDM](https://img.shields.io/badge/MCDM_menetelmät-12-2563eb?style=for-the-badge)](#-kaksitoista-päätöksenteon-koulukuntaa--ja-miksi-kaksitoista)
 [![Engines](https://img.shields.io/badge/Moottorit-Python_+_Rust-c2410c?style=for-the-badge)](#-kaksi-riippumatonta-moottoria-ristiintarkistus)
-[![i18n](https://img.shields.io/badge/Kielet-12-16a34a?style=for-the-badge)](#-12-kieltä--sdl-trados--käännösmuisti)
+[![i18n](https://img.shields.io/badge/Kielet-12-16a34a?style=for-the-badge)](#-12-kieltä--kansainvälisen-markkinastandardin-käännösmuisti)
 [![Robustez](https://img.shields.io/badge/Simuloidut_universumit-2.000-8f3d56?style=for-the-badge)](#konsensusmoottori)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
@@ -437,9 +437,9 @@ Ja tulos on **bitilleen identtinen** hitaan reitin kanssa — 100 universumia ×
 
 ---
 
-## 🌐 12 kieltä — SDL Trados -käännösmuisti
+## 🌐 12 kieltä — kansainvälisen markkinastandardin käännösmuisti
 
-Tämä ei ole READMEn konekääntämistä. Tämä on **lokalisointiputki**, jossa on käännösmuisti **SDL Trados Studio** -standardin mukaisesti.
+Tämä ei ole READMEn konekääntämistä. Tämä on **lokalisointiputki**, jossa on kansainvälisen markkinastandardin mukainen käännösmuisti.
 
 ```
 translation.memory.md          ← kanoninen lähde, versioitu gitissä

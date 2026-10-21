@@ -18,7 +18,7 @@ E-mail: profbruanbima@gmail.com
 
 [![MCDM](https://img.shields.io/badge/MCDM_विधियाँ-12-2563eb?style=for-the-badge)](#-निर्णय-की-बारह-विचारधाराएँ--और-बारह-ही-क्यों)
 [![Engines](https://img.shields.io/badge/इंजन-Python_+_Rust-c2410c?style=for-the-badge)](#-दो-स्वतंत्र-इंजन-प्रति-सत्यापन)
-[![i18n](https://img.shields.io/badge/भाषाएँ-12-16a34a?style=for-the-badge)](#-12-भाषाएँ--sdl-trados-अनुवाद-स्मृति)
+[![i18n](https://img.shields.io/badge/भाषाएँ-12-16a34a?style=for-the-badge)](#-12-भाषाएँ--अंतर्राष्ट्रीय-बाज़ार-मानक-अनुवाद-स्मृति)
 [![Robustez](https://img.shields.io/badge/अनुरूपित_ब्रह्मांड-2.000-8f3d56?style=for-the-badge)](#सर्वसम्मति-इंजन)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
@@ -437,9 +437,9 @@ python3 exportar_rust.py
 
 ---
 
-## 🌐 12 भाषाएँ — SDL Trados अनुवाद स्मृति
+## 🌐 12 भाषाएँ — अंतर्राष्ट्रीय बाज़ार मानक अनुवाद स्मृति
 
-यह README का यंत्र-अनुवाद नहीं है। यह **SDL Trados Studio** मानक की अनुवाद स्मृति वाली एक **स्थानीयकरण पाइपलाइन** है।
+यह README का यंत्र-अनुवाद नहीं है। यह अंतर्राष्ट्रीय बाज़ार मानक अनुवाद स्मृति वाली एक **स्थानीयकरण पाइपलाइन** है।
 
 ```
 translation.memory.md          ← प्रामाणिक स्रोत, git में संस्करणित

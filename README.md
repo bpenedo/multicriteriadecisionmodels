@@ -18,7 +18,7 @@ E-mail: profbruanbima@gmail.com
 
 [![MCDM](https://img.shields.io/badge/Métodos_MCDM-12-2563eb?style=for-the-badge)](#-as-doze-escolas-de-decisão--e-por-que-doze)
 [![Engines](https://img.shields.io/badge/Motores-Python_+_Rust-c2410c?style=for-the-badge)](#-dois-motores-independentes-a-prova-cruzada)
-[![i18n](https://img.shields.io/badge/Idiomas-12-16a34a?style=for-the-badge)](#-12-idiomas--memória-de-tradução-sdl-trados)
+[![i18n](https://img.shields.io/badge/Idiomas-12-16a34a?style=for-the-badge)](#-12-idiomas--memória-de-tradução-padrão-internacional-de-mercado)
 [![Robustez](https://img.shields.io/badge/Universos_simulados-2.000-8f3d56?style=for-the-badge)](#o-motor-de-consenso)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
@@ -437,9 +437,9 @@ E o resultado é **bit a bit idêntico** ao caminho lento — 100 universos × 1
 
 ---
 
-## 🌐 12 idiomas — memória de tradução SDL Trados
+## 🌐 12 idiomas — memória de tradução padrão internacional de mercado
 
-Não é tradução automática de README. É um **pipeline de localização** com memória de tradução no padrão **SDL Trados Studio**.
+Não é tradução automática de README. É um **pipeline de localização** com memória de tradução padrão internacional de mercado.
 
 ```
 translation.memory.md          ← fonte canônica, versionada em git

@@ -18,7 +18,7 @@ E-mail: profbruanbima@gmail.com
 
 [![MCDM](https://img.shields.io/badge/Методы_MCDM-12-2563eb?style=for-the-badge)](#-двенадцать-школ-принятия-решений--и-почему-именно-двенадцать)
 [![Engines](https://img.shields.io/badge/Движки-Python_+_Rust-c2410c?style=for-the-badge)](#-два-независимых-движка-перекрёстная-проверка)
-[![i18n](https://img.shields.io/badge/Языки-12-16a34a?style=for-the-badge)](#-12-языков--память-переводов-sdl-trados)
+[![i18n](https://img.shields.io/badge/Языки-12-16a34a?style=for-the-badge)](#-12-языков--память-переводов-международного-рыночного-стандарта)
 [![Robustez](https://img.shields.io/badge/Смоделированные_вселенные-2.000-8f3d56?style=for-the-badge)](#движок-консенсуса)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
@@ -437,9 +437,9 @@ python3 exportar_rust.py
 
 ---
 
-## 🌐 12 языков — память переводов SDL Trados
+## 🌐 12 языков — память переводов международного рыночного стандарта
 
-Это не машинный перевод README. Это **конвейер локализации** с памятью переводов в стандарте **SDL Trados Studio**.
+Это не машинный перевод README. Это **конвейер локализации** с памятью переводов международного рыночного стандарта.
 
 ```
 translation.memory.md          ← канонический источник, версионируется в git

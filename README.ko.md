@@ -18,7 +18,7 @@ E-mail: profbruanbima@gmail.com
 
 [![MCDM](https://img.shields.io/badge/MCDM_방법-12-2563eb?style=for-the-badge)](#-열두-개의-의사결정-학파--그리고-왜-열둘인가)
 [![Engines](https://img.shields.io/badge/엔진-Python_+_Rust-c2410c?style=for-the-badge)](#-두-개의-독립-엔진-교차-검증)
-[![i18n](https://img.shields.io/badge/언어-12-16a34a?style=for-the-badge)](#-12개-언어--sdl-trados-번역-메모리)
+[![i18n](https://img.shields.io/badge/언어-12-16a34a?style=for-the-badge)](#-12개-언어--국제-시장-표준-번역-메모리)
 [![Robustez](https://img.shields.io/badge/시뮬레이션_세계-2.000-8f3d56?style=for-the-badge)](#합의-엔진)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
@@ -437,9 +437,9 @@ python3 exportar_rust.py
 
 ---
 
-## 🌐 12개 언어 — SDL Trados 번역 메모리
+## 🌐 12개 언어 — 국제 시장 표준 번역 메모리
 
-README를 기계 번역하는 것이 아닙니다. **SDL Trados Studio** 표준의 번역 메모리를 갖춘 **현지화 파이프라인**입니다.
+README를 기계 번역하는 것이 아닙니다. 국제 시장 표준 번역 메모리를 갖춘 **현지화 파이프라인**입니다.
 
 ```
 translation.memory.md          ← 정본 소스, git으로 버전 관리

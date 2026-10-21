@@ -18,7 +18,7 @@ E-mail: profbruanbima@gmail.com
 
 [![MCDM](https://img.shields.io/badge/MCDM方法-12-2563eb?style=for-the-badge)](#-十二大决策学派以及为何是十二个)
 [![Engines](https://img.shields.io/badge/引擎-Python_+_Rust-c2410c?style=for-the-badge)](#-两个独立引擎交叉验证)
-[![i18n](https://img.shields.io/badge/语言-12-16a34a?style=for-the-badge)](#-12种语言sdl-trados-翻译记忆库)
+[![i18n](https://img.shields.io/badge/语言-12-16a34a?style=for-the-badge)](#-12种语言国际市场标准翻译记忆库)
 [![Robustez](https://img.shields.io/badge/模拟宇宙-2.000-8f3d56?style=for-the-badge)](#共识引擎)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
@@ -437,9 +437,9 @@ python3 exportar_rust.py
 
 ---
 
-## 🌐 12种语言——SDL Trados 翻译记忆库
+## 🌐 12种语言——国际市场标准翻译记忆库
 
-这不是对 README 做机器翻译，而是一条采用 **SDL Trados Studio** 标准翻译记忆库的**本地化流水线**。
+这不是对 README 做机器翻译，而是一条采用国际市场标准翻译记忆库的**本地化流水线**。
 
 ```
 translation.memory.md          ← 规范来源，纳入 git 版本管理

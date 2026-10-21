@@ -18,7 +18,7 @@ E-mail: profbruanbima@gmail.com
 
 [![MCDM](https://img.shields.io/badge/MCDM_Methods-12-2563eb?style=for-the-badge)](#-the-twelve-schools-of-decision--and-why-twelve)
 [![Engines](https://img.shields.io/badge/Engines-Python_+_Rust-c2410c?style=for-the-badge)](#-two-independent-engines-the-cross-check)
-[![i18n](https://img.shields.io/badge/Languages-12-16a34a?style=for-the-badge)](#-12-languages--sdl-trados-translation-memory)
+[![i18n](https://img.shields.io/badge/Languages-12-16a34a?style=for-the-badge)](#-12-languages--international-market-standard-translation-memory)
 [![Robustez](https://img.shields.io/badge/Simulated_universes-2.000-8f3d56?style=for-the-badge)](#the-consensus-engine)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
@@ -437,9 +437,9 @@ And the result is **bit-for-bit identical** to the slow path — 100 universes �
 
 ---
 
-## 🌐 12 languages — SDL Trados translation memory
+## 🌐 12 languages — international market-standard translation memory
 
-This is not machine-translating a README. It is a **localisation pipeline** with a translation memory in the **SDL Trados Studio** standard.
+This is not machine-translating a README. It is a **localisation pipeline** with an international market-standard translation memory.
 
 ```
 translation.memory.md          ← canonical source, versioned in git

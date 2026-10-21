@@ -18,7 +18,7 @@ E-mail: profbruanbima@gmail.com
 
 [![MCDM](https://img.shields.io/badge/שיטות_MCDM-12-2563eb?style=for-the-badge)](#-שתים-עשרה-אסכולות-ההחלטה--ולמה-שתים-עשרה)
 [![Engines](https://img.shields.io/badge/מנועים-Python_+_Rust-c2410c?style=for-the-badge)](#-שני-מנועים-עצמאיים-הבדיקה-הצולבת)
-[![i18n](https://img.shields.io/badge/שפות-12-16a34a?style=for-the-badge)](#-12-שפות--זיכרון-תרגום-sdl-trados)
+[![i18n](https://img.shields.io/badge/שפות-12-16a34a?style=for-the-badge)](#-12-שפות--זיכרון-תרגום-בתקן-בינלאומי-מקובל)
 [![Robustez](https://img.shields.io/badge/יקומים_מדומים-2.000-8f3d56?style=for-the-badge)](#מנוע-הקונצנזוס)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
@@ -437,9 +437,9 @@ python3 exportar_rust.py
 
 ---
 
-## 🌐 12 שפות — זיכרון תרגום SDL Trados
+## 🌐 12 שפות — זיכרון תרגום בתקן בינלאומי מקובל
 
-זה אינו תרגום מכונה של README. זו **צנרת לוקליזציה** עם זיכרון תרגום בתקן **SDL Trados Studio**.
+זה אינו תרגום מכונה של README. זו **צנרת לוקליזציה** עם זיכרון תרגום בתקן בינלאומי מקובל.
 
 ```
 translation.memory.md          ← מקור קנוני, מנוהל בגרסאות ב-git

@@ -18,7 +18,7 @@ E-mail: profbruanbima@gmail.com
 
 [![MCDM](https://img.shields.io/badge/MCDM_metoder-12-2563eb?style=for-the-badge)](#-de-tolv-beslutsskolorna--och-varför-tolv)
 [![Engines](https://img.shields.io/badge/Motorer-Python_+_Rust-c2410c?style=for-the-badge)](#-två-oberoende-motorer-korskontrollen)
-[![i18n](https://img.shields.io/badge/Språk-12-16a34a?style=for-the-badge)](#-12-språk--sdl-trados-översättningsminne)
+[![i18n](https://img.shields.io/badge/Språk-12-16a34a?style=for-the-badge)](#-12-språk--översättningsminne-enligt-internationell-marknadsstandard)
 [![Robustez](https://img.shields.io/badge/Simulerade_universum-2.000-8f3d56?style=for-the-badge)](#konsensusmotorn)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
@@ -437,9 +437,9 @@ Och resultatet är **bit för bit identiskt** med den långsamma vägen — 100 
 
 ---
 
-## 🌐 12 språk — SDL Trados översättningsminne
+## 🌐 12 språk — översättningsminne enligt internationell marknadsstandard
 
-Detta är ingen maskinöversättning av en README. Det är en **lokaliseringspipeline** med översättningsminne enligt standarden **SDL Trados Studio**.
+Detta är ingen maskinöversättning av en README. Det är en **lokaliseringspipeline** med översättningsminne enligt internationell marknadsstandard.
 
 ```
 translation.memory.md          ← kanonisk källa, versionshanterad i git

@@ -18,7 +18,7 @@ E-mail: profbruanbima@gmail.com
 
 [![MCDM](https://img.shields.io/badge/MCDM_Methoden-12-2563eb?style=for-the-badge)](#-die-zwölf-entscheidungsschulen--und-warum-zwölf)
 [![Engines](https://img.shields.io/badge/Engines-Python_+_Rust-c2410c?style=for-the-badge)](#-zwei-unabhängige-engines-die-kreuzprüfung)
-[![i18n](https://img.shields.io/badge/Sprachen-12-16a34a?style=for-the-badge)](#-12-sprachen--sdl-trados-translation-memory)
+[![i18n](https://img.shields.io/badge/Sprachen-12-16a34a?style=for-the-badge)](#-12-sprachen--translation-memory-nach-internationalem-marktstandard)
 [![Robustez](https://img.shields.io/badge/Simulierte_Universen-2.000-8f3d56?style=for-the-badge)](#die-konsens-engine)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
@@ -437,9 +437,9 @@ Und das Ergebnis ist **bitgenau identisch** mit dem langsamen Pfad — 100 Unive
 
 ---
 
-## 🌐 12 Sprachen — SDL Trados Translation Memory
+## 🌐 12 Sprachen — Translation Memory nach internationalem Marktstandard
 
-Das ist keine maschinelle Übersetzung eines README. Es ist eine **Lokalisierungspipeline** mit Translation Memory im Standard **SDL Trados Studio**.
+Das ist keine maschinelle Übersetzung eines README. Es ist eine **Lokalisierungspipeline** mit Translation Memory nach internationalem Marktstandard.
 
 ```
 translation.memory.md          ← kanonische Quelle, in git versioniert
