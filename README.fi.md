@@ -14,12 +14,12 @@ E-mail: profbruanbima@gmail.com
 
 ### Lopeta valitseminen taulukkolaskennalla. Ala päättää todisteiden pohjalta.
 
-**Kymmenen päätöksenteon koulukuntaa. Yksi voittaja. Ja — ensimmäistä kertaa — todennäköisyys sille, että voittaja on oikea.**
+**Kaksitoista päätöksenteon koulukuntaa. Yksi voittaja. Ja — ensimmäistä kertaa — todennäköisyys sille, että voittaja on oikea.**
 
-[![MCDM](https://img.shields.io/badge/MCDM_menetelmät-10-2563eb?style=for-the-badge)](#-kymmenen-päätöksenteon-koulukuntaa--ja-miksi-kymmenen)
+[![MCDM](https://img.shields.io/badge/MCDM_menetelmät-12-2563eb?style=for-the-badge)](#-kaksitoista-päätöksenteon-koulukuntaa--ja-miksi-kaksitoista)
 [![Engines](https://img.shields.io/badge/Moottorit-Python_+_Rust-c2410c?style=for-the-badge)](#-kaksi-riippumatonta-moottoria-ristiintarkistus)
-[![i18n](https://img.shields.io/badge/Kielet-12-16a34a?style=for-the-badge)](#-12-kieltä--sdl-trados-käännösmuisti)
-[![Robustez](https://img.shields.io/badge/Simuloidut_universumit-2.000-8f3d56?style=for-the-badge)](#-kysymys-johon-kukaan-ei-vastaa-entä-jos-painot-ovat-väärin)
+[![i18n](https://img.shields.io/badge/Kielet-12-16a34a?style=for-the-badge)](#-12-kieltä--sdl-trados--käännösmuisti)
+[![Robustez](https://img.shields.io/badge/Simuloidut_universumit-2.000-8f3d56?style=for-the-badge)](#konsensusmoottori)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
 [![Rust](https://img.shields.io/badge/Rust-1.96-000000?logo=rust&logoColor=white)](https://www.rust-lang.org)
@@ -65,9 +65,9 @@ Se ”voittaja” ei koskaan ollut voittaja. Se oli **kalibrointisi artefakti** 
 
 ---
 
-## 💊 Ratkaisu: kymmenen koulukuntaa, yksi konsensus ja luottamusväli
+## 💊 Ratkaisu: kaksitoista koulukuntaa, yksi konsensus ja luottamusväli
 
-**MCDM Studio ajaa **yhdeksän vakiintunutta monikriteerimenetelmää** samaan ongelmaan, johtaa voittajan niiden välisestä **konsensuksesta** ja tekee sitten sen ainoan asian, jolla on todella väliä:**
+**MCDM Studio ajaa **kaksitoista vakiintunutta monikriteerimallia** samaan ongelmaan, johtaa voittajan niiden kymmenen **konsensuksesta**, jotka tuottavat järjestyksen, ja tekee sitten sen ainoan asian, jolla on todella väliä:**
 
 > ### 🎲 Se häiritsee painoja **2 000 kertaa** ja laskee, kuinka monessa universumissa voittaja yhä voittaa.
 
@@ -104,7 +104,7 @@ Tuomio lakkaa olemasta luku ja muuttuu **lauseeksi, joka kestää komitean**:
 
 **Kipu, jonka tämä poistaa:** jokaiseen MCDM-menetelmään on sisäänrakennettu teoria siitä, mitä ”parempi” tarkoittaa — ja se vaihtaa voittajan. Menetelmän valitseminen ja tuloksen esittäminen on tuloksen valitsemista.
 
-Ajamme kaikki yhdeksän. Kun ne ovat yhtä mieltä, valinta **ei ole menetelmän artefakti**. Kun ne eroavat, **ero itsessään on löydös**.
+Ajamme kaikki kymmenen. Kun ne ovat yhtä mieltä, valinta **ei ole menetelmän artefakti**. Kun ne eroavat, **ero itsessään on löydös**.
 
 > Yllä: **lataushybridi** on ensimmäinen seitsemässä menetelmässä mutta **kuudes ELECTRE I:ssä**. Se ei ole kohinaa — se on informaatiota. ELECTRE I sallii *veton*: se kertoo, että hybridillä on jossakin kriteerissä riittävän vakava haitta karsiutuakseen, olipa se muuten miten hyvä tahansa. **Juuri sen kysymyksen haluat viedä komitealle.**
 
@@ -315,10 +315,10 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ Yhdeksän päätöksenteon koulukuntaa — ja miksi kymmenen
+## ⚖️ Kaksitoista päätöksenteon koulukuntaa — ja miksi kaksitoista
 
 > [!IMPORTANT]
-> **Jokainen menetelmä on eri teoria siitä, mitä ”parempi” tarkoittaa.** Vain yhden käyttäminen on vastauksen valitsemista yhdessä kysymyksen kanssa. Ajamme kaikki kymmenen, koska **riippumattomien teorioiden yksimielisyys** on vahvin todiste, jonka päätösongelma sallii.
+> **Jokainen menetelmä on eri teoria siitä, mitä ”parempi” tarkoittaa.** Vain yhden käyttäminen on vastauksen valitsemista yhdessä kysymyksen kanssa. Ajamme ne kaikki, koska **riippumattomien teorioiden yksimielisyys** on vahvin todiste, jonka päätösongelma sallii.
 
 <div align="center">
 
@@ -334,11 +334,16 @@ python3 gerar_graficos.py --workers 6
 | **TODIM** | prospektiteoria | tappio sattuu enemmän kuin vastaava voitto ilahduttaa | tappiota karttava päättäjä — **niitä ovat kaikki** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | järjestysasteikollinen, monta päättäjää | useiden päättäjien järjestysasteikollinen arvio | **komitea, joka ei ole yksimielinen** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
 | **TOPSIS Fuzzy** | Sumea | että data on VÄLI, ei piste | mittaus on epätarkka ja haluat tietää, kestääkö järjestys sen | Zadeh (1965); Chen (2000) |
+| **BWM** | painojen lähde | että päättäjä osaa nimetä parhaan ja huonoimman kriteerin | **Saatyn matriisia ei voi täyttää**: 2n−3 vertailua eikä n(n−1)/2 | Rezaei (2015; 2016) |
+| **DRSA** | sääntöjen induktio | että aiempia päätöksiä on ja ne kunnioittavat dominanssia | kukaan ei osaa ilmoittaa painoja, mutta **historiaa on** — ja vastauksen pitää olla **luettava sääntö** | Greco, Matarazzo & Słowiński (1999; 2001) |
 
 </div>
 
 > [!NOTE]
 > **Sumea TOPSIS** ei ole AHP-TOPSIS kohinalla: kolmiolukujen lisäksi se vaihtaa normalisoinnin (lineaarinen vektorin sijaan) ja ihanneratkaisun (absoluuttinen suhteellisen sijaan). **Poikkeaminen AHP-TOPSIS 2n:stä on odotettu käytös**, ja se mittaa, kuinka paljon järjestys riippuu näistä valinnoista. **Sumea AHP** (Buckley) tulee kolmanneksi painolähteeksi DEMATELin ja AHP:n rinnalle: se ottaa saman parittaisen arvion mutta kantaa epätarkkuuden loppuun asti — tasaisella hajonnalla keskiarvo vastaa AHP:n arvoa, ja se lisää **välin**, joka kertoo kestääkö prioriteettijärjestys päättäjän oman epätarkkuuden.
+
+> [!IMPORTANT]
+> **BWM ja DRSA ovat eri asemassa kuin muut kymmenen.** BWM on **painojen lähde** — vaihtoehto AHP:lle ja DEMATELille — ja DRSA **indusoi sääntöjä** menneistä päätöksistä. Kumpikaan ei tuota omaa järjestystä, ja siksi **Borda-konsensus ja robustiusanalyysi lasketaan edelleen kymmenen järjestämismenetelmän yli**.
 
 <details>
 <summary><b>Miksi nämä kolme ansaitsevat erityishuomion</b></summary>
@@ -359,11 +364,13 @@ Kaikki muut menetelmät vaativat painovektorin. **Mistä se tulee, kun viisi pä
 ### Konsensusmoottori
 
 ```
-DEMATEL ──► painot vaikutuksen mukaan ──► 10 menetelmää ──► Bordan konsensus ──► voittaja
-                                                    │
-                        2 000 Dirichlet-universumia ─────────────────┘
-                                    ▼
-                     tuomio: ROBUSTO / PROVÁVEL / FRÁGIL
+DEMATEL · AHP · AHP Fuzzy · BWM ──► painot vaikutuksen mukaan ──► 10 menetelmää ──► Bordan konsensus ──► voittaja
+                                                                        │
+                                        2 000 Dirichlet-universumia ───────────────────┘
+                                                    ▼
+                                 tuomio: ROBUSTO / PROVÁVEL / FRÁGIL
+
+DRSA ──────────────────────────────► luettavat säännöt menneistä päätöksistä
 ```
 
 | Tuomio | Luottamus | Mitä tehdä |
@@ -411,7 +418,7 @@ Robustiusanalyysi ajaa 2 000 universumia × 10 menetelmää. Naiivi toteutus vei
 
 </div>
 
-> **Eniten tuottanut optimointi ei ollut rinnakkaisuus eikä JIT.** Se oli oivallus, että neljä yhdeksästä menetelmästä on **lineaarisia painovektorin suhteen** — mikä sallii tensorien esilaskennan ja kunkin universumin typistämisen yhdeksi matriisi-vektori-tuloksi. **Algebra ennen infrastruktuuria.**
+> **Eniten tuottanut optimointi ei ollut rinnakkaisuus eikä JIT.** Se oli oivallus, että neljä kymmenestä menetelmästä on **lineaarisia painovektorin suhteen** — mikä sallii tensorien esilaskennan ja kunkin universumin typistämisen yhdeksi matriisi-vektori-tuloksi. **Algebra ennen infrastruktuuria.**
 
 Ja tulos on **bitilleen identtinen** hitaan reitin kanssa — 100 universumia × 10 menetelmää tarkistetaan jokaisella testisarjan ajolla. Optimointi, joka muuttaa tulosta, on vika eikä hyöty.
 
@@ -475,13 +482,16 @@ multicriteriadecisionmodels/
     │   ├── nucleo.py                   DEMATEL · ELECTRE I/II · PROMETHEE II
     │   │                               MAUT · MCDA-C · AHP · TOPSIS 2N
     │   ├── metodos_br.py               SAPEVO-M · VIKOR · TODIM · Copeland
+    │   ├── fuzzy.py                    AHP Fuzzy · TOPSIS Fuzzy
+    │   ├── bwm.py                      BWM (Rezaei)
+    │   ├── drsa.py                     DRSA (Greco · Matarazzo · Słowiński)
     │   ├── robustez.py                 Dirichlet + ProcessPoolExecutor
     │   ├── pipeline.py                 orkestroija
-    │   ├── gerar_graficos.py           5 näkymää tapausta kohden
+    │   ├── gerar_graficos.py           6 näkymää tapausta kohden
     │   ├── gerar_i18n.py               TM → merkkijonot → sivut → TMX
-    │   ├── testes_nucleo.py            16 matemaattista tarkistusta
+    │   ├── testes_nucleo.py            99 matemaattista tarkistusta
     │   ├── exportar_rust.py            moottoreiden välinen täsmäytys
-    │   ├── casos/catalogo.py           6 tapausta + validointi
+    │   ├── casos/                     38 tapausta + validointi
     │   └── run_all.sh                  putki (screen)
     │
     ├── rust/mcdm_core/                 RUST-MOOTTORI (varmennus + jakelu)
@@ -516,7 +526,7 @@ Ei, kolmesta syystä. **(1)** Painotettu matriisi on **yksi** menetelmä (painot
 <details>
 <summary><b>Miten valitsen painot?</b></summary>
 
-Et valitse niitä — **kolme reittiä johtaa ne**. **DEMATEL** poimii ne ilmoittamastasi kausaalirakenteesta (kuka vaikuttaa keneen). **AHP** poimii ne pareittaisista vertailuista, ja johdonmukaisuustarkistus **hylkää** ristiriitaisen arvion. **SAPEVO-M** poimii ne useiden päättäjien järjestysasteikollisista arvioista. Ja sen jälkeen robustiusanalyysi kysyy, kuinka paljon tulos yhä **riippuu** niistä.
+Et valitse niitä — **viisi reittiä johtaa ne**. **DEMATEL** poimii ne kausaalirakenteesta, jonka ilmoitat (kuka vaikuttaa kehen). **AHP** poimii ne parivertailuista, ja johdonmukaisuustarkistus **hylkää** ristiriitaisen arvion. **Sumea AHP** tekee saman myöntäen, että jokainen arvio on väli eikä piste. **BWM** kysyy vain parhaan ja huonoimman kriteerin — 2n−3 vertailua eikä n(n−1)/2 — ja on siksi täytettävissä siellä, missä AHP ei ole. **SAPEVO-M** poimii ne usean päättäjän järjestysarviosta. Ja sen jälkeen robustiusanalyysi kysyy, kuinka paljon tulos vielä **riippuu** niistä.
 </details>
 
 <details>

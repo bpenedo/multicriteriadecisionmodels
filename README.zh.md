@@ -14,12 +14,12 @@ E-mail: profbruanbima@gmail.com
 
 ### 别再用电子表格做选择。开始用证据做决策。
 
-**十大决策学派。一个优胜方案。而且——这是第一次——附带该方案正确的概率。**
+**十二大决策学派。一个优胜方案。而且——这是第一次——附带该方案正确的概率。**
 
-[![MCDM](https://img.shields.io/badge/MCDM方法-10-2563eb?style=for-the-badge)](#-九大决策学派以及为何是九个)
+[![MCDM](https://img.shields.io/badge/MCDM方法-12-2563eb?style=for-the-badge)](#-十二大决策学派以及为何是十二个)
 [![Engines](https://img.shields.io/badge/引擎-Python_+_Rust-c2410c?style=for-the-badge)](#-两个独立引擎交叉验证)
-[![i18n](https://img.shields.io/badge/语言-12-16a34a?style=for-the-badge)](#-12种语言--sdl-trados翻译记忆库)
-[![Robustez](https://img.shields.io/badge/模拟宇宙-2.000-8f3d56?style=for-the-badge)](#-无人回答的问题如果权重错了怎么办)
+[![i18n](https://img.shields.io/badge/语言-12-16a34a?style=for-the-badge)](#-12种语言sdl-trados-翻译记忆库)
+[![Robustez](https://img.shields.io/badge/模拟宇宙-2.000-8f3d56?style=for-the-badge)](#共识引擎)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
 [![Rust](https://img.shields.io/badge/Rust-1.96-000000?logo=rust&logoColor=white)](https://www.rust-lang.org)
@@ -65,9 +65,9 @@ E-mail: profbruanbima@gmail.com
 
 ---
 
-## 💊 解法：十大学派、一个共识，外加一个置信区间
+## 💊 解法：十二大学派、一个共识，外加一个置信区间
 
-**MCDM Studio 在同一个问题上运行**九种成熟的多准则方法**，从它们之间的**共识**中得出优胜方案，然后做那件真正重要的事：**
+**MCDM Studio 在同一个问题上运行**十二种成熟的多准则模型**，从其中产生排序的十种之间的**共识**中得出优胜方案，然后做那件真正重要的事：**
 
 > ### 🎲 它把权重扰动**2000次**，统计在多少个宇宙里优胜方案依然获胜。
 
@@ -104,7 +104,7 @@ E-mail: profbruanbima@gmail.com
 
 **它解决的痛点：** 每种MCDM方法都内嵌着一套关于“更好”意味着什么的理论——而它会改变优胜方案。选定一种方法再呈现结果，就等于选定了结果。
 
-我们把九种全部跑一遍。当它们一致时，该选择**不是方法的产物**。当它们分歧时，**分歧本身就是发现**。
+我们把十种全部跑一遍。当它们一致时，该选择**不是方法的产物**。当它们分歧时，**分歧本身就是发现**。
 
 > 上图：**插电式混动**在七种方法中排第一，却在**ELECTRE I 中排第六**。这不是噪声，而是信息。ELECTRE I 允许*否决*：它指出该混动车在某个准则上的劣势严重到足以被淘汰，无论其他方面多好。**这正是你要带到委员会上的问题。**
 
@@ -315,10 +315,10 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ 十大决策学派——以及为何是九个
+## ⚖️ 十二大决策学派——以及为何是十二个
 
 > [!IMPORTANT]
-> **每种方法都是关于“更好”意味着什么的不同理论。** 只用一种，等于在选定问题的同时选定了答案。我们运行全部九种，因为**独立理论之间的一致**是决策问题所能提供的最强证据。
+> **每种方法都是关于“更好”意味着什么的不同理论。** 只用一种，等于在选定问题的同时选定了答案。我们把它们全部运行，因为**独立理论之间的一致**是决策问题所能提供的最强证据。
 
 <div align="center">
 
@@ -334,11 +334,16 @@ python3 gerar_graficos.py --workers 6
 | **TODIM** | 前景理论 | 损失之痛大于等量收益之喜 | 厌恶损失的决策者——**人人如此** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | 多决策者序数法 | 多位决策者的序数判断 | **内部无法达成一致的委员会** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
 | **TOPSIS Fuzzy** | 模糊 | 数据是一个**区间**，而非一个点 | 测量不精确，而你想知道排名是否经得起这种不确定 | Zadeh (1965); Chen (2000) |
+| **BWM** | 权重来源 | 决策者能指出最佳与最差准则 | **萨蒂矩阵填不完**：2n−3 次比较，而非 n(n−1)/2 | Rezaei (2015; 2016) |
+| **DRSA** | 规则归纳 | 存在过往决策，且它们尊重占优关系 | 没人能给出权重，但**有历史决策**——而答案必须是**可读的规则** | Greco, Matarazzo & Słowiński (1999; 2001) |
 
 </div>
 
 > [!NOTE]
 > **模糊 TOPSIS** 不是「加了噪声的 AHP-TOPSIS」：除三角模糊数外，它还更换了归一化方式（线性而非向量）与理想解（绝对而非相对）。**与 AHP-TOPSIS 2n 产生分歧是预期行为**，它衡量排名对这些选择的依赖程度。**模糊 AHP**（Buckley）作为第三种权重来源，与 DEMATEL、AHP 并列：它接受同样的两两判断，但把不确定性一路带到最后——在均匀展幅下中心值与 AHP 一致，它新增的是**区间**，用以回答优先次序能否经得起决策者自身的不确定。
+
+> [!IMPORTANT]
+> **BWM 与 DRSA 的位置与其余十个不同。** BWM 是**权重来源**——AHP 与 DEMATEL 的替代——DRSA 则从过往决策中**归纳规则**。两者都不产生自己的排名，因此**博尔达共识与稳健性分析仍在十个排序方法之上计算**。
 
 <details>
 <summary><b>为何这三种值得特别关注</b></summary>
@@ -359,11 +364,13 @@ VIKOR 计算**两个**度量：`S`（群体效用——加权和，**接受**某
 ### 共识引擎
 
 ```
-DEMATEL ──► 按影响力得出的权重 ──► 10种方法 ──► 波达共识 ──► 优胜方案
-                                                    │
-                        2000个狄利克雷宇宙 ─────────────────┘
-                                    ▼
-                     结论: ROBUSTO / PROVÁVEL / FRÁGIL
+DEMATEL · AHP · AHP Fuzzy · BWM ──► 按影响力得出的权重 ──► 10种方法 ──► 波达共识 ──► 优胜方案
+                                                                        │
+                                        2000个狄利克雷宇宙 ───────────────────┘
+                                                    ▼
+                                 结论: ROBUSTO / PROVÁVEL / FRÁGIL
+
+DRSA ──────────────────────────────► 由过往决策归纳出的可读规则
 ```
 
 | 结论 | 置信度 | 应当怎么做 |
@@ -411,7 +418,7 @@ python3 exportar_rust.py
 
 </div>
 
-> **收益最大的优化既不是并行，也不是JIT。** 而是意识到九种方法中有四种**对权重向量是线性的**——这使得可以预先计算张量，把每个宇宙化简为一次矩阵-向量乘法。**代数优先于基础设施。**
+> **收益最大的优化既不是并行，也不是JIT。** 而是意识到十种方法中有四种**对权重向量是线性的**——这使得可以预先计算张量，把每个宇宙化简为一次矩阵-向量乘法。**代数优先于基础设施。**
 
 而且结果与慢速路径**逐位完全一致**——每次运行测试套件都会验证100个宇宙 × 10种方法。改变结果的优化是缺陷，不是收益。
 
@@ -475,13 +482,16 @@ multicriteriadecisionmodels/
     │   ├── nucleo.py                   DEMATEL · ELECTRE I/II · PROMETHEE II
     │   │                               MAUT · MCDA-C · AHP · TOPSIS 2N
     │   ├── metodos_br.py               SAPEVO-M · VIKOR · TODIM · Copeland
+    │   ├── fuzzy.py                    AHP Fuzzy · TOPSIS Fuzzy
+    │   ├── bwm.py                      BWM (Rezaei)
+    │   ├── drsa.py                     DRSA (Greco · Matarazzo · Słowiński)
     │   ├── robustez.py                 狄利克雷 + ProcessPoolExecutor
     │   ├── pipeline.py                 编排器
-    │   ├── gerar_graficos.py           每个案例5张图
+    │   ├── gerar_graficos.py           每个案例6张图
     │   ├── gerar_i18n.py               TM → 字符串 → 页面 → TMX
-    │   ├── testes_nucleo.py            16项数学检验
+    │   ├── testes_nucleo.py            99项数学检验
     │   ├── exportar_rust.py            引擎间核对
-    │   ├── casos/catalogo.py           6个案例 + 校验
+    │   ├── casos/                     38个案例 + 校验
     │   └── run_all.sh                  流水线（screen）
     │
     ├── rust/mcdm_core/                 RUST 引擎（验证 + 分发）
@@ -516,7 +526,7 @@ multicriteriadecisionmodels/
 <details>
 <summary><b>我该如何选择权重？</b></summary>
 
-你不需要选——**有三条路径来推导它们**。**DEMATEL** 从你声明的因果结构（谁影响谁）中提取。**AHP** 从成对比较中提取，并用一致性检验**否决**自相矛盾的判断。**SAPEVO-M** 从多位决策者的序数判断中提取。在此之后，稳健性分析还会追问结果究竟还有多**依赖**它们。
+你不必选——**有五条路径推导出它们**。**DEMATEL** 从你声明的因果结构（谁影响谁）中提取；**AHP** 从两两比较中提取，并以一致性检验**否决**自相矛盾的判断；**模糊 AHP** 做同样的事，但承认每个判断是一个区间而非一个点；**BWM** 只问最佳与最差准则——2n−3 次比较而非 n(n−1)/2，因此在 AHP 填不动的地方它仍可填；**SAPEVO-M** 从多位决策者的序数判断中提取。之后，稳健性分析再问：结果究竟还有多**依赖**它们。
 </details>
 
 <details>

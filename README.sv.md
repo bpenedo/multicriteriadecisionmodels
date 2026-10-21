@@ -14,12 +14,12 @@ E-mail: profbruanbima@gmail.com
 
 ### Sluta välja med kalkylblad. Börja besluta med bevis.
 
-**Nio beslutsskolor. En vinnare. Och — för första gången — sannolikheten att den vinnaren är rätt.**
+**Tolv beslutsskolor. En vinnare. Och — för första gången — sannolikheten att den vinnaren är rätt.**
 
-[![MCDM](https://img.shields.io/badge/MCDM_metoder-10-2563eb?style=for-the-badge)](#-de-tio-beslutsskolorna--och-varför-tio)
+[![MCDM](https://img.shields.io/badge/MCDM_metoder-12-2563eb?style=for-the-badge)](#-de-tolv-beslutsskolorna--och-varför-tolv)
 [![Engines](https://img.shields.io/badge/Motorer-Python_+_Rust-c2410c?style=for-the-badge)](#-två-oberoende-motorer-korskontrollen)
 [![i18n](https://img.shields.io/badge/Språk-12-16a34a?style=for-the-badge)](#-12-språk--sdl-trados-översättningsminne)
-[![Robustez](https://img.shields.io/badge/Simulerade_universum-2.000-8f3d56?style=for-the-badge)](#-frågan-ingen-besvarar-tänk-om-vikterna-är-fel)
+[![Robustez](https://img.shields.io/badge/Simulerade_universum-2.000-8f3d56?style=for-the-badge)](#konsensusmotorn)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
 [![Rust](https://img.shields.io/badge/Rust-1.96-000000?logo=rust&logoColor=white)](https://www.rust-lang.org)
@@ -65,9 +65,9 @@ Den ”vinnaren” var aldrig någon vinnare. Den var en **artefakt av din kalib
 
 ---
 
-## 💊 Lösningen: tio skolor, en konsensus och ett konfidensintervall
+## 💊 Lösningen: tolv skolor, en konsensus och ett konfidensintervall
 
-**MCDM Studio kör **nio etablerade multikriteriella metoder** på samma problem, härleder vinnaren ur **konsensus** mellan dem, och gör sedan det enda som verkligen betyder något:**
+**MCDM Studio kör **tolv etablerade multikriteriella modeller** på samma problem, härleder vinnaren ur **konsensus** mellan de tio som ger en rangordning, och gör sedan det enda som verkligen betyder något:**
 
 > ### 🎲 Den stör vikterna **2 000 gånger** och räknar i hur många universum vinnaren fortsätter att vinna.
 
@@ -104,7 +104,7 @@ Utlåtandet upphör att vara ett tal och blir en **mening som överlever kommitt
 
 **Smärtan detta löser:** varje MCDM-metod bär en inbyggd teori om vad ”bättre” betyder — och den ändrar vinnaren. Att välja en metod och presentera resultatet är att välja resultatet.
 
-Vi kör alla nio. När de är eniga är valet **ingen metodartefakt**. När de skiljer sig åt **är avvikelsen fyndet**.
+Vi kör alla tio. När de är eniga är valet **ingen metodartefakt**. När de skiljer sig åt **är avvikelsen fyndet**.
 
 > Ovan: **laddhybriden** är etta i sju metoder men **sexa i ELECTRE I**. Det är inte brus — det är information. ELECTRE I tillåter *veto*: den säger att hybriden har en nackdel som är allvarlig nog i något kriterium för att sållas bort, hur bra den än är i övrigt. **Det är precis den frågan du vill ta till kommittén.**
 
@@ -315,10 +315,10 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ De nio beslutsskolorna — och varför nio
+## ⚖️ De tolv beslutsskolorna — och varför tolv
 
 > [!IMPORTANT]
-> **Varje metod är en annan teori om vad ”bättre” betyder.** Att bara använda en är att välja svaret tillsammans med frågan. Vi kör alla tio eftersom **samstämmighet mellan oberoende teorier** är det starkaste belägg ett beslutsproblem tillåter.
+> **Varje metod är en annan teori om vad ”bättre” betyder.** Att bara använda en är att välja svaret tillsammans med frågan. Vi kör dem alla eftersom **samstämmighet mellan oberoende teorier** är det starkaste belägg ett beslutsproblem tillåter.
 
 <div align="center">
 
@@ -334,11 +334,16 @@ python3 gerar_graficos.py --workers 6
 | **TODIM** | prospektteori | en förlust svider mer än en likvärdig vinst gläder | förlustavert beslutsfattare — **det är alla** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | ordinal, flera beslutsfattare | ordinal bedömning från flera beslutsfattare | **kommitté som inte är överens** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
 | **TOPSIS Fuzzy** | Fuzzy | att data är ett INTERVALL, inte en punkt | mätningen är oprecis och du vill veta om rangordningen överlever det | Zadeh (1965); Chen (2000) |
+| **BWM** | viktkälla | att beslutsfattaren kan peka ut det bästa och det sämsta kriteriet | **Saaty-matrisen går inte att fylla i**: 2n−3 jämförelser i stället för n(n−1)/2 | Rezaei (2015; 2016) |
+| **DRSA** | regelinduktion | att det finns tidigare beslut och att de respekterar dominans | ingen kan ange vikter, men **det finns en historik** — och svaret måste vara en **läsbar regel** | Greco, Matarazzo & Słowiński (1999; 2001) |
 
 </div>
 
 > [!NOTE]
 > **Fuzzy TOPSIS** är inte AHP-TOPSIS med brus: utöver triangeltalen byter den normalisering (linjär i stället för vektoriell) och idealllösning (absolut i stället för relativ). **Att avvika från AHP-TOPSIS 2n är det förväntade beteendet**, och det mäter hur mycket rangordningen beror på dessa val. **Fuzzy AHP** (Buckley) blir en tredje viktkälla vid sidan av DEMATEL och AHP: den tar samma parvisa bedömning men bär oskärpan hela vägen — med jämn spridning sammanfaller centralvärdet med AHP:s, och det den tillför är **intervallet**, som svarar på om prioritetsordningen överlever beslutsfattarens egen oskärpa.
+
+> [!IMPORTANT]
+> **BWM och DRSA har en annan plats än de övriga tio.** BWM är en **viktkälla** — ett alternativ till AHP och DEMATEL — och DRSA **inducerar regler** ur tidigare beslut. Ingen av dem ger en egen rangordning, och därför beräknas **Borda-konsensus och robusthetsanalysen fortfarande över de tio rangordningsmetoderna**.
 
 <details>
 <summary><b>Varför dessa tre förtjänar särskild uppmärksamhet</b></summary>
@@ -359,11 +364,13 @@ Alla andra metoder kräver en viktvektor. **Varifrån kommer den när fem beslut
 ### Konsensusmotorn
 
 ```
-DEMATEL ──► vikter efter påverkan ──► 10 metoder ──► Borda-konsensus ──► vinnare
-                                                    │
-                        2 000 Dirichlet-universum ─────────────────┘
-                                    ▼
-                     utlåtande: ROBUSTO / PROVÁVEL / FRÁGIL
+DEMATEL · AHP · AHP Fuzzy · BWM ──► vikter efter påverkan ──► 10 metoder ──► Borda-konsensus ──► vinnare
+                                                                        │
+                                        2 000 Dirichlet-universum ───────────────────┘
+                                                    ▼
+                                 utlåtande: ROBUSTO / PROVÁVEL / FRÁGIL
+
+DRSA ──────────────────────────────► läsbara regler ur tidigare beslut
 ```
 
 | Utlåtande | Konfidens | Vad man ska göra |
@@ -411,7 +418,7 @@ Robusthetsanalysen kör 2 000 universum × 10 metoder. Den naiva implementatione
 
 </div>
 
-> **Den optimering som gav mest var varken parallellism eller JIT.** Det var insikten att fyra av de nio metoderna är **linjära i viktvektorn** — vilket gör det möjligt att förberäkna tensorer och reducera varje universum till en matris-vektor-produkt. **Algebra före infrastruktur.**
+> **Den optimering som gav mest var varken parallellism eller JIT.** Det var insikten att fyra av de tio metoderna är **linjära i viktvektorn** — vilket gör det möjligt att förberäkna tensorer och reducera varje universum till en matris-vektor-produkt. **Algebra före infrastruktur.**
 
 Och resultatet är **bit för bit identiskt** med den långsamma vägen — 100 universum × 10 metoder verifieras vid varje körning av sviten. En optimering som ändrar resultatet är en defekt, inte en vinst.
 
@@ -475,13 +482,16 @@ multicriteriadecisionmodels/
     │   ├── nucleo.py                   DEMATEL · ELECTRE I/II · PROMETHEE II
     │   │                               MAUT · MCDA-C · AHP · TOPSIS 2N
     │   ├── metodos_br.py               SAPEVO-M · VIKOR · TODIM · Copeland
+    │   ├── fuzzy.py                    AHP Fuzzy · TOPSIS Fuzzy
+    │   ├── bwm.py                      BWM (Rezaei)
+    │   ├── drsa.py                     DRSA (Greco · Matarazzo · Słowiński)
     │   ├── robustez.py                 Dirichlet + ProcessPoolExecutor
     │   ├── pipeline.py                 orkestrerare
-    │   ├── gerar_graficos.py           5 vyer per fall
+    │   ├── gerar_graficos.py           6 vyer per fall
     │   ├── gerar_i18n.py               TM → strängar → sidor → TMX
-    │   ├── testes_nucleo.py            16 matematiska kontroller
+    │   ├── testes_nucleo.py            99 matematiska kontroller
     │   ├── exportar_rust.py            avstämning mellan motorer
-    │   ├── casos/catalogo.py           6 fall + validering
+    │   ├── casos/                     38 fall + validering
     │   └── run_all.sh                  kedja (screen)
     │
     ├── rust/mcdm_core/                 RUST-MOTOR (verifiering + distribution)
@@ -516,7 +526,7 @@ Nej, av tre skäl. **(1)** En viktad matris är **en** metod (viktad summa) med 
 <details>
 <summary><b>Hur väljer jag vikterna?</b></summary>
 
-Du väljer dem inte — **tre vägar härleder dem**. **DEMATEL** utvinner dem ur den kausala struktur du deklarerar (vem påverkar vem). **AHP** utvinner dem ur parvisa jämförelser, med en konsistenskontroll som **underkänner** motsägelsefulla bedömningar. **SAPEVO-M** utvinner dem ur ordinala bedömningar från flera beslutsfattare. Och därefter frågar robusthetsanalysen hur mycket resultatet fortfarande **beror** på dem.
+Du väljer dem inte — **fem vägar härleder dem**. **DEMATEL** hämtar dem ur den kausalstruktur du deklarerar (vem påverkar vem). **AHP** hämtar dem ur parvisa jämförelser, med en konsistenskontroll som **underkänner** motsägelsefullt omdöme. **Fuzzy-AHP** gör detsamma men medger att varje omdöme är ett intervall, inte en punkt. **BWM** frågar bara efter det bästa och det sämsta kriteriet — 2n−3 jämförelser i stället för n(n−1)/2, och går därför att fylla i där AHP inte gör det. **SAPEVO-M** hämtar dem ur flera beslutsfattares ordinala omdöme. Och därefter frågar robusthetsanalysen hur mycket resultatet fortfarande **beror** på dem.
 </details>
 
 <details>

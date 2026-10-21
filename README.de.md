@@ -14,12 +14,12 @@ E-mail: profbruanbima@gmail.com
 
 ### Hören Sie auf, mit einer Tabelle zu wählen. Fangen Sie an, mit Beweis zu entscheiden.
 
-**Neun Entscheidungsschulen. Ein Sieger. Und — zum ersten Mal — die Wahrscheinlichkeit, dass dieser Sieger richtig ist.**
+**Zwölf Entscheidungsschulen. Ein Sieger. Und — zum ersten Mal — die Wahrscheinlichkeit, dass dieser Sieger richtig ist.**
 
-[![MCDM](https://img.shields.io/badge/MCDM_Methoden-10-2563eb?style=for-the-badge)](#-die-zehn-entscheidungsschulen--und-warum-zehn)
+[![MCDM](https://img.shields.io/badge/MCDM_Methoden-12-2563eb?style=for-the-badge)](#-die-zwölf-entscheidungsschulen--und-warum-zwölf)
 [![Engines](https://img.shields.io/badge/Engines-Python_+_Rust-c2410c?style=for-the-badge)](#-zwei-unabhängige-engines-die-kreuzprüfung)
 [![i18n](https://img.shields.io/badge/Sprachen-12-16a34a?style=for-the-badge)](#-12-sprachen--sdl-trados-translation-memory)
-[![Robustez](https://img.shields.io/badge/Simulierte_Universen-2.000-8f3d56?style=for-the-badge)](#-die-frage-die-niemand-beantwortet-was-wenn-die-gewichte-falsch-sind)
+[![Robustez](https://img.shields.io/badge/Simulierte_Universen-2.000-8f3d56?style=for-the-badge)](#die-konsens-engine)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
 [![Rust](https://img.shields.io/badge/Rust-1.96-000000?logo=rust&logoColor=white)](https://www.rust-lang.org)
@@ -65,9 +65,9 @@ Dieser „Sieger“ war nie ein Sieger. Er war ein **Artefakt Ihrer Kalibrierung
 
 ---
 
-## 💊 Die Lösung: zehn Schulen, ein Konsens und ein Konfidenzintervall
+## 💊 Die Lösung: zwölf Schulen, ein Konsens und ein Konfidenzintervall
 
-**MCDM Studio führt **neun etablierte multikriterielle Methoden** auf demselben Problem aus, zieht den Sieger aus dem **Konsens** zwischen ihnen und tut dann das Einzige, worauf es wirklich ankommt:**
+**MCDM Studio führt **zwölf etablierte multikriterielle Modelle** auf demselben Problem aus, zieht den Sieger aus dem **Konsens** der zehn, die eine Rangfolge erzeugen, und tut dann das Einzige, worauf es wirklich ankommt:**
 
 > ### 🎲 Es stört die Gewichte **2.000-mal** und zählt, in wie vielen Universen der Sieger weiterhin gewinnt.
 
@@ -98,13 +98,13 @@ Das Urteil ist keine Zahl mehr, sondern ein **Satz, der das Gremium überlebt**:
 
 > Im obigen Fall sind **Technologietransfer** und **Radarsignatur** URSACHEN: an ihnen zu drehen bewegt das ganze System. **Flottenverfügbarkeit** ist eine WIRKUNG — ein Thermometer, kein Hebel. Eine Ausschreibung, die Verfügbarkeit bewertet und ToT ignoriert, misst das Fieber und ignoriert die Infektion.
 
-### 2. Zehn Schulen auf demselben Problem
+### 2. Zehn Schulen auf dasselbe Problem
 
 <div align="center"><img src="docs/telas/veiculo_eletrico/mapa_metodos.png" alt="Métodos" width="900"/></div>
 
 **Der Schmerz, den das löst:** jede MCDM-Methode trägt eine eingebaute Theorie darüber, was „am besten“ bedeutet — und sie verändert den Sieger. Eine Methode zu wählen und das Ergebnis zu präsentieren heißt, das Ergebnis zu wählen.
 
-Wir führen alle neun aus. Stimmen sie überein, ist die Wahl **kein Methodenartefakt**. Weichen sie ab, **ist die Abweichung der Befund**.
+Wir führen alle zehn aus. Stimmen sie überein, ist die Wahl **kein Methodenartefakt**. Weichen sie ab, **ist die Abweichung der Befund**.
 
 > Oben: der **Plug-in-Hybrid** ist in sieben Methoden Erster, aber **Sechster in ELECTRE I**. Das ist kein Rauschen — das ist Information. ELECTRE I erlaubt das *Veto*: es sagt, der Hybrid habe bei einem Kriterium einen so schweren Nachteil, dass er ausscheidet, so gut er sonst auch sei. **Genau diese Frage wollen Sie ins Gremium tragen.**
 
@@ -315,10 +315,10 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ Die zehn Entscheidungsschulen — und warum zehn
+## ⚖️ Die zwölf Entscheidungsschulen — und warum zwölf
 
 > [!IMPORTANT]
-> **Jede Methode ist eine andere Theorie darüber, was „am besten“ bedeutet.** Nur eine zu verwenden heißt, die Antwort zusammen mit der Frage zu wählen. Wir führen alle zehn aus, weil **Übereinstimmung zwischen unabhängigen Theorien** der stärkste Beleg ist, den ein Entscheidungsproblem zulässt.
+> **Jede Methode ist eine andere Theorie darüber, was „am besten“ bedeutet.** Nur eine zu verwenden heißt, die Antwort zusammen mit der Frage zu wählen. Wir führen alle aus, weil **Übereinstimmung zwischen unabhängigen Theorien** der stärkste Beleg ist, den ein Entscheidungsproblem zulässt.
 
 <div align="center">
 
@@ -334,11 +334,16 @@ python3 gerar_graficos.py --workers 6
 | **TODIM** | Prospect Theory | ein Verlust schmerzt mehr als ein gleich großer Gewinn erfreut | verlustaverser Entscheider — **das sind alle** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | ordinal, mehrere Entscheider | ordinales Urteil mehrerer Entscheider | **Gremium, das sich nicht einig ist** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
 | **TOPSIS Fuzzy** | Fuzzy | dass die Angabe eine SPANNE ist, kein Punkt | die Messung unscharf ist und Sie wissen wollen, ob die Rangliste das übersteht | Zadeh (1965); Chen (2000) |
+| **BWM** | Gewichtsquelle | dass der Entscheider das beste und das schlechteste Kriterium benennen kann | **die Saaty-Matrix ist nicht ausfüllbar**: 2n−3 Vergleiche statt n(n−1)/2 | Rezaei (2015; 2016) |
+| **DRSA** | Regelinduktion | dass frühere Entscheidungen vorliegen und die Dominanz respektieren | niemand kann Gewichte angeben, aber **es gibt eine Historie** — und die Antwort muss eine **lesbare Regel** sein | Greco, Matarazzo & Słowiński (1999; 2001) |
 
 </div>
 
 > [!NOTE]
 > Das **Fuzzy-TOPSIS** ist nicht AHP-TOPSIS mit Rauschen: Neben den Dreiecksnummern tauscht es die Normalisierung (linear statt vektoriell) und die Ideallösung (absolut statt relativ). **Vom AHP-TOPSIS 2n abzuweichen ist das erwartete Verhalten** und misst, wie stark die Rangliste von diesen Entscheidungen abhängt. Das **Fuzzy-AHP** (Buckley) tritt als dritte Gewichtsquelle neben DEMATEL und AHP: Es erhält dasselbe paarweise Urteil, trägt die Unschärfe aber bis zum Ende — bei gleichmäßiger Streuung stimmt der Zentralwert mit dem des AHP überein, und was es hinzufügt, ist die **Spanne**, die beantwortet, ob die Prioritätenfolge die Unschärfe des Entscheiders selbst übersteht.
+
+> [!IMPORTANT]
+> **BWM und DRSA stehen an einer anderen Stelle als die übrigen zehn.** BWM ist eine **Gewichtsquelle** — eine Alternative zu AHP und DEMATEL — und DRSA **induziert Regeln** aus früheren Entscheidungen. Keines von beiden erzeugt ein eigenes Ranking; deshalb werden **Borda-Konsens und Robustheitsanalyse weiterhin über die zehn Ranking-Methoden berechnet**.
 
 <details>
 <summary><b>Warum diese drei besondere Aufmerksamkeit verdienen</b></summary>
@@ -359,11 +364,13 @@ Alle anderen Methoden verlangen einen Gewichtsvektor. **Woher kommt er, wenn fü
 ### Die Konsens-Engine
 
 ```
-DEMATEL ──► Gewichte nach Einfluss ──► 10 Methoden ──► Borda-Konsens ──► Sieger
-                                                    │
-                        2.000 Dirichlet-Universen ─────────────────┘
-                                    ▼
-                     Urteil: ROBUSTO / PROVÁVEL / FRÁGIL
+DEMATEL · AHP · AHP Fuzzy · BWM ──► Gewichte nach Einfluss ──► 10 Methoden ──► Borda-Konsens ──► Sieger
+                                                                        │
+                                        2.000 Dirichlet-Universen ───────────────────┘
+                                                    ▼
+                                 Urteil: ROBUSTO / PROVÁVEL / FRÁGIL
+
+DRSA ──────────────────────────────► lesbare Regeln aus früheren Entscheidungen
 ```
 
 | Urteil | Konfidenz | Was zu tun ist |
@@ -411,7 +418,7 @@ Die Robustheitsanalyse führt 2.000 Universen × 10 Methoden aus. Die naive Impl
 
 </div>
 
-> **Die Optimierung mit dem größten Ertrag war weder Parallelität noch JIT.** Es war die Erkenntnis, dass vier der neun Methoden **linear im Gewichtsvektor** sind — was erlaubt, Tensoren vorzuberechnen und jedes Universum auf ein Matrix-Vektor-Produkt zu reduzieren. **Algebra vor Infrastruktur.**
+> **Die Optimierung mit dem größten Ertrag war weder Parallelität noch JIT.** Es war die Erkenntnis, dass vier der zehn Methoden **linear im Gewichtsvektor** sind — was erlaubt, Tensoren vorzuberechnen und jedes Universum auf ein Matrix-Vektor-Produkt zu reduzieren. **Algebra vor Infrastruktur.**
 
 Und das Ergebnis ist **bitgenau identisch** mit dem langsamen Pfad — 100 Universen × 10 Methoden bei jedem Suite-Lauf geprüft. Eine Optimierung, die das Ergebnis verändert, ist ein Fehler, kein Gewinn.
 
@@ -475,13 +482,16 @@ multicriteriadecisionmodels/
     │   ├── nucleo.py                   DEMATEL · ELECTRE I/II · PROMETHEE II
     │   │                               MAUT · MCDA-C · AHP · TOPSIS 2N
     │   ├── metodos_br.py               SAPEVO-M · VIKOR · TODIM · Copeland
+    │   ├── fuzzy.py                    AHP Fuzzy · TOPSIS Fuzzy
+    │   ├── bwm.py                      BWM (Rezaei)
+    │   ├── drsa.py                     DRSA (Greco · Matarazzo · Słowiński)
     │   ├── robustez.py                 Dirichlet + ProcessPoolExecutor
     │   ├── pipeline.py                 Orchestrator
-    │   ├── gerar_graficos.py           5 Ansichten pro Fall
+    │   ├── gerar_graficos.py           6 Ansichten pro Fall
     │   ├── gerar_i18n.py               TM → Strings → Seiten → TMX
-    │   ├── testes_nucleo.py            16 mathematische Prüfungen
+    │   ├── testes_nucleo.py            99 mathematische Prüfungen
     │   ├── exportar_rust.py            Abgleich zwischen Engines
-    │   ├── casos/catalogo.py           6 Fälle + Validierung
+    │   ├── casos/                     38 Fälle + Validierung
     │   └── run_all.sh                  Pipeline (screen)
     │
     ├── rust/mcdm_core/                 RUST-ENGINE (Verifikation + Verteilung)
@@ -516,7 +526,7 @@ Nein, aus drei Gründen. **(1)** Eine gewichtete Matrix ist **eine** Methode (ge
 <details>
 <summary><b>Wie wähle ich die Gewichte?</b></summary>
 
-Sie wählen sie nicht — **drei Wege leiten sie ab**. **DEMATEL** gewinnt sie aus der von Ihnen erklärten Kausalstruktur (wer wen beeinflusst). Der **AHP** gewinnt sie aus paarweisen Vergleichen, mit einer Konsistenzprüfung, die widersprüchliches Urteil **zurückweist**. **SAPEVO-M** gewinnt sie aus dem ordinalen Urteil mehrerer Entscheider. Und danach fragt die Robustheitsanalyse, wie stark das Ergebnis noch von ihnen **abhängt**.
+Sie wählen sie nicht — **fünf Wege leiten sie ab**. **DEMATEL** gewinnt sie aus der Kausalstruktur, die Sie erklären (wer wen beeinflusst). **AHP** gewinnt sie aus Paarvergleichen, mit einer Konsistenzprüfung, die widersprüchliches Urteil **ablehnt**. **Fuzzy-AHP** tut dasselbe und räumt ein, dass jedes Urteil eine Spanne ist, kein Punkt. **BWM** verlangt nur das beste und das schlechteste Kriterium — 2n−3 Vergleiche statt n(n−1)/2, und ist damit ausfüllbar, wo AHP es nicht ist. **SAPEVO-M** gewinnt sie aus dem ordinalen Urteil mehrerer Entscheider. Und danach fragt die Robustheitsanalyse, wie stark das Ergebnis noch von ihnen **abhängt**.
 </details>
 
 <details>

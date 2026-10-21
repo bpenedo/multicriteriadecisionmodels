@@ -14,12 +14,12 @@ E-mail: profbruanbima@gmail.com
 
 ### Arrêtez de choisir avec un tableur. Commencez à décider avec des preuves.
 
-**Dix écoles de décision. Un gagnant. Et — pour la première fois — la probabilité que ce gagnant soit le bon.**
+**Douze écoles de décision. Un gagnant. Et — pour la première fois — la probabilité que ce gagnant soit le bon.**
 
-[![MCDM](https://img.shields.io/badge/Méthodes_MCDM-10-2563eb?style=for-the-badge)](#-les-dix-écoles-de-décision--et-pourquoi-dix)
-[![Engines](https://img.shields.io/badge/Moteurs-Python_+_Rust-c2410c?style=for-the-badge)](#-deux-moteurs-indépendants-la-vérification-croisée)
+[![MCDM](https://img.shields.io/badge/Méthodes_MCDM-12-2563eb?style=for-the-badge)](#-les-douze-écoles-de-décision--et-pourquoi-douze)
+[![Engines](https://img.shields.io/badge/Moteurs-Python_+_Rust-c2410c?style=for-the-badge)](#-deux-moteurs-indépendants--la-vérification-croisée)
 [![i18n](https://img.shields.io/badge/Langues-12-16a34a?style=for-the-badge)](#-12-langues--mémoire-de-traduction-sdl-trados)
-[![Robustez](https://img.shields.io/badge/Univers_simulés-2.000-8f3d56?style=for-the-badge)](#-la-question-que-personne-ne-répond-et-si-les-poids-étaient-faux)
+[![Robustez](https://img.shields.io/badge/Univers_simulés-2.000-8f3d56?style=for-the-badge)](#le-moteur-de-consensus)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
 [![Rust](https://img.shields.io/badge/Rust-1.96-000000?logo=rust&logoColor=white)](https://www.rust-lang.org)
@@ -65,9 +65,9 @@ Ce « gagnant » n'en a jamais été un. C'était un **artefact de votre calibra
 
 ---
 
-## 💊 La solution : dix écoles, un consensus, et un intervalle de confiance
+## 💊 La solution : douze écoles, un consensus, et un intervalle de confiance
 
-**MCDM Studio exécute **neuf méthodes multicritères** consacrées sur le même problème, tire le gagnant du **consensus** entre elles, puis fait la seule chose qui compte vraiment :**
+**MCDM Studio exécute **douze modèles multicritères** consacrés sur le même problème, tire le gagnant du **consensus** entre les dix qui produisent un classement, puis fait la seule chose qui compte vraiment :**
 
 > ### 🎲 Il perturbe les poids **2 000 fois** et compte dans combien d'univers le gagnant continue de gagner.
 
@@ -104,7 +104,7 @@ Le verdict cesse d'être un nombre et devient une **phrase qui survit au comité
 
 **La douleur que cela résout :** toute méthode MCDM porte une théorie implicite de ce que « meilleur » signifie — et elle change le gagnant. Choisir une méthode et présenter le résultat, c'est choisir le résultat.
 
-Nous exécutons les neuf. Quand elles s'accordent, le choix **n'est pas un artefact de méthode**. Quand elles divergent, **la divergence est la trouvaille**.
+Nous exécutons les dix. Quand elles s'accordent, le choix **n'est pas un artefact de méthode**. Quand elles divergent, **la divergence est la trouvaille**.
 
 > Ci-dessus : l'**hybride rechargeable** est 1er dans sept méthodes, mais **6e dans ELECTRE I**. Ce n'est pas du bruit — c'est de l'information. ELECTRE I autorise le *veto* : il indique que l'hybride présente un désavantage assez grave sur un critère pour être écarté, si bon soit-il par ailleurs. **C'est exactement la question que vous voulez porter au comité.**
 
@@ -315,10 +315,10 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ Les dix écoles de décision — et pourquoi dix
+## ⚖️ Les douze écoles de décision — et pourquoi douze
 
 > [!IMPORTANT]
-> **Chaque méthode est une théorie différente de ce que « meilleur » signifie.** N'en utiliser qu'une, c'est choisir la réponse en même temps que la question. Nous exécutons les dix parce que **l'accord entre théories indépendantes** est la preuve la plus forte qu'un problème de décision admette.
+> **Chaque méthode est une théorie différente de ce que « meilleur » signifie.** N'en utiliser qu'une, c'est choisir la réponse en même temps que la question. Nous les exécutons toutes parce que **l'accord entre théories indépendantes** est la preuve la plus forte qu'un problème de décision admette.
 
 <div align="center">
 
@@ -334,11 +334,16 @@ python3 gerar_graficos.py --workers 6
 | **TODIM** | Théorie des Perspectives | une perte fait plus mal qu'un gain équivalent | décideur averse à la perte — **tous le sont** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | ordinal multi-décideur | jugement ordinal de plusieurs décideurs | **comité qui ne s'accorde pas** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
 | **TOPSIS Fuzzy** | Floue | que la donnée a une PLAGE, pas un point | la mesure est imprécise et vous voulez savoir si le classement y survit | Zadeh (1965); Chen (2000) |
+| **BWM** | source de poids | que le décideur sait désigner le meilleur et le pire critère | **la matrice de Saaty est impossible à remplir** : 2n−3 comparaisons au lieu de n(n−1)/2 | Rezaei (2015; 2016) |
+| **DRSA** | induction de règles | qu'il existe des décisions passées, et qu'elles respectent la dominance | personne ne peut déclarer de poids, mais **il existe un historique** — et la réponse doit être une **règle lisible** | Greco, Matarazzo & Słowiński (1999; 2001) |
 
 </div>
 
 > [!NOTE]
 > Le **TOPSIS flou** n'est pas l'AHP-TOPSIS avec du bruit : outre les nombres triangulaires, il change la normalisation (linéaire au lieu de vectorielle) et la solution idéale (absolue au lieu de relative). **Diverger de l'AHP-TOPSIS 2n est le comportement attendu**, et cela mesure à quel point le classement dépend de ces choix. L'**AHP flou** (Buckley) devient une troisième source de poids, aux côtés du DEMATEL et de l'AHP : il reçoit le même jugement par paires, mais porte l'imprécision jusqu'au bout — avec un étalement uniforme la valeur centrale coïncide avec celle de l'AHP, et ce qu'il ajoute est la **plage**, qui dit si l'ordre de priorité survit à l'imprécision du décideur lui-même.
+
+> [!IMPORTANT]
+> **BWM et DRSA occupent une place différente des dix autres.** Le BWM est une **source de poids** — alternative à l'AHP et au DEMATEL — et le DRSA **induit des règles** à partir de décisions passées. Aucun des deux ne produit de classement propre, et c'est pourquoi le **consensus de Borda et l'analyse de robustesse restent calculés sur les dix méthodes de classement**.
 
 <details>
 <summary><b>Pourquoi ces trois méritent une attention particulière</b></summary>
@@ -359,11 +364,13 @@ Toutes les autres méthodes exigent un vecteur de poids. **D'où vient-il quand 
 ### Le moteur de consensus
 
 ```
-DEMATEL ──► poids par influence ──► 10 méthodes ──► consensus de Borda ──► gagnant
-                                                    │
-                        2 000 univers de Dirichlet ─────────────────┘
-                                    ▼
-                     verdict: ROBUSTO / PROVÁVEL / FRÁGIL
+DEMATEL · AHP · AHP Fuzzy · BWM ──► poids par influence ──► 10 méthodes ──► consensus de Borda ──► gagnant
+                                                                        │
+                                        2 000 univers de Dirichlet ───────────────────┘
+                                                    ▼
+                                 verdict: ROBUSTO / PROVÁVEL / FRÁGIL
+
+DRSA ──────────────────────────────► règles lisibles à partir de décisions passées
 ```
 
 | Verdict | Confiance | Que faire |
@@ -411,7 +418,7 @@ L'analyse de robustesse exécute 2 000 univers × 10 méthodes. L'implémentatio
 
 </div>
 
-> **L'optimisation la plus rentable n'a été ni le parallélisme ni le JIT.** C'est d'avoir compris que quatre des neuf méthodes sont **linéaires dans le vecteur de poids** — ce qui permet de précalculer des tenseurs et de réduire chaque univers à un produit matrice-vecteur. **L'algèbre avant l'infrastructure.**
+> **L'optimisation la plus rentable n'a été ni le parallélisme ni le JIT.** C'est d'avoir compris que quatre des dix méthodes sont **linéaires dans le vecteur de poids** — ce qui permet de précalculer des tenseurs et de réduire chaque univers à un produit matrice-vecteur. **L'algèbre avant l'infrastructure.**
 
 Et le résultat est **identique bit à bit** au chemin lent — 100 univers × 10 méthodes vérifiés à chaque exécution de la suite. Une optimisation qui change le résultat est un bogue, pas un gain.
 
@@ -475,13 +482,16 @@ multicriteriadecisionmodels/
     │   ├── nucleo.py                   DEMATEL · ELECTRE I/II · PROMETHEE II
     │   │                               MAUT · MCDA-C · AHP · TOPSIS 2N
     │   ├── metodos_br.py               SAPEVO-M · VIKOR · TODIM · Copeland
+    │   ├── fuzzy.py                    AHP Fuzzy · TOPSIS Fuzzy
+    │   ├── bwm.py                      BWM (Rezaei)
+    │   ├── drsa.py                     DRSA (Greco · Matarazzo · Słowiński)
     │   ├── robustez.py                 Dirichlet + ProcessPoolExecutor
     │   ├── pipeline.py                 orchestrateur
-    │   ├── gerar_graficos.py           5 écrans par cas
+    │   ├── gerar_graficos.py           6 écrans par cas
     │   ├── gerar_i18n.py               TM → strings → pages → TMX
-    │   ├── testes_nucleo.py            16 vérifications mathématiques
+    │   ├── testes_nucleo.py            99 vérifications mathématiques
     │   ├── exportar_rust.py            vérification entre moteurs
-    │   ├── casos/catalogo.py           6 cas + validation
+    │   ├── casos/                     38 cas + validation
     │   └── run_all.sh                  chaîne (screen)
     │
     ├── rust/mcdm_core/                 MOTEUR RUST (vérification + distribution)
@@ -516,7 +526,7 @@ Non, pour trois raisons. **(1)** Une matrice pondérée est **une** méthode (so
 <details>
 <summary><b>Comment choisir les poids ?</b></summary>
 
-Vous ne les choisissez pas — **trois voies les dérivent**. Le **DEMATEL** les extrait de la structure causale que vous déclarez (qui influence qui). L'**AHP** les extrait de comparaisons par paires, avec une vérification de cohérence qui **rejette** un jugement contradictoire. Le **SAPEVO-M** les extrait du jugement ordinal de plusieurs décideurs. Et ensuite, l'analyse de robustesse demande à quel point le résultat en **dépend** encore.
+Vous ne les choisissez pas — **cinq chemins les dérivent**. Le **DEMATEL** les extrait de la structure causale que vous déclarez (qui influence qui). L'**AHP** les extrait de comparaisons par paires, avec une vérification de cohérence qui **rejette** le jugement contradictoire. L'**AHP flou** fait de même en admettant que chaque jugement est une plage, non un point. Le **BWM** ne demande que le meilleur et le pire critère — 2n−3 comparaisons au lieu de n(n−1)/2, ce qui le rend remplissable là où l'AHP ne l'est pas. Le **SAPEVO-M** les extrait du jugement ordinal de plusieurs décideurs. Et après cela, l'analyse de robustesse demande à quel point le résultat en **dépend** encore.
 </details>
 
 <details>

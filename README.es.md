@@ -14,12 +14,12 @@ E-mail: profbruanbima@gmail.com
 
 ### Deje de elegir con una hoja de cálculo. Empiece a decidir con pruebas.
 
-**Diez escuelas de decisión. Un ganador. Y —por primera vez— la probabilidad de que ese ganador sea el correcto.**
+**Doce escuelas de decisión. Un ganador. Y —por primera vez— la probabilidad de que ese ganador sea el correcto.**
 
-[![MCDM](https://img.shields.io/badge/Métodos_MCDM-10-2563eb?style=for-the-badge)](#-las-diez-escuelas-de-decisión--y-por-qué-diez)
+[![MCDM](https://img.shields.io/badge/Métodos_MCDM-12-2563eb?style=for-the-badge)](#-las-doce-escuelas-de-decisión--y-por-qué-doce)
 [![Engines](https://img.shields.io/badge/Motores-Python_+_Rust-c2410c?style=for-the-badge)](#-dos-motores-independientes-la-prueba-cruzada)
 [![i18n](https://img.shields.io/badge/Idiomas-12-16a34a?style=for-the-badge)](#-12-idiomas--memoria-de-traducción-sdl-trados)
-[![Robustez](https://img.shields.io/badge/Universos_simulados-2.000-8f3d56?style=for-the-badge)](#-la-pregunta-que-nadie-responde-y-si-los-pesos-están-mal)
+[![Robustez](https://img.shields.io/badge/Universos_simulados-2.000-8f3d56?style=for-the-badge)](#el-motor-de-consenso)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
 [![Rust](https://img.shields.io/badge/Rust-1.96-000000?logo=rust&logoColor=white)](https://www.rust-lang.org)
@@ -65,9 +65,9 @@ Aquel «ganador» nunca fue un ganador. Era un **artefacto de su calibración** 
 
 ---
 
-## 💊 La solución: diez escuelas, un consenso y un intervalo de confianza
+## 💊 La solución: doce escuelas, un consenso y un intervalo de confianza
 
-**MCDM Studio ejecuta **nueve métodos multicriterio** consagrados sobre el mismo problema, extrae el ganador del **consenso** entre ellos y luego hace lo único que realmente importa:**
+**MCDM Studio ejecuta **doce modelos multicriterio** consagrados sobre el mismo problema, extrae el ganador del **consenso** entre los diez que producen ordenación, y luego hace lo único que realmente importa:**
 
 > ### 🎲 Perturba los pesos **2.000 veces** y cuenta en cuántos universos el ganador sigue ganando.
 
@@ -104,7 +104,7 @@ El veredicto deja de ser un número y pasa a ser una **frase que sobrevive al co
 
 **El dolor que esto resuelve:** todo método MCDM lleva incorporada una teoría sobre qué significa «mejor» — y esa teoría cambia al ganador. Elegir un método y presentar el resultado es elegir el resultado.
 
-Ejecutamos los nueve. Cuando coinciden, la elección **no es un artefacto del método**. Cuando divergen, **la divergencia es el hallazgo**.
+Ejecutamos los diez. Cuando coinciden, la elección **no es un artefacto del método**. Cuando divergen, **la divergencia es el hallazgo**.
 
 > Arriba: el **Híbrido enchufable** es 1.º en siete métodos, pero **6.º en ELECTRE I**. No es ruido — es información. ELECTRE I permite el *veto*: dice que el híbrido tiene una desventaja lo bastante grave en algún criterio como para ser eliminado, por bueno que sea en el resto. **Esa es exactamente la pregunta que quiere llevar al comité.**
 
@@ -315,10 +315,10 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ Las diez escuelas de decisión — y por qué diez
+## ⚖️ Las doce escuelas de decisión — y por qué doce
 
 > [!IMPORTANT]
-> **Cada método es una teoría distinta sobre qué significa «mejor».** Usar uno solo es elegir la respuesta junto con la pregunta. Ejecutamos los diez porque la **coincidencia entre teorías independientes** es la evidencia más fuerte que admite un problema de decisión.
+> **Cada método es una teoría distinta sobre qué significa «mejor».** Usar uno solo es elegir la respuesta junto con la pregunta. Ejecutamos todas porque la **coincidencia entre teorías independientes** es la evidencia más fuerte que admite un problema de decisión.
 
 <div align="center">
 
@@ -334,11 +334,16 @@ python3 gerar_graficos.py --workers 6
 | **TODIM** | Teoría de las Perspectivas | la pérdida duele más que la ganancia equivalente | decisor averso a la pérdida — **todos lo son** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | ordinal multidecisor | juicio ordinal de varios decisores | **comité que no se pone de acuerdo** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
 | **TOPSIS Fuzzy** | Difusa | que el dato tiene un RANGO, no un punto | la medición es imprecisa y quiere saber si el ranking sobrevive a eso | Zadeh (1965); Chen (2000) |
+| **BWM** | fuente de pesos | que el decisor sabe señalar el mejor y el peor criterio | **la matriz de Saaty es imposible de rellenar**: 2n−3 comparaciones en lugar de n(n−1)/2 | Rezaei (2015; 2016) |
+| **DRSA** | inducción de reglas | que hay decisiones pasadas, y que respetan la dominancia | nadie puede declarar pesos, pero **hay historial** — y la respuesta debe ser una **regla legible** | Greco, Matarazzo & Słowiński (1999; 2001) |
 
 </div>
 
 > [!NOTE]
 > El **TOPSIS Difuso** no es el AHP-TOPSIS con ruido: además de los números triangulares, cambia la normalización (lineal en vez de vectorial) y la solución ideal (absoluta en vez de relativa). **Divergir del AHP-TOPSIS 2n es el comportamiento esperado**, y mide cuánto depende el ranking de esas decisiones. El **AHP Difuso** (Buckley) entra como tercera fuente de pesos, junto al DEMATEL y al AHP: recibe el mismo juicio par a par, pero lleva la imprecisión hasta el final — con dispersión uniforme el valor central coincide con el del AHP, y lo que aporta es el **rango**, que responde si el orden de prioridad sobrevive a la imprecisión del propio decisor.
+
+> [!IMPORTANT]
+> **BWM y DRSA ocupan un lugar distinto de los otros diez.** El BWM es una **fuente de pesos** — alternativa al AHP y al DEMATEL — y el DRSA **induce reglas** a partir de decisiones pasadas. Ninguno de los dos produce un ranking propio, y por eso el **consenso de Borda y el análisis de robustez siguen calculándose sobre los diez métodos de ordenación**.
 
 <details>
 <summary><b>Por qué estos tres merecen atención especial</b></summary>
@@ -359,11 +364,13 @@ Todos los demás métodos exigen un vector de pesos. **¿De dónde sale cuando h
 ### El motor de consenso
 
 ```
-DEMATEL ──► pesos por influencia ──► 10 métodos ──► consenso de Borda ──► ganador
-                                                    │
-                        2.000 universos de Dirichlet ─────────────────┘
-                                    ▼
-                     veredicto: ROBUSTO / PROVÁVEL / FRÁGIL
+DEMATEL · AHP · AHP Fuzzy · BWM ──► pesos por influencia ──► 10 métodos ──► consenso de Borda ──► ganador
+                                                                        │
+                                        2.000 universos de Dirichlet ───────────────────┘
+                                                    ▼
+                                 veredicto: ROBUSTO / PROVÁVEL / FRÁGIL
+
+DRSA ──────────────────────────────► reglas legibles a partir de decisiones pasadas
 ```
 
 | Veredicto | Confianza | Qué hacer |
@@ -411,7 +418,7 @@ El análisis de robustez ejecuta 2.000 universos × 10 métodos. La implementaci
 
 </div>
 
-> **La optimización más rentable no fue el paralelismo ni el JIT.** Fue darse cuenta de que cuatro de los nueve métodos son **lineales en el vector de pesos** — lo que permite precomputar tensores y reducir cada universo a un producto matriz-vector. **Álgebra antes que infraestructura.**
+> **La optimización más rentable no fue el paralelismo ni el JIT.** Fue darse cuenta de que cuatro de los diez métodos son **lineales en el vector de pesos** — lo que permite precomputar tensores y reducir cada universo a un producto matriz-vector. **Álgebra antes que infraestructura.**
 
 Y el resultado es **idéntico bit a bit** al camino lento — 100 universos × 10 métodos verificados en cada ejecución de la suite. Una optimización que cambia el resultado es un fallo, no una mejora.
 
@@ -475,13 +482,16 @@ multicriteriadecisionmodels/
     │   ├── nucleo.py                   DEMATEL · ELECTRE I/II · PROMETHEE II
     │   │                               MAUT · MCDA-C · AHP · TOPSIS 2N
     │   ├── metodos_br.py               SAPEVO-M · VIKOR · TODIM · Copeland
+    │   ├── fuzzy.py                    AHP Fuzzy · TOPSIS Fuzzy
+    │   ├── bwm.py                      BWM (Rezaei)
+    │   ├── drsa.py                     DRSA (Greco · Matarazzo · Słowiński)
     │   ├── robustez.py                 Dirichlet + ProcessPoolExecutor
     │   ├── pipeline.py                 orquestador
-    │   ├── gerar_graficos.py           5 pantallas por caso
+    │   ├── gerar_graficos.py           6 pantallas por caso
     │   ├── gerar_i18n.py               TM → strings → páginas → TMX
-    │   ├── testes_nucleo.py            16 verificaciones matemáticas
+    │   ├── testes_nucleo.py            99 verificaciones matemáticas
     │   ├── exportar_rust.py            cotejo entre motores
-    │   ├── casos/catalogo.py           6 casos + validación
+    │   ├── casos/                     38 casos + validación
     │   └── run_all.sh                  cadena (screen)
     │
     ├── rust/mcdm_core/                 MOTOR RUST (verificación + distribución)
@@ -516,7 +526,7 @@ No, por tres razones. **(1)** Una matriz ponderada es **un** método (suma ponde
 <details>
 <summary><b>¿Cómo elijo los pesos?</b></summary>
 
-No los elige — **tres caminos los derivan**. El **DEMATEL** los extrae de la estructura causal que usted declara (quién influye sobre quién). El **AHP** los extrae de comparaciones par a par, con una verificación de consistencia que **rechaza** el juicio contradictorio. El **SAPEVO-M** los extrae del juicio ordinal de varios decisores. Y después de eso, el análisis de robustez pregunta cuánto **depende** todavía el resultado de ellos.
+No los eliges — **cinco caminos los derivan**. El **DEMATEL** los extrae de la estructura causal que declaras (quién influye en quién). El **AHP** los extrae de comparaciones par a par, con verificación de consistencia que **rechaza** el juicio contradictorio. El **AHP Fuzzy** hace lo mismo admitiendo que cada juicio es un rango, no un punto. El **BWM** pide solo el mejor y el peor criterio — 2n−3 comparaciones en lugar de n(n−1)/2, y por eso se puede rellenar donde el AHP no. El **SAPEVO-M** los extrae del juicio ordinal de varios decisores. Y después de eso, el análisis de robustez pregunta cuánto **depende** aún el resultado de ellos.
 </details>
 
 <details>

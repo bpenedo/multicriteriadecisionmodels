@@ -14,12 +14,12 @@ E-mail: profbruanbima@gmail.com
 
 ### Stop choosing with a spreadsheet. Start deciding with proof.
 
-**Ten schools of decision. One winner. And — for the first time — the probability that this winner is right.**
+**Twelve schools of decision. One winner. And — for the first time — the probability that this winner is right.**
 
-[![MCDM](https://img.shields.io/badge/MCDM_Methods-10-2563eb?style=for-the-badge)](#-the-ten-schools-of-decision--and-why-ten)
+[![MCDM](https://img.shields.io/badge/MCDM_Methods-12-2563eb?style=for-the-badge)](#-the-twelve-schools-of-decision--and-why-twelve)
 [![Engines](https://img.shields.io/badge/Engines-Python_+_Rust-c2410c?style=for-the-badge)](#-two-independent-engines-the-cross-check)
 [![i18n](https://img.shields.io/badge/Languages-12-16a34a?style=for-the-badge)](#-12-languages--sdl-trados-translation-memory)
-[![Robustez](https://img.shields.io/badge/Simulated_universes-2.000-8f3d56?style=for-the-badge)](#-the-question-nobody-answers-what-if-the-weights-are-wrong)
+[![Robustez](https://img.shields.io/badge/Simulated_universes-2.000-8f3d56?style=for-the-badge)](#the-consensus-engine)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
 [![Rust](https://img.shields.io/badge/Rust-1.96-000000?logo=rust&logoColor=white)](https://www.rust-lang.org)
@@ -65,9 +65,9 @@ That "winner" was never a winner. It was an **artefact of your calibration** —
 
 ---
 
-## 💊 The solution: ten schools, one consensus, and a confidence interval
+## 💊 The solution: twelve schools, one consensus, and a confidence interval
 
-**MCDM Studio runs **nine established multi-criteria methods** on the same problem, draws the winner from the **consensus** among them, and then does the one thing that actually matters:**
+**MCDM Studio runs **twelve established multi-criteria models** on the same problem, draws the winner from the **consensus** among the ten that produce a ranking, and then does the one thing that actually matters:**
 
 > ### 🎲 It perturbs the weights **2,000 times** and counts in how many universes the winner keeps winning.
 
@@ -104,7 +104,7 @@ The verdict stops being a number and becomes a **sentence that survives the comm
 
 **The pain this solves:** every MCDM method carries an embedded theory of what "best" means — and it changes the winner. Choosing one method and presenting the result is choosing the result.
 
-We run all nine. When they agree, the choice is **not a method artefact**. When they diverge, **the divergence is the finding**.
+We run all ten. When they agree, the choice is **not a method artefact**. When they diverge, **the divergence is the finding**.
 
 > Above: the **plug-in hybrid** is 1st in seven methods but **6th in ELECTRE I**. That is not noise — it is information. ELECTRE I allows *veto*: it says the hybrid has a disadvantage severe enough in some criterion to be eliminated, however good it is elsewhere. **That is exactly the question you want to take to the committee.**
 
@@ -315,10 +315,10 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ The ten schools of decision — and why ten
+## ⚖️ The twelve schools of decision — and why twelve
 
 > [!IMPORTANT]
-> **Each method is a different theory of what "best" means.** Using only one is choosing the answer along with the question. We run all ten because **agreement among independent theories** is the strongest evidence a decision problem admits.
+> **Each method is a different theory of what "best" means.** Using only one is choosing the answer along with the question. We run them all because **agreement among independent theories** is the strongest evidence a decision problem admits.
 
 <div align="center">
 
@@ -334,11 +334,16 @@ python3 gerar_graficos.py --workers 6
 | **TODIM** | Prospect Theory | a loss hurts more than an equivalent gain | loss-averse decision maker — **everyone is** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | ordinal multi-decision-maker | ordinal judgement from several decision makers | **a committee that does not agree with itself** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
 | **TOPSIS Fuzzy** | Fuzzy | that data has a RANGE, not a point | measurement is imprecise and you want to know whether the ranking survives it | Zadeh (1965); Chen (2000) |
+| **BWM** | weight source | that the decision maker can name the best and the worst criterion | **the Saaty matrix is unfillable**: 2n−3 comparisons instead of n(n−1)/2 | Rezaei (2015; 2016) |
+| **DRSA** | rule induction | that past decisions exist, and that they respect dominance | nobody can state weights, but **there is a history** — and the answer must be a **readable rule** | Greco, Matarazzo & Słowiński (1999; 2001) |
 
 </div>
 
 > [!NOTE]
 > **Fuzzy TOPSIS** is not AHP-TOPSIS with noise: besides triangular numbers, it swaps the normalization (linear instead of vector) and the ideal solution (absolute instead of relative). **Diverging from AHP-TOPSIS 2n is the expected behaviour**, and it measures how much the ranking depends on those choices. **Fuzzy AHP** (Buckley) joins as a third source of weights, alongside DEMATEL and AHP: it takes the same pairwise judgement but carries the imprecision to the end — with uniform spread the central value matches AHP's, and what it adds is the **range**, which answers whether the priority order survives the decision maker's own imprecision.
+
+> [!IMPORTANT]
+> **BWM and DRSA sit in a different place from the other ten.** BWM is a **weight source** — an alternative to AHP and DEMATEL — and DRSA **induces rules** from past decisions. Neither produces a ranking of its own, which is why the **Borda consensus and the robustness analysis remain computed over the ten ranking methods**.
 
 <details>
 <summary><b>Why these three deserve special attention</b></summary>
@@ -359,11 +364,13 @@ Every other method requires a weight vector. **Where does it come from when five
 ### The consensus engine
 
 ```
-DEMATEL ──► weights by influence ──► 10 methods ──► Borda consensus ──► winner
-                                                    │
-                        2,000 Dirichlet universes ─────────────────┘
-                                    ▼
-                     verdict: ROBUSTO / PROVÁVEL / FRÁGIL
+DEMATEL · AHP · AHP Fuzzy · BWM ──► weights by influence ──► 10 methods ──► Borda consensus ──► winner
+                                                                        │
+                                        2,000 Dirichlet universes ───────────────────┘
+                                                    ▼
+                                 verdict: ROBUSTO / PROVÁVEL / FRÁGIL
+
+DRSA ──────────────────────────────► readable rules from past decisions
 ```
 
 | Verdict | Confidence | What to do |
@@ -411,7 +418,7 @@ The robustness analysis runs 2,000 universes × 10 methods. The naive implementa
 
 </div>
 
-> **The optimisation that paid most was neither parallelism nor JIT.** It was realising that four of the nine methods are **linear in the weight vector** — which allows pre-computing tensors and reducing each universe to a matrix-vector product. **Algebra before infrastructure.**
+> **The optimisation that paid most was neither parallelism nor JIT.** It was realising that four of the ten methods are **linear in the weight vector** — which allows pre-computing tensors and reducing each universe to a matrix-vector product. **Algebra before infrastructure.**
 
 And the result is **bit-for-bit identical** to the slow path — 100 universes × 10 methods verified on every suite run. An optimisation that changes the result is a bug, not a gain.
 
@@ -475,13 +482,16 @@ multicriteriadecisionmodels/
     │   ├── nucleo.py                   DEMATEL · ELECTRE I/II · PROMETHEE II
     │   │                               MAUT · MCDA-C · AHP · TOPSIS 2N
     │   ├── metodos_br.py               SAPEVO-M · VIKOR · TODIM · Copeland
+    │   ├── fuzzy.py                    AHP Fuzzy · TOPSIS Fuzzy
+    │   ├── bwm.py                      BWM (Rezaei)
+    │   ├── drsa.py                     DRSA (Greco · Matarazzo · Słowiński)
     │   ├── robustez.py                 Dirichlet + ProcessPoolExecutor
     │   ├── pipeline.py                 orchestrator
-    │   ├── gerar_graficos.py           5 screens per case
+    │   ├── gerar_graficos.py           6 screens per case
     │   ├── gerar_i18n.py               TM → strings → pages → TMX
-    │   ├── testes_nucleo.py            16 mathematical checks
+    │   ├── testes_nucleo.py            99 mathematical checks
     │   ├── exportar_rust.py            cross-engine check
-    │   ├── casos/catalogo.py           6 cases + validation
+    │   ├── casos/                     38 cases + validation
     │   └── run_all.sh                  pipeline (screen)
     │
     ├── rust/mcdm_core/                 RUST ENGINE (verification + distribution)
@@ -516,7 +526,7 @@ No, for three reasons. **(1)** A weighted matrix is **one** method (weighted sum
 <details>
 <summary><b>How do I choose the weights?</b></summary>
 
-You do not choose them — **three paths derive them**. **DEMATEL** extracts them from the causal structure you declare (who influences whom). **AHP** extracts them from pairwise comparisons, with a consistency check that **rejects** contradictory judgement. **SAPEVO-M** extracts them from the ordinal judgement of several decision makers. And after that, the robustness analysis asks how much the result still **depends** on them.
+You do not choose them — **five paths derive them**. **DEMATEL** extracts them from the causal structure you declare (who influences whom). **AHP** extracts them from pairwise comparisons, with a consistency check that **rejects** contradictory judgement. **Fuzzy AHP** does the same while admitting that each judgement is a range, not a point. **BWM** asks only for the best and the worst criterion — 2n−3 comparisons instead of n(n−1)/2, which makes it fillable where AHP is not. **SAPEVO-M** extracts them from the ordinal judgement of several decision makers. And after that, the robustness analysis asks how much the result still **depends** on them.
 </details>
 
 <details>

@@ -318,6 +318,61 @@ def carregar():
             json.loads(BLOCOS_JSON.read_text(encoding=ENCODING)))
 
 
+# Âncoras dos badges: DERIVADAS do título da seção, nunca escritas à mão.
+#
+# Escritas à mão, 14 das 60 apontavam para o vazio: o título dizia "dez" e a
+# âncora dizia "nove", ou faltava um hífen onde o travessão some entre dois
+# espaços. Link interno quebrado não dá erro em lugar nenhum — só não navega
+# (#BUG-050). `anc_robustez` aponta para a seção do motor de consenso, onde
+# ficam os 2.000 universos de Dirichlet e a tabela de vereditos.
+# U+FE0F e companhia são marcas de combinação (Mn) e passariam pelo filtro de
+# letras, deixando um caractere invisível no começo da âncora — que nunca casa.
+INVISIVEIS = ("\u200b", "\u200c", "\u200d", "\ufeff")
+
+ANCORAS = {"anc_escolas": "h_escolas", "anc_motores": "h_motores",
+           "anc_i18n": "h_i18n", "anc_licenca": "h_licenca",
+           "anc_robustez": "h_consenso"}
+
+
+def slug_github(titulo):
+    """Fragmento de URL que o GitHub gera para um cabeçalho Markdown.
+
+    Minúsculas; espaço vira hífen; letras, números e marcas de combinação são
+    preservados (as matras do devanágari e os nikud do hebraico fazem parte da
+    palavra); pontuação e símbolos saem. O travessão de "— e por que doze" é
+    pontuação cercada de dois espaços, e por isso vira DOIS hífens.
+    """
+    import unicodedata
+    saida = []
+    for ch in titulo.strip().lower():
+        if ch in "-_":
+            saida.append(ch)
+        elif ch.isspace():
+            saida.append("-")
+        elif ch in INVISIVEIS or 0xFE00 <= ord(ch) <= 0xFE0F:
+            continue          # seletor de variação do emoji: some com o emoji
+        elif unicodedata.category(ch)[0] in "LMN":
+            saida.append(ch)
+    return "".join(saida)
+
+
+def ancora_de(template, chave_titulo, codigo, blocos):
+    """Âncora do cabeçalho que usa `chave_titulo`, como o GitHub a geraria.
+
+    Deriva da LINHA inteira do template, emoji incluído: `## ⚖️ {{h_escolas}}`
+    produz `-as-doze-...` com o hífen inicial que sobra do espaço após o emoji,
+    e `### {{h_consenso}}` produz `o-motor-de-consenso` sem ele. Antes esse
+    hífen era escrito à mão no badge, e sobrava no cabeçalho que não tinha
+    emoji (#BUG-050).
+    """
+    linha = re.search(r"^#{1,4}\s+(.*\{\{" + re.escape(chave_titulo) + r"\}\}.*)$",
+                      template, re.M)
+    if linha is None:
+        raise RuntimeError(f"âncora: nenhum cabeçalho usa {{{{{chave_titulo}}}}}")
+    return slug_github(PADRAO_BLOCO.sub(
+        lambda m: blocos.get(m.group(1), {}).get(codigo, ""), linha.group(1)))
+
+
 def chaves_do_template(template):
     """Todas as chaves {{...}} usadas, na ordem de aparição, sem repetição."""
     vistas, ordem = set(), []
@@ -330,9 +385,13 @@ def chaves_do_template(template):
 
 def verificar(template, blocos):
     """Confere que todo bloco do template existe em todo idioma. Devolve problemas."""
-    chaves = chaves_do_template(template) + [
-        k for k in CHAVES_DINAMICAS if k not in chaves_do_template(template)]
+    no_template = chaves_do_template(template)
+    chaves = [k for k in no_template if k not in ANCORAS] + [
+        k for k in CHAVES_DINAMICAS if k not in no_template]
     problemas = []
+    for anc, titulo in ANCORAS.items():
+        if anc in no_template and titulo not in blocos:
+            problemas.append(f"âncora {anc} deriva de {titulo}, que não existe")
     for cod, nome, _arq, _d in IDIOMAS:
         se_falta = [k for k in chaves if not blocos.get(k, {}).get(cod, "").strip()]
         if se_falta:
@@ -351,6 +410,8 @@ def gerar(codigo, template, blocos):
 
     def _sub(m):
         chave = m.group(1)
+        if chave in ANCORAS:
+            return ancora_de(template, ANCORAS[chave], codigo, blocos)
         valor = blocos.get(chave, {}).get(codigo, "")
         if not valor.strip():
             faltando.append(chave)

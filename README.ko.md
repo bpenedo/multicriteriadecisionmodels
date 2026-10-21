@@ -14,12 +14,12 @@ E-mail: profbruanbima@gmail.com
 
 ### 스프레드시트로 고르는 일을 멈추십시오. 증거로 결정하십시오.
 
-**열 개의 의사결정 학파. 하나의 선정안. 그리고 — 처음으로 — 그 선정안이 옳을 확률.**
+**열두 개의 의사결정 학파. 하나의 선정안. 그리고 — 처음으로 — 그 선정안이 옳을 확률.**
 
-[![MCDM](https://img.shields.io/badge/MCDM_방법-10-2563eb?style=for-the-badge)](#-아홉-개의-의사결정-학파--그리고-왜-아홉인가)
+[![MCDM](https://img.shields.io/badge/MCDM_방법-12-2563eb?style=for-the-badge)](#-열두-개의-의사결정-학파--그리고-왜-열둘인가)
 [![Engines](https://img.shields.io/badge/엔진-Python_+_Rust-c2410c?style=for-the-badge)](#-두-개의-독립-엔진-교차-검증)
 [![i18n](https://img.shields.io/badge/언어-12-16a34a?style=for-the-badge)](#-12개-언어--sdl-trados-번역-메모리)
-[![Robustez](https://img.shields.io/badge/시뮬레이션_세계-2.000-8f3d56?style=for-the-badge)](#-아무도-답하지-않는-질문-가중치가-틀렸다면)
+[![Robustez](https://img.shields.io/badge/시뮬레이션_세계-2.000-8f3d56?style=for-the-badge)](#합의-엔진)
 
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org)
 [![Rust](https://img.shields.io/badge/Rust-1.96-000000?logo=rust&logoColor=white)](https://www.rust-lang.org)
@@ -65,9 +65,9 @@ E-mail: profbruanbima@gmail.com
 
 ---
 
-## 💊 해법: 열 학파, 하나의 합의, 그리고 신뢰구간
+## 💊 해법: 열두 학파, 하나의 합의, 그리고 신뢰구간
 
-**MCDM Studio는 같은 문제에 대해 **정립된 열 가지 다기준 방법**을 실행하고, 그 사이의 **합의**로부터 선정안을 도출한 뒤, 정말 중요한 단 한 가지를 수행합니다:**
+**MCDM Studio는 같은 문제에 대해 **정립된 열두 가지 다기준 모델**을 실행하고, 그중 순위를 산출하는 열 가지의 **합의**로부터 선정안을 도출한 뒤, 정말 중요한 단 한 가지를 수행합니다:**
 
 > ### 🎲 가중치를 **2,000번** 교란하고, 몇 개의 세계에서 그 선정안이 계속 이기는지 셉니다.
 
@@ -98,7 +98,7 @@ E-mail: profbruanbima@gmail.com
 
 > 위 사례에서 **기술이전**과 **레이더 반사면적**은 원인입니다: 이들을 움직이면 시스템 전체가 움직입니다. **함대 가동률**은 결과입니다 — 지렛대가 아니라 온도계입니다. 가동률에 점수를 매기면서 기술이전을 무시하는 입찰공고는 열을 재면서 감염을 무시하는 것입니다.
 
-### 2. 같은 문제에 대한 열 학파
+### 2. 같은 문제를 보는 열 학파
 
 <div align="center"><img src="docs/telas/veiculo_eletrico/mapa_metodos.png" alt="Métodos" width="900"/></div>
 
@@ -315,10 +315,10 @@ python3 gerar_graficos.py --workers 6
 
 ---
 
-## ⚖️ 열 개의 의사결정 학파 — 그리고 왜 열인가
+## ⚖️ 열두 개의 의사결정 학파 — 그리고 왜 열둘인가
 
 > [!IMPORTANT]
-> **각 방법은 “더 낫다”가 무엇을 뜻하는지에 관한 서로 다른 이론입니다.** 하나만 쓰는 것은 질문과 함께 답을 고르는 일입니다. 열 가지를 모두 실행하는 이유는 **독립적인 이론들 사이의 일치**야말로 의사결정 문제가 허용하는 가장 강한 증거이기 때문입니다.
+> **각 방법은 “더 낫다”가 무엇을 뜻하는지에 관한 서로 다른 이론입니다.** 하나만 쓰는 것은 질문과 함께 답을 고르는 일입니다. 전부 실행하는 이유는 **독립적인 이론들 사이의 일치**야말로 의사결정 문제가 허용하는 가장 강한 증거이기 때문입니다.
 
 <div align="center">
 
@@ -334,11 +334,16 @@ python3 gerar_graficos.py --workers 6
 | **TODIM** | 전망이론 | 손실이 같은 크기의 이득보다 더 아프다 | 손실 회피적 의사결정자 — **모두가 그렇다** | Gomes & Lima (1992); Kahneman & Tversky (1979) |
 | **SAPEVO-M** | 다의사결정자 서수법 | 여러 의사결정자의 서수적 판단 | **스스로 합의하지 못하는 위원회** | Gomes et al. (1997); Teixeira, Santos & Gomes (2019) |
 | **TOPSIS Fuzzy** | 퍼지 | 데이터가 점이 아니라 **구간**이라는 것 | 측정이 부정확하고, 그래도 순위가 유지되는지 알고 싶을 때 | Zadeh (1965); Chen (2000) |
+| **BWM** | 가중치 출처 | 의사결정자가 최선·최악 기준을 지목할 수 있다 | **사티 행렬을 채울 수 없을 때**: n(n−1)/2 대신 2n−3회 비교 | Rezaei (2015; 2016) |
+| **DRSA** | 규칙 귀납 | 과거 결정이 존재하고 우월 관계를 지킨다 | 아무도 가중치를 말할 수 없지만 **이력이 있고**, 답이 **읽을 수 있는 규칙**이어야 할 때 | Greco, Matarazzo & Słowiński (1999; 2001) |
 
 </div>
 
 > [!NOTE]
 > **퍼지 TOPSIS**는 잡음을 더한 AHP-TOPSIS가 아닙니다. 삼각퍼지수 외에도 정규화(벡터 대신 선형)와 이상해(상대 대신 절대)를 바꿉니다. **AHP-TOPSIS 2n과 달라지는 것이 예상된 동작**이며, 순위가 그 선택들에 얼마나 의존하는지를 측정합니다. **퍼지 AHP**(Buckley)는 DEMATEL, AHP와 나란히 세 번째 가중치 원천으로 들어갑니다. 같은 쌍대비교 판단을 받되 불확실성을 끝까지 운반하며, 균일한 퍼짐에서는 중심값이 AHP와 일치하고 새로 더하는 것은 **구간**입니다. 그 구간이 우선순위가 의사결정자 자신의 불확실성을 견디는지 답합니다.
+
+> [!IMPORTANT]
+> **BWM와 DRSA는 나머지 열 개와 자리가 다릅니다.** BWM은 AHP·DEMATEL의 대안인 **가중치 출처**이고, DRSA는 과거 결정에서 **규칙을 귀납**합니다. 둘 다 자체 순위를 내지 않으므로 **보르다 합의와 견고성 분석은 계속 열 개의 순위 방법 위에서 계산됩니다**.
 
 <details>
 <summary><b>이 셋이 특별한 주목을 받는 이유</b></summary>
@@ -359,11 +364,13 @@ Kahneman과 Tversky의 **전망이론**에 기반합니다: 주행거리 10점�
 ### 합의 엔진
 
 ```
-DEMATEL ──► 영향력 기반 가중치 ──► 10개 방법 ──► 보르다 합의 ──► 선정안
-                                                    │
-                        2,000개 디리클레 세계 ─────────────────┘
-                                    ▼
-                     판정: ROBUSTO / PROVÁVEL / FRÁGIL
+DEMATEL · AHP · AHP Fuzzy · BWM ──► 영향력 기반 가중치 ──► 10개 방법 ──► 보르다 합의 ──► 선정안
+                                                                        │
+                                        2,000개 디리클레 세계 ───────────────────┘
+                                                    ▼
+                                 판정: ROBUSTO / PROVÁVEL / FRÁGIL
+
+DRSA ──────────────────────────────► 과거 결정에서 얻은 읽을 수 있는 규칙
 ```
 
 | 판정 | 신뢰도 | 해야 할 일 |
@@ -475,13 +482,16 @@ multicriteriadecisionmodels/
     │   ├── nucleo.py                   DEMATEL · ELECTRE I/II · PROMETHEE II
     │   │                               MAUT · MCDA-C · AHP · TOPSIS 2N
     │   ├── metodos_br.py               SAPEVO-M · VIKOR · TODIM · Copeland
+    │   ├── fuzzy.py                    AHP Fuzzy · TOPSIS Fuzzy
+    │   ├── bwm.py                      BWM (Rezaei)
+    │   ├── drsa.py                     DRSA (Greco · Matarazzo · Słowiński)
     │   ├── robustez.py                 디리클레 + ProcessPoolExecutor
     │   ├── pipeline.py                 오케스트레이터
-    │   ├── gerar_graficos.py           사례당 5개 화면
+    │   ├── gerar_graficos.py           사례당 6개 화면
     │   ├── gerar_i18n.py               TM → 문자열 → 페이지 → TMX
-    │   ├── testes_nucleo.py            16개 수학적 검증
+    │   ├── testes_nucleo.py            99개 수학적 검증
     │   ├── exportar_rust.py            엔진 간 대조
-    │   ├── casos/catalogo.py           6개 사례 + 검증
+    │   ├── casos/                     38개 사례 + 검증
     │   └── run_all.sh                  파이프라인 (screen)
     │
     ├── rust/mcdm_core/                 RUST 엔진 (검증 + 배포)
@@ -516,7 +526,7 @@ multicriteriadecisionmodels/
 <details>
 <summary><b>가중치는 어떻게 고르나요?</b></summary>
 
-고르지 않습니다 — **세 경로가 그것을 도출합니다**. **DEMATEL**은 당신이 선언한 인과 구조(누가 누구에게 영향을 주는가)에서 추출합니다. **AHP**는 쌍대비교에서 추출하며, 일관성 검사가 모순된 판단을 **기각**합니다. **SAPEVO-M**은 여러 의사결정자의 서수적 판단에서 추출합니다. 그다음 견고성 분석이 결과가 아직 그것들에 얼마나 **의존**하는지 묻습니다.
+고르지 않습니다 — **다섯 경로가 도출합니다**. **DEMATEL**은 당신이 선언한 인과 구조(누가 누구에게 영향을 주는가)에서 뽑아냅니다. **AHP**는 쌍대비교에서 뽑아내며, 모순된 판단을 **반려**하는 일관성 검사를 거칩니다. **퍼지 AHP**는 같은 일을 하되 각 판단이 점이 아니라 구간임을 인정합니다. **BWM**은 최선·최악 기준만 물어 n(n−1)/2 대신 2n−3회만 비교하므로, AHP를 채울 수 없는 곳에서도 채울 수 있습니다. **SAPEVO-M**은 여러 의사결정자의 순서 판단에서 뽑아냅니다. 그 뒤 견고성 분석이 결과가 아직 얼마나 가중치에 **의존**하는지 묻습니다.
 </details>
 
 <details>
