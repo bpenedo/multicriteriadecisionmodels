@@ -368,8 +368,15 @@ def grafico_robustez(conn, id_caso, destino):
     ax.set_xlabel("% dos universos de preferência em que vence o consenso", fontsize=10.5)
     ax.axvline(90, color="#16a34a", ls="--", lw=1, alpha=0.6)
     ax.axvline(60, color="#f4b548", ls="--", lw=1, alpha=0.6)
-    ax.text(90, -0.75, "ROBUSTO ≥90%", color="#16a34a", fontsize=8.5, ha="center")
-    ax.text(60, -0.75, "PROVÁVEL ≥60%", color="#d19a00", fontsize=8.5, ha="center")
+    # Coordenadas de EIXO no y (0 = base, 1 = topo), não de dados: com o eixo
+    # invertido, y = -0.75 caía ACIMA da primeira barra, em cima do subtítulo —
+    # e o veredito ficava ilegível justamente na tela publicada no README
+    # (#BUG-058). Na base, os rótulos acompanham as linhas de corte sem colidir.
+    for x, txt, cor in ((90, "ROBUSTO ≥90%", "#16a34a"),
+                        (60, "PROVÁVEL ≥60%", "#d19a00")):
+        ax.text(x, 0.012, txt, color=cor, fontsize=8.5, ha="center", va="bottom",
+                transform=ax.get_xaxis_transform(), zorder=6,
+                bbox=dict(boxstyle="square,pad=0.12", fc="white", ec="none", alpha=0.85))
     subtitulo = (f"veredito: {ver['classificacao']} "
                  f"({ver['prob_vitoria']:.1f}% para o 1º lugar)")
     if omitidas:
