@@ -325,9 +325,28 @@ def gerar_paginas():
     gerados = []
     for locale, (curto, nome, direcao) in LOCALES.items():
         protegido, guardados = _proteger(texto_base)
-        traduzido = protegido if locale == ORIGEM else traduzir_unidade(
-            protegido, locale, glossario)
+        if locale == ORIGEM:
+            traduzido = protegido
+        else:
+            # Os targets APROVADOS da TM vêm primeiro, segmento a segmento, do
+            # mais longo para o mais curto. Antes a página inteira era passada a
+            # `traduzir_unidade` sem tuid, de modo que o caminho dos targets
+            # nunca era alcançado e tudo caía no glossário: a página saía em
+            # português com termos isolados trocados — "métodos multiCriterion",
+            # "entre 대안s que se contradizem" (#BUG-052).
+            alvos_locale = alvos.get(locale, {})
+            for tuid, origem in sorted(unidades.items(),
+                                       key=lambda kv: len(kv[1]), reverse=True):
+                alvo = alvos_locale.get(tuid)
+                if alvo and origem.strip() and origem in protegido:
+                    protegido = protegido.replace(origem, alvo)
+            # O que sobrou sem target aprovado ainda passa pelo glossário, e a
+            # seção 7 do QA cobra exatamente esse resto.
+            traduzido = traduzir_unidade(protegido, locale, glossario)
         traduzido = _restaurar(traduzido, guardados)
+        if locale != ORIGEM:
+            traduzido = _traduzir_rotulos(traduzido, locale, glossario, unidades,
+                                          alvos.get(locale, {}))
 
         # Troca o seletor de idiomas pela versão desta página.
         traduzido = re.sub(r"^🌐 .*$", _seletor_idiomas(curto), traduzido,
@@ -349,6 +368,92 @@ def gerar_paginas():
 
 
 # ---------------------------------------------------------------------------
+def _nucleo(rotulo):
+    """Rótulo sem o emoji decorativo inicial: "🏆 Vencedor" -> "Vencedor"."""
+    return re.sub(r"^[^\w(]+\s*", "", rotulo).strip()
+
+
+def _traduzir_rotulos(texto, locale, glossario, unidades, alvos_locale):
+    """Traduz o texto VISÍVEL dentro das tags de componente: title="...".
+
+    As tags `<BigValue .../>`, `<Column .../>` são protegidas da tradução porque
+    são código — mas o atributo `title` é o rótulo que o leitor vê no cartão e na
+    coluna da tabela. Protegidas em bloco, as 24 legendas do painel ficavam em
+    português nos 12 idiomas, e nenhuma checagem as olhava (#BUG-053).
+    """
+    def _um(m):
+        rotulo = m.group(1)
+        nucleo = _nucleo(rotulo)
+        for tuid, origem in unidades.items():
+            alvo = alvos_locale.get(tuid)
+            if alvo and origem and origem == nucleo:
+                # preserva o emoji decorativo, troca só o texto
+                return f'title="{rotulo.replace(nucleo, alvo)}"'
+        # Sem TU para o rótulo inteiro: devolve o português intacto em vez de
+        # traduzir pela metade. Meia tradução parece tradução e não é.
+        return m.group(0)
+
+    return re.sub(r'title="([^"]+)"', _um, texto)
+
+
+def _paragrafos_de_prosa(texto):
+    """Parágrafos de prosa de uma página: sem código, HTML, tabela ou front-matter.
+
+    É o que um leitor humano lê. Serve para responder "esta página está traduzida?"
+    olhando a página, não a memória de tradução.
+    """
+    limpo = re.sub(r"```.*?```", "", texto, flags=re.S)
+    limpo = re.sub(r"<!--.*?-->", "", limpo, flags=re.S)   # comentário não é lido
+    # Só tag HTML de verdade. `<[^>]+>` casava o "<" de "`R−C < 0`" com o ">" do
+    # blockquote seguinte e comia o texto entre os dois — o parágrafo chegava
+    # truncado ao QA, que então o acusava de não ter tradução.
+    limpo = re.sub(r"</?[A-Za-z][^>]*>", "", limpo)
+    limpo = re.sub(r"^---.*?^---", "", limpo, flags=re.S | re.M)
+    saida = []
+    # Dentro de um blockquote, ">" sozinho separa parágrafos. Dividir também ali
+    # alinha a segmentação do QA com a da TM, que tem uma TU por parágrafo; sem
+    # isso, três parágrafos viram um e nenhuma TU cobre 60% dele.
+    for par in re.split(r"\n\s*\n|\n>\s*\n", limpo):
+        par = " ".join(par.split())
+        if not par or par.startswith("|") or par.startswith("🌐"):
+            continue
+        saida.append(par)
+    return saida
+
+
+def _invariante(par):
+    """Parágrafo que NÃO se traduz: o carimbo de autoria do rodapé.
+
+    Nome do projeto, autor e reserva de direitos são invariantes declarados do
+    projeto; a frase "TODOS OS DIREITOS RESERVADOS" tem alvo próprio por locale,
+    aplicado em `gerar_paginas`. Cobrá-los como "não traduzidos" treinaria quem
+    usa o QA a ignorá-lo.
+    """
+    return "ProfBru" in par or "TODOS OS DIREITOS RESERVADOS" in par
+
+
+def paginas_em_memoria():
+    """Gera a página de cada locale SEM escrever em disco, para o QA inspecionar."""
+    base = (EVIDENCE_DIR / "pages" / "index.md").read_text(encoding=ENCODING)
+    glossario, _direitos, unidades, alvos = carregar_tm()
+    saida = {}
+    for locale in LOCALES:
+        if locale == ORIGEM:
+            saida[locale] = base
+            continue
+        texto = base
+        alvos_locale = alvos.get(locale, {})
+        for tuid, origem in sorted(unidades.items(), key=lambda kv: len(kv[1]),
+                                   reverse=True):
+            alvo = alvos_locale.get(tuid)
+            if alvo and origem.strip() and origem in texto:
+                texto = texto.replace(origem, alvo)
+        texto = traduzir_unidade(texto, locale, glossario)
+        saida[locale] = _traduzir_rotulos(texto, locale, glossario, unidades,
+                                          alvos_locale)
+    return saida
+
+
 def verificar():
     """QA equivalente ao Verify do Trados. Devolve a lista de problemas."""
     glossario, direitos, unidades, alvos = carregar_tm()
@@ -417,6 +522,61 @@ def verificar():
     for tuid, txt in unidades.items():
         if not txt.strip():
             problemas.append(f"{tuid}: segmento de origem vazio")
+
+    # 7. cobertura da PÁGINA PUBLICADA — e não da TM.
+    #
+    # A seção 5 mede os targets das TUs, que estavam 11/11 completos enquanto as
+    # páginas saíam em português: elas não são montadas a partir dessas TUs. Medir
+    # a memória e concluir sobre a entrega é a mesma armadilha do #BUG-049 — o
+    # verificador olhando para um conjunto diferente do que é publicado.
+    # Aqui a página de cada locale é gerada em memória e comparada com a de pt:
+    # parágrafo de prosa idêntico ao português é parágrafo não traduzido.
+    prosa_pt = [p for p in _paragrafos_de_prosa(
+        (EVIDENCE_DIR / "pages" / "index.md").read_text(encoding=ENCODING))
+        if len(p.split()) >= 6 and not _invariante(p)]
+    origens = {re.sub(r"^>\s?", "", t).strip(): tuid for tuid, t in unidades.items()}
+    for locale in LOCALES:
+        if locale == ORIGEM:
+            continue
+        sem_tu = []
+        for par in prosa_pt:
+            nu = re.sub(r"^>\s?", "", par).strip()
+            # Cabeçalho é traduzido por substring ("# 🎯 " + alvo de `ui.titulo`),
+            # então cobertura é contenção — exigindo que a TU cubra a maior parte
+            # do parágrafo, ou uma TU de duas palavras "cobriria" um texto de
+            # sessenta.
+            coberto = any(
+                origem and origem in nu and len(origem) >= 0.6 * len(nu)
+                and alvos.get(locale, {}).get(tuid)
+                for origem, tuid in origens.items())
+            if not coberto:
+                sem_tu.append(par)
+        if sem_tu:
+            problemas.append(
+                f"[{locale}] página do dashboard: {len(sem_tu)}/{len(prosa_pt)} "
+                f"parágrafo(s) sem target de tradução: {sem_tu[0][:60]!r}")
+
+    # 8. rótulos visíveis dentro das tags de componente (title="...").
+    pagina_pt = (EVIDENCE_DIR / "pages" / "index.md").read_text(encoding=ENCODING)
+    rotulos = sorted(set(re.findall(r'title="([^"]+)"', pagina_pt)))
+    # Emoji sozinho é o próprio rótulo em qualquer idioma.
+    rotulos = [r for r in rotulos if re.search(r"[A-Za-zÀ-ÿ]", r)]
+    for locale in LOCALES:
+        if locale == ORIGEM:
+            continue
+        alvos_locale = alvos.get(locale, {})
+        # Cobertura INTEGRAL: a TU tem de ser o rótulo inteiro (descontado um
+        # emoji inicial). Aceitar substring foi o que publicou "Alternatives
+        # avaliadas" e "판정s ROBUSTOS" — a TU curta casou dentro do rótulo
+        # longo e o resto ficou em português, com o QA dizendo OK (#BUG-053).
+        sem = [r for r in rotulos
+               if not any(alvos_locale.get(t) and o and _nucleo(r) == o
+                          for t, o in unidades.items())]
+        if sem:
+            problemas.append(
+                f"[{locale}] rótulos do painel: {len(sem)}/{len(rotulos)} "
+                f"sem target: {', '.join(repr(x) for x in sem[:3])}"
+                f"{' ...' if len(sem) > 3 else ''}")
 
     print("QA de tradução — equivalente ao Verify do SDL Trados Studio")
     print("=" * 74)

@@ -118,7 +118,7 @@ E-mail: profbruanbima@gmail.com
 
 ### 4. היכן האינטואיציה שלכם טועה
 
-<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL x AHP" width="820"/></div>
+<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL, AHP, AHP Fuzzy e BWM" width="820"/></div>
 
 **הכאב שזה פותר:** אתם חושבים שאתם יודעים מה חשוב. שתי משפחות משקלים בוחנות זאת.
 

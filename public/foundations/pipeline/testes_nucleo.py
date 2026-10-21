@@ -92,7 +92,7 @@ def teste_dematel():
 
 
 def teste_dominancia():
-    secao("5. Dominância estrita — TODOS os 9 métodos devem eleger a alternativa dominante")
+    secao(f"5. Dominância estrita — TODOS os {len(METODOS)} métodos devem eleger a alternativa dominante")
     X, dirs, w = problema_dominante()
     prep = preparar(X, dirs)
     scores = prep.pontuar(w)

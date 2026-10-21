@@ -5,7 +5,7 @@ Estudos de caso derivados do acervo `kb/Artigos e Teses/Novos2/`.
  PROCEDÊNCIA — cada caso abaixo reproduz a ESTRUTURA DE DECISÃO (critérios,
  direções, relações causais) de um trabalho específico do acervo. A autoria dos
  estudos é dos autores citados; deste projeto é a implementação e a integração
- ao motor de nove métodos.
+ ao motor de dez métodos.
 ═══════════════════════════════════════════════════════════════════════════════
 
 ⚠️  Os VALORES das matrizes são ILUSTRATIVOS — ordens de grandeza plausíveis de

@@ -118,7 +118,7 @@ Wir stören die Gewichte mit `w' ~ Dirichlet(κ·w)` und ranken 2.000-mal neu. D
 
 ### 4. Wo Ihre Intuition falsch liegt
 
-<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL x AHP" width="820"/></div>
+<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL, AHP, AHP Fuzzy e BWM" width="820"/></div>
 
 **Der Schmerz, den das löst:** Sie glauben zu wissen, was wichtig ist. Zwei Gewichtsfamilien stellen das auf die Probe.
 

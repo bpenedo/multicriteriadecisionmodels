@@ -34,7 +34,7 @@ O trabalho de origem valida o modelo num único projeto real, não publicado.
 
 DIFERENÇA DE MÉTODO, declarada. O artigo resolve por lógica fuzzy (funções de
 pertinência S-spline, convoluções pessimista/média/otimista, defuzzificação e
-interpretação linguística). Aqui o mesmo problema passa pelos NOVE MÉTODOS deste
+interpretação linguística). Aqui o mesmo problema passa pelos DEZ MÉTODOS deste
 projeto, com pesos do DEMATEL. Não é reprodução do algoritmo: é o mesmo problema
 de decisão submetido a outras escolas — e a convergência (ou não) é o achado.
 

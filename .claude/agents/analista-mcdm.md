@@ -52,7 +52,7 @@ color: blue
 
     | Caminho | Papel |
     |---|---|
-    | `public/foundations/pipeline/nucleo.py` | Motor: DEMATEL, AHP, os 9 métodos, Borda, `ProblemaPreparado` (caminho rápido) |
+    | `public/foundations/pipeline/nucleo.py` | Motor: DEMATEL, AHP, os 10 métodos, Borda, `ProblemaPreparado` (caminho rápido) |
     | `public/foundations/pipeline/metodos_br.py` | Escola brasileira: SAPEVO-M, VIKOR, TODIM, ELECTRE II, Copeland |
     | `public/foundations/pipeline/robustez.py` | Perturbação de Dirichlet, `N_BLOCOS=16` fixo (reprodutibilidade) |
     | `public/foundations/pipeline/casos/` | `catalogo.py` (fundacionais), `produtos.py`, `producao.py`, `estudos_kb.py` (derivados da literatura) |
@@ -86,7 +86,7 @@ color: blue
   </por_que_nove_metodos>
 
   <pesos_dematel_versus_ahp>
-    Os pesos que alimentam os nove métodos vêm do **DEMATEL**, não do AHP. A razão é de
+    Os pesos que alimentam os dez métodos vêm do **DEMATEL**, não do AHP. A razão é de
     modelagem, não de gosto:
 
     O AHP pergunta ao decisor quanto o critério A importa mais que o B, par a par. O decisor
@@ -358,7 +358,7 @@ color: blue
   <passo numero="8" nome="Propor a próxima melhoria, com custo e ganho">
     Nunca entregar uma lista de melhorias sem ordem. Ordenar por (ganho ÷ risco) e dizer,
     de cada uma, o que ela quebra se der errado. Preferir sempre:
-    → álgebra antes de infraestrutura (4 dos 9 métodos são lineares em `w`; foi daí que
+    → álgebra antes de infraestrutura (4 dos 10 métodos são lineares em `w`; foi daí que
       vieram os 26× de ganho, não de paralelismo);
     → verificação que reprova antes de otimização que acelera.
   </passo>

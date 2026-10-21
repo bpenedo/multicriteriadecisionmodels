@@ -20,7 +20,7 @@ _MCDM Studio — Modelos MultiКритерий de Decisão · Autor: **ProfBru -
   Só consultas AGREGADAS (uma linha por caso). As tabelas detalhadas — ranking por
   método (3.744 linhas), Матрица решений (3.514), distribuição (4.230), Робастность por
   método (4.160) — vivem nas páginas de caso, onde estão filtradas por `id_caso`.
-  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador. Ver bugs.md #BUG-028.
+  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador.
 -->
 
 ```sql casos
@@ -44,100 +44,76 @@ select dominio, count(*) as casos, avg(prob_vitoria) as confianca_media
 from mcdm.casos group by dominio order by casos desc
 ```
 
-# 🎯 Decisão MultiКритерий — nove escolas, um Вердикт com intervalo de confiança
+# 🎯 Многокритериальное решение — десять школ, один вердикт с доверительным интервалом
 
-> **A planilha não erra a conta. Ela erra a pergunta.**
-> Ordenar por preço elege o mais barato. Ordenar por nota de especialista elege o mais caro.
-> Filtrar por "atende a todos os requisitos" costuma esvaziar a lista. Nenhuma das três
-> responde à pergunta que foi feita: *entre Альтернативаs que se contradizem, qual escolher —
-> e com que confiança?*
+> **Таблица не ошибается в счёте. Она ошибается в вопросе.** Сортировка по цене выбирает самое дешёвое. Сортировка по оценке эксперта выбирает самое дорогое. Фильтр «соответствует всем требованиям» обычно опустошает список. Ни один из трёх не отвечает на заданный вопрос: *среди альтернатив, противоречащих друг другу, какую выбрать — и с какой уверенностью?*
 
-Este painel roda **nove métodos multiКритерий** sobre cada caso, tira o vencedor do **consenso
-de Borda** entre eles e depois **perturba os pesos 2.000 vezes** para responder à única
-pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouco diferente?*
+Эта панель выполняет **десять многокритериальных методов** для каждого кейса, выводит победителя из **консенсуса Борда** между ними, а затем **возмущает веса 2 000 раз**, чтобы ответить на единственный вопрос, который комитет действительно задаёт: *а если бы мы задали чуть иной вес?*
 
-<BigValue data={totais} value=casos title="Casos de decisão" fmt=num0/>
-<BigValue data={totais} value=alternativas title="Alternativas avaliadas" fmt=num0/>
-<BigValue data={totais} value=robustos title="Vereditos ROBUSTOS" fmt=num0/>
-<BigValue data={totais} value=frageis title="Vereditos FRÁGEIS" fmt=num0/>
+<BigValue data={totais} value=casos title="Случаи принятия решений" fmt=num0/>
+<BigValue data={totais} value=alternativas title="Оценённые альтернативы" fmt=num0/>
+<BigValue data={totais} value=robustos title="РОБАСТНЫЕ вердикты" fmt=num0/>
+<BigValue data={totais} value=frageis title="ХРУПКИЕ вердикты" fmt=num0/>
 
-## 📋 Casos de decisão
+## 📋 Случаи принятия решений
 
-> Clique em qualquer caso para abrir o **relatório completo**: diagrama causa-efeito do
-> DEMATEL, mapa das nove escolas, núcleo do ELECTRE, dupla normalização do TOPSIS,
-> Консенсус Борда, Робастность sob 2.000 universos, matriz BCG e a Матрица решений.
+> Нажмите на любой кейс, чтобы открыть **полный отчёт**: диаграмма причина-следствие DEMATEL, карта десяти школ, ядро ELECTRE, двойная нормализация TOPSIS, консенсус Борда, робастность на 2 000 вселенных, матрица BCG и матрица решения.
 
 <DataTable data={casos} rows=all rowShading=true link=link>
-  <Column id=nome title="Caso"/>
-  <Column id=dominio title="Domínio"/>
-  <Column id=n_alternativas title="Alternativas" fmt=num0/>
-  <Column id=vencedor_rotulo title="🏆 Vencedor"/>
-  <Column id=prob_vitoria title="Confiança (%)" fmt=num1 contentType=colorscale/>
-  <Column id=classificacao title="Veredito"/>
+  <Column id=nome title="Случай"/>
+  <Column id=dominio title="Область"/>
+  <Column id=n_alternativas title="Альтернативы" fmt=num0/>
+  <Column id=vencedor_rotulo title="🏆 Победитель"/>
+  <Column id=prob_vitoria title="Уверенность (%)" fmt=num1 contentType=colorscale/>
+  <Column id=classificacao title="Вердикт"/>
 </DataTable>
 
-> **Como ler o Вердикт.** `ROBUSTO` (≥ 90%) = a escolha não depende da calibração fina dos
-> pesos; pode ir ao comitê. `PROVÁVEL` (60–90%) = se sustenta na maioria dos cenários, mas o
-> vice é competitivo. `FRÁGIL` (abaixo de 60%) = **o 1º lugar é artefato dos pesos** — o
-> sistema diz isso em vez de exibir um troféu.
+> **Как читать вердикт.** `РОБАСТНЫЙ` (≥ 90%) = выбор не зависит от тонкой калибровки весов; его можно вынести на комитет. `ВЕРОЯТНЫЙ` (60–90%) = держится в большинстве сценариев, но второй конкурентоспособен. `ХРУПКИЙ` (ниже 60%) = **первое место — артефакт весов**, и система говорит это вместо того, чтобы выставлять трофей.
 
-<BarChart data={resumo_dominio} x=dominio y=casos title="Casos por domínio de aplicação" yAxisTitle="Casos"/>
+<BarChart data={resumo_dominio} x=dominio y=casos title="Кейсы по области применения" yAxisTitle="Casos"/>
 
-## 🧮 DEMATEL — a causa raiz de cada decisão
+## 🧮 DEMATEL — первопричина каждого решения
 
-> A pergunta que quase ninguém faz antes de atribuir pesos: **os Критерийs são
-> independentes?** Quase nunca são. Consumo energético *causa* autonomia; blindagem
-> *causa* peso, que *causa* perda de mobilidade. Somar os dois como independentes conta a
-> mesma coisa duas vezes.
+> Вопрос, который почти никто не задаёт перед назначением весов: **независимы ли критерии?** Почти никогда. Энергопотребление *вызывает* запас хода; броня *вызывает* массу, а масса *вызывает* потерю подвижности. Складывать их как независимые — значит считать одно и то же дважды.
 >
-> O **DEMATEL** (Gabus & Fontela, Battelle) monta a matriz de relação total
-> `T = X(I−X)⁻¹` — que soma influências diretas **e indiretas** de qualquer comprimento de
-> caminho — e separa: `R+C` = importância no sistema; `R−C > 0` = **CAUSA** (alavanca:
-> mexa aqui) e `R−C < 0` = **EFEITO** (termômetro: resultado do que já se fez).
+> **DEMATEL** (Gabus и Fontela, Battelle) строит матрицу полных связей `T = X(I−X)⁻¹` — она суммирует прямые **и косвенные** влияния любой длины пути — и разделяет: `R+C` = важность в системе; `R−C > 0` = **ПРИЧИНА** (рычаг: действовать здесь) и `R−C < 0` = **СЛЕДСТВИЕ** (термометр: результат уже сделанного).
 >
-> A coluna **Causa raiz** abaixo é o Критерий de maior `R−C` de cada caso: é nele que uma
-> intervenção move o sistema inteiro.
+> Столбец **Первопричина** ниже — это критерий с наибольшим `R−C` в каждом кейсе: именно там одно вмешательство двигает всю систему.
 
 <DataTable data={alavancas} rows=all rowShading=true>
-  <Column id=nome title="Caso"/>
-  <Column id=n_criterios title="Critérios" fmt=num0/>
-  <Column id=n_causas title="Causas" fmt=num0 contentType=colorscale/>
-  <Column id=causa_raiz title="🔧 Causa raiz (maior R−C)"/>
-  <Column id=criterio_maior_peso title="Critério de maior peso"/>
-  <Column id=maior_peso_pct title="Peso (%)" fmt=num1/>
+  <Column id=nome title="Случай"/>
+  <Column id=n_criterios title="Критерии" fmt=num0/>
+  <Column id=n_causas title="Причины" fmt=num0 contentType=colorscale/>
+  <Column id=causa_raiz title="🔧 Первопричина (наибольшее R−C)"/>
+  <Column id=criterio_maior_peso title="Критерий с наибольшим весом"/>
+  <Column id=maior_peso_pct title="Вес (%)" fmt=num1/>
 </DataTable>
 
-<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="Critérios que são CAUSA em cada caso (alavancas contra o total)" yAxisTitle="Critérios" swapXY=true/>
+<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="Критерии, являющиеся ПРИЧИНОЙ в каждом кейсе (рычаги относительно общего числа)" yAxisTitle="Critérios" swapXY=true/>
 
-> **Abra um caso** para ver o diagrama causa-efeito completo, a tabela com `R` e `C`
-> separados e a **matriz de relação total** com as ligações uma a uma.
+> **Откройте кейс**, чтобы увидеть полную диаграмму причина-следствие, таблицу с раздельными `R` и `C` и **матрицу полных связей** со связями по одной.
 
-## 🎲 Matriz BCG — mapa de oportunidades por categoria
+## 🎲 Матрица BCG — карта возможностей по категориям
 
-> Além de *qual escolher*, cada categoria tem um **perfil de oportunidade**: quantas
-> Альтернативаs são ⭐ Estrela (investir), 🐄 Vaca (colher), ❓ Interrogação (avaliar o prêmio)
-> e 🐕 Abacaxi (descartar). Uma categoria só de Interrogações é um mercado caro; uma cheia de
-> Vacas é um mercado maduro, onde o dinheiro decide pouco.
+> Помимо *что выбрать*, у каждой категории есть **профиль возможностей**: сколько альтернатив являются ⭐ Звездой (вкладывать), 🐄 Коровой (собирать урожай), ❓ Знаком вопроса (взвесить приз) и 🐕 Собакой (отбросить). Категория из одних знаков вопроса — дорогой рынок; полная коров — зрелый рынок, где деньги решают мало.
 
 <DataTable data={bcg_geral} rows=all rowShading=true>
-  <Column id=nome title="Categoria"/>
+  <Column id=nome title="Категория"/>
   <Column id=estrelas title="⭐" fmt=num0 contentType=colorscale/>
   <Column id=vacas title="🐄" fmt=num0 contentType=colorscale/>
   <Column id=interrogacoes title="❓" fmt=num0 contentType=colorscale/>
   <Column id=abacaxis title="🐕" fmt=num0 contentType=colorscale/>
-  <Column id=total title="Total" fmt=num0/>
-  <Column id=quadrante_do_vencedor title="Quadrante do 1º colocado"/>
+  <Column id=total title="Итого" fmt=num0/>
+  <Column id=quadrante_do_vencedor title="Квадрант первого места"/>
 </DataTable>
 
-## ⚖️ As nove escolas de decisão
+## ⚖️ Десять школ принятия решений
 
-> Cada método é uma **teoria diferente sobre o que significa "melhor"**, e é por isso que
-> rodamos todos: quando nove escolas independentes elegem o mesmo vencedor, a escolha não é
-> artefato de um método. Quando divergem, a divergência aponta onde está o trade-off real.
+> Каждый метод — это **иная теория о том, что значит «лучше»**, и потому мы запускаем их все: когда десять независимых школ выбирают одного и того же победителя, выбор не является артефактом одного метода. Когда они расходятся, расхождение указывает, где лежит настоящий компромисс.
 
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
-| **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre Критерийs | Критерийs quantitativos, decisor único |
+| **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre Критерийs | Критерии quantitativos, decisor único |
 | **ELECTRE I** | Превосходство | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
 | **ELECTRE II** | Превосходство | Limiares forte e fraco | Ordenação completa com veto |
 | **PROMETHEE II** | Превосходство | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
@@ -147,23 +123,15 @@ pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouc
 | **TODIM** | Teoria dos Prospectos | Perda dói mais que ganho equivalente | Decisor avesso a perda (todos são) |
 | **SAPEVO-M** | Ordinal multidecisor | Julgamento ordinal de vários decisores | Comitê que não concorda entre si |
 
-## 🎯 Робастность — o intervalo de confiança da própria decisão
+## 🎯 Робастность — доверительный интервал самого решения
 
-> **O problema.** Todo método MCDM devolve um vencedor com confiança implícita de 100%. Mas
-> os pesos nunca são exatos — são estimativas de preferência. Se dois pontos percentuais no
-> peso de um Критерий trocam o 1º com o 2º colocado, o "vencedor" é artefato da calibração,
-> não fato do conjunto. Ninguém reporta isso. **É onde as decisões morrem no comitê.**
+> **Проблема.** Любой метод MCDM возвращает победителя с неявной уверенностью 100%. Но веса никогда не точны — это оценки предпочтений. Если два процентных пункта в весе одного критерия меняют первое и второе место, «победитель» — артефакт калибровки, а не факт о множестве. Об этом никто не сообщает. **Именно здесь решения умирают в комитете.**
 >
-> **A solução.** Perturbamos os pesos com `w' ~ Dirichlet(κ·w)` e reranqueamos 2.000 vezes.
-> A Dirichlet é a escolha natural: seu suporte é exatamente o simplex (pesos positivos que
-> somam 1) e ela satisfaz `E[w'] = w` — perturbamos **sem enviesar**. Com κ = 200, um peso de
-> 13% oscila ±2,4 p.p.
+> **Решение.** Мы возмущаем веса как `w' ~ Dirichlet(κ·w)` и переранжируем 2 000 раз. Дирихле — естественный выбор: её носитель — в точности симплекс (положительные веса с суммой 1), и она удовлетворяет `E[w'] = w` — мы возмущаем **без смещения**. При κ = 200 вес 13% колеблется на ±2,4 п.п.
 >
-> O Вердикт deixa de ser *"o Modelo C é o melhor"* e passa a ser **"o Modelo C vence em 96%
-> dos universos de preferência plausíveis"**.
+> Вердикт перестаёт быть *«Модель C — лучшая»* и становится **«Модель C побеждает в 96% правдоподобных вселенных предпочтений»**.
 
-**Abra um caso na tabela acima** para ver o diagrama causa-efeito, o mapa das nove escolas, a
-matriz BCG e a distribuição completa das posições nos 2.000 universos.
+**Откройте кейс из таблицы выше**, чтобы увидеть диаграмму причина-следствие, карту десяти школ, матрицу BCG и полное распределение мест по 2 000 вселенных.
 
 ---
 

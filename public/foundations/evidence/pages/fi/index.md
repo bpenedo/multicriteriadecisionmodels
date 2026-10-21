@@ -20,7 +20,7 @@ _MCDM Studio — Modelos MultiKriteeri de Decisão · Autor: **ProfBru - Bruno P
   Só consultas AGREGADAS (uma linha por caso). As tabelas detalhadas — ranking por
   método (3.744 linhas), Päätösmatriisi (3.514), distribuição (4.230), Robustius por
   método (4.160) — vivem nas páginas de caso, onde estão filtradas por `id_caso`.
-  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador. Ver bugs.md #BUG-028.
+  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador.
 -->
 
 ```sql casos
@@ -44,100 +44,76 @@ select dominio, count(*) as casos, avg(prob_vitoria) as confianca_media
 from mcdm.casos group by dominio order by casos desc
 ```
 
-# 🎯 Decisão MultiKriteeri — nove escolas, um Tuomio com intervalo de confiança
+# 🎯 Monikriteerinen päätös — kymmenen koulukuntaa, yksi tuomio luottamusvälillä
 
-> **A planilha não erra a conta. Ela erra a pergunta.**
-> Ordenar por preço elege o mais barato. Ordenar por nota de especialista elege o mais caro.
-> Filtrar por "atende a todos os requisitos" costuma esvaziar a lista. Nenhuma das três
-> responde à pergunta que foi feita: *entre Vaihtoehtos que se contradizem, qual escolher —
-> e com que confiança?*
+> **Taulukkolaskenta ei laske väärin. Se kysyy väärin.** Hinnan mukaan järjestäminen valitsee halvimman. Asiantuntija-arvion mukaan järjestäminen valitsee kalleimman. Suodatus "täyttää kaikki vaatimukset" tyhjentää listan yleensä. Mikään näistä kolmesta ei vastaa esitettyyn kysymykseen: *keskenään ristiriitaisista vaihtoehdoista, mikä valita — ja millä varmuudella?*
 
-Este painel roda **nove métodos multiKriteeri** sobre cada caso, tira o vencedor do **consenso
-de Borda** entre eles e depois **perturba os pesos 2.000 vezes** para responder à única
-pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouco diferente?*
+Tämä näkymä ajaa **kymmenen monikriteerimenetelmää** jokaiseen tapaukseen, johtaa voittajan niiden **Borda-konsensuksesta** ja **häiritsee sitten painoja 2 000 kertaa** vastatakseen siihen ainoaan kysymykseen, jonka toimikunta todella esittää: *entä jos olisimme antaneet hieman eri painon?*
 
-<BigValue data={totais} value=casos title="Casos de decisão" fmt=num0/>
-<BigValue data={totais} value=alternativas title="Alternativas avaliadas" fmt=num0/>
-<BigValue data={totais} value=robustos title="Vereditos ROBUSTOS" fmt=num0/>
-<BigValue data={totais} value=frageis title="Vereditos FRÁGEIS" fmt=num0/>
+<BigValue data={totais} value=casos title="Päätöstapaukset" fmt=num0/>
+<BigValue data={totais} value=alternativas title="Arvioidut vaihtoehdot" fmt=num0/>
+<BigValue data={totais} value=robustos title="ROBUSTIT tuomiot" fmt=num0/>
+<BigValue data={totais} value=frageis title="HAURAAT tuomiot" fmt=num0/>
 
-## 📋 Casos de decisão
+## 📋 Päätöstapaukset
 
-> Clique em qualquer caso para abrir o **relatório completo**: diagrama causa-efeito do
-> DEMATEL, mapa das nove escolas, núcleo do ELECTRE, dupla normalização do TOPSIS,
-> Bordan konsensus, Robustius sob 2.000 universos, matriz BCG e a Päätösmatriisi.
+> Napsauta mitä tahansa tapausta avatakseen **täyden raportin**: DEMATELin syy-vaikutuskaavio, kymmenen koulukunnan kartta, ELECTREn ydin, TOPSISin kaksoisnormalisointi, Borda-konsensus, robustius 2 000 universumissa, BCG-matriisi ja päätösmatriisi.
 
 <DataTable data={casos} rows=all rowShading=true link=link>
-  <Column id=nome title="Caso"/>
-  <Column id=dominio title="Domínio"/>
-  <Column id=n_alternativas title="Alternativas" fmt=num0/>
-  <Column id=vencedor_rotulo title="🏆 Vencedor"/>
-  <Column id=prob_vitoria title="Confiança (%)" fmt=num1 contentType=colorscale/>
-  <Column id=classificacao title="Veredito"/>
+  <Column id=nome title="Tapaus"/>
+  <Column id=dominio title="Toimiala"/>
+  <Column id=n_alternativas title="Vaihtoehdot" fmt=num0/>
+  <Column id=vencedor_rotulo title="🏆 Voittaja"/>
+  <Column id=prob_vitoria title="Luottamus (%)" fmt=num1 contentType=colorscale/>
+  <Column id=classificacao title="Tuomio"/>
 </DataTable>
 
-> **Como ler o Tuomio.** `ROBUSTO` (≥ 90%) = a escolha não depende da calibração fina dos
-> pesos; pode ir ao comitê. `PROVÁVEL` (60–90%) = se sustenta na maioria dos cenários, mas o
-> vice é competitivo. `FRÁGIL` (abaixo de 60%) = **o 1º lugar é artefato dos pesos** — o
-> sistema diz isso em vez de exibir um troféu.
+> **Näin luet Tuomion.** `ROBUSIT` (≥ 90 %) = valinta ei riipu painojen hienosäädöstä; se voi mennä toimikuntaan. `TODENNÄKÖINEN` (60–90 %) = se pitää useimmissa skenaarioissa, mutta kakkonen on kilpailukykyinen. `HAURAS` (alle 60 %) = **ykköstila on painojen artefakti** — järjestelmä sanoo sen sen sijaan että näyttäisi palkintoa.
 
-<BarChart data={resumo_dominio} x=dominio y=casos title="Casos por domínio de aplicação" yAxisTitle="Casos"/>
+<BarChart data={resumo_dominio} x=dominio y=casos title="Tapaukset sovellusalueen mukaan" yAxisTitle="Casos"/>
 
-## 🧮 DEMATEL — a causa raiz de cada decisão
+## 🧮 DEMATEL — jokaisen päätöksen perussyy
 
-> A pergunta que quase ninguém faz antes de atribuir pesos: **os Kriteeris são
-> independentes?** Quase nunca são. Consumo energético *causa* autonomia; blindagem
-> *causa* peso, que *causa* perda de mobilidade. Somar os dois como independentes conta a
-> mesma coisa duas vezes.
+> Kysymys, jota lähes kukaan ei esitä ennen painojen antamista: **ovatko kriteerit riippumattomia?** Lähes koskaan eivät ole. Energiankulutus *aiheuttaa* toimintamatkan; panssarointi *aiheuttaa* painon, joka *aiheuttaa* liikkuvuuden menetyksen. Näiden laskeminen yhteen riippumattomina laskee saman asian kaksi kertaa.
 >
-> O **DEMATEL** (Gabus & Fontela, Battelle) monta a matriz de relação total
-> `T = X(I−X)⁻¹` — que soma influências diretas **e indiretas** de qualquer comprimento de
-> caminho — e separa: `R+C` = importância no sistema; `R−C > 0` = **CAUSA** (alavanca:
-> mexa aqui) e `R−C < 0` = **EFEITO** (termômetro: resultado do que já se fez).
+> **DEMATEL** (Gabus & Fontela, Battelle) rakentaa kokonaisrelaatiomatriisin `T = X(I−X)⁻¹` — joka summaa suorat **ja epäsuorat** vaikutukset mistä tahansa polun pituudesta — ja erottelee: `R+C` = tärkeys järjestelmässä; `R−C > 0` = **SYY** (vipu: toimi tässä) ja `R−C < 0` = **VAIKUTUS** (lämpömittari: jo tehdyn tulos).
 >
-> A coluna **Causa raiz** abaixo é o Kriteeri de maior `R−C` de cada caso: é nele que uma
-> intervenção move o sistema inteiro.
+> Alla oleva **Perussyy**-sarake on kunkin tapauksen suurimman `R−C`:n kriteeri: siinä yksi toimenpide liikuttaa koko järjestelmää.
 
 <DataTable data={alavancas} rows=all rowShading=true>
-  <Column id=nome title="Caso"/>
-  <Column id=n_criterios title="Critérios" fmt=num0/>
-  <Column id=n_causas title="Causas" fmt=num0 contentType=colorscale/>
-  <Column id=causa_raiz title="🔧 Causa raiz (maior R−C)"/>
-  <Column id=criterio_maior_peso title="Critério de maior peso"/>
-  <Column id=maior_peso_pct title="Peso (%)" fmt=num1/>
+  <Column id=nome title="Tapaus"/>
+  <Column id=n_criterios title="Kriteerit" fmt=num0/>
+  <Column id=n_causas title="Syyt" fmt=num0 contentType=colorscale/>
+  <Column id=causa_raiz title="🔧 Perussyy (suurin R−C)"/>
+  <Column id=criterio_maior_peso title="Suurimman painon kriteeri"/>
+  <Column id=maior_peso_pct title="Paino (%)" fmt=num1/>
 </DataTable>
 
-<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="Critérios que são CAUSA em cada caso (alavancas contra o total)" yAxisTitle="Critérios" swapXY=true/>
+<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="Kriteerit, jotka ovat SYY kussakin tapauksessa (vivut suhteessa kokonaismäärään)" yAxisTitle="Critérios" swapXY=true/>
 
-> **Abra um caso** para ver o diagrama causa-efeito completo, a tabela com `R` e `C`
-> separados e a **matriz de relação total** com as ligações uma a uma.
+> **Avaa tapaus** nähdäksesi täyden syy-vaikutuskaavion, taulukon erillisillä `R`:llä ja `C`:llä sekä **kokonaisrelaatiomatriisin** yhteyksineen yksitellen.
 
-## 🎲 Matriz BCG — mapa de oportunidades por categoria
+## 🎲 BCG-matriisi — mahdollisuuksien kartta luokittain
 
-> Além de *qual escolher*, cada categoria tem um **perfil de oportunidade**: quantas
-> Vaihtoehtos são ⭐ Estrela (investir), 🐄 Vaca (colher), ❓ Interrogação (avaliar o prêmio)
-> e 🐕 Abacaxi (descartar). Uma categoria só de Interrogações é um mercado caro; uma cheia de
-> Vacas é um mercado maduro, onde o dinheiro decide pouco.
+> Sen lisäksi, *minkä valita*, jokaisella luokalla on **mahdollisuusprofiili**: montako vaihtoehtoa on ⭐ Tähti (sijoita), 🐄 Lehmä (korjaa sato), ❓ Kysymysmerkki (punnitse palkinto) ja 🐕 Koira (luovu). Pelkistä kysymysmerkeistä koostuva luokka on kallis markkina; lehmiä täynnä oleva on kypsä markkina, jossa raha ratkaisee vähän.
 
 <DataTable data={bcg_geral} rows=all rowShading=true>
-  <Column id=nome title="Categoria"/>
+  <Column id=nome title="Luokka"/>
   <Column id=estrelas title="⭐" fmt=num0 contentType=colorscale/>
   <Column id=vacas title="🐄" fmt=num0 contentType=colorscale/>
   <Column id=interrogacoes title="❓" fmt=num0 contentType=colorscale/>
   <Column id=abacaxis title="🐕" fmt=num0 contentType=colorscale/>
-  <Column id=total title="Total" fmt=num0/>
-  <Column id=quadrante_do_vencedor title="Quadrante do 1º colocado"/>
+  <Column id=total title="Yhteensä" fmt=num0/>
+  <Column id=quadrante_do_vencedor title="Ensimmäisen sijan neljännes"/>
 </DataTable>
 
-## ⚖️ As nove escolas de decisão
+## ⚖️ Kymmenen päätöksenteon koulukuntaa
 
-> Cada método é uma **teoria diferente sobre o que significa "melhor"**, e é por isso que
-> rodamos todos: quando nove escolas independentes elegem o mesmo vencedor, a escolha não é
-> artefato de um método. Quando divergem, a divergência aponta onde está o trade-off real.
+> Jokainen menetelmä on **eri teoria siitä, mitä "parempi" tarkoittaa**, ja siksi ajamme ne kaikki: kun kymmenen riippumatonta koulukuntaa valitsee saman voittajan, valinta ei ole yhden menetelmän artefakti. Kun ne eroavat, ero osoittaa, missä todellinen kompromissi on.
 
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
-| **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre Kriteeris | Kriteeris quantitativos, decisor único |
+| **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre Kriteeris | Kriteerit quantitativos, decisor único |
 | **ELECTRE I** | Ylivertaisuus | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
 | **ELECTRE II** | Ylivertaisuus | Limiares forte e fraco | Ordenação completa com veto |
 | **PROMETHEE II** | Ylivertaisuus | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
@@ -147,23 +123,15 @@ pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouc
 | **TODIM** | Teoria dos Prospectos | Perda dói mais que ganho equivalente | Decisor avesso a perda (todos são) |
 | **SAPEVO-M** | Ordinal multidecisor | Julgamento ordinal de vários decisores | Comitê que não concorda entre si |
 
-## 🎯 Robustius — o intervalo de confiança da própria decisão
+## 🎯 Robustius — luottamusväli itse päätökselle
 
-> **O problema.** Todo método MCDM devolve um vencedor com confiança implícita de 100%. Mas
-> os pesos nunca são exatos — são estimativas de preferência. Se dois pontos percentuais no
-> peso de um Kriteeri trocam o 1º com o 2º colocado, o "vencedor" é artefato da calibração,
-> não fato do conjunto. Ninguém reporta isso. **É onde as decisões morrem no comitê.**
+> **Ongelma.** Jokainen MCDM-menetelmä palauttaa voittajan, jonka implisiittinen varmuus on 100 %. Mutta painot eivät ole koskaan tarkkoja — ne ovat preferenssiarvioita. Jos kaksi prosenttiyksikköä yhden kriteerin painossa vaihtaa ykkösen ja kakkosen, "voittaja" on kalibroinnin artefakti eikä joukkoa koskeva tosiasia. Kukaan ei raportoi tätä. **Siinä päätökset kuolevat toimikunnassa.**
 >
-> **A solução.** Perturbamos os pesos com `w' ~ Dirichlet(κ·w)` e reranqueamos 2.000 vezes.
-> A Dirichlet é a escolha natural: seu suporte é exatamente o simplex (pesos positivos que
-> somam 1) e ela satisfaz `E[w'] = w` — perturbamos **sem enviesar**. Com κ = 200, um peso de
-> 13% oscila ±2,4 p.p.
+> **Ratkaisu.** Häiritsemme painoja `w' ~ Dirichlet(κ·w)` ja järjestämme uudelleen 2 000 kertaa. Dirichlet on luonnollinen valinta: sen kantaja on täsmälleen simpleksi (positiiviset painot, summa 1) ja se toteuttaa `E[w'] = w` — häiritsemme **harhauttamatta**. Kun κ = 200, 13 %:n paino heilahtelee ±2,4 %-yks.
 >
-> O Tuomio deixa de ser *"o Modelo C é o melhor"* e passa a ser **"o Modelo C vence em 96%
-> dos universos de preferência plausíveis"**.
+> Tuomio ei ole enää *"Malli C on paras"* vaan **"Malli C voittaa 96 %:ssa uskottavista preferenssiuniversumeista"**.
 
-**Abra um caso na tabela acima** para ver o diagrama causa-efeito, o mapa das nove escolas, a
-matriz BCG e a distribuição completa das posições nos 2.000 universos.
+**Avaa tapaus yllä olevasta taulukosta** nähdäksesi syy-vaikutuskaavion, kymmenen koulukunnan kartan, BCG-matriisin ja sijoitusten täyden jakauman 2 000 universumissa.
 
 ---
 

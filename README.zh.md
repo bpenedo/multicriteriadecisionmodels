@@ -118,7 +118,7 @@ E-mail: profbruanbima@gmail.com
 
 ### 4. 你的直觉错在哪里
 
-<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL x AHP" width="820"/></div>
+<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL, AHP, AHP Fuzzy e BWM" width="820"/></div>
 
 **它解决的痛点：** 你以为自己知道什么重要。两族权重会检验这一点。
 

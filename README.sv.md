@@ -118,7 +118,7 @@ Vi stör vikterna med `w' ~ Dirichlet(κ·w)` och rankar om 2 000 gånger. Diric
 
 ### 4. Där din intuition har fel
 
-<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL x AHP" width="820"/></div>
+<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL, AHP, AHP Fuzzy e BWM" width="820"/></div>
 
 **Smärtan detta löser:** du tror att du vet vad som är viktigt. Två viktfamiljer prövar det.
 

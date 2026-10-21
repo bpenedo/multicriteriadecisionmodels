@@ -1,5 +1,5 @@
 -- Matriz BCG: quadrante de cada alternativa, cruzado com a posição no consenso.
--- Os eixos vêm dos MESMOS pesos do DEMATEL que alimentam os nove métodos,
+-- Os eixos vêm dos MESMOS pesos do DEMATEL que alimentam os dez métodos,
 -- renormalizados dentro dos grupos de benefício e de custo.
 SELECT b.id_caso, b.alternativa, a.rotulo, b.atratividade, b.posicao,
        b.quadrante, b.corte_atratividade, b.corte_posicao, b.rank_consenso,

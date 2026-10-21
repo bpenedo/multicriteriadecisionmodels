@@ -26,7 +26,7 @@ mesma categoria, finalidades distintas, critérios distintos.
 
 Os modelos citados nos vídeos estão marcados com [V1] / [V2] nos comentários.
 Os demais são comparáveis do mesmo segmento, acrescentados para dar discriminação
-ao método — cinco alternativas não exercitam discordância entre os nove métodos.
+ao método — cinco alternativas não exercitam discordância entre os dez métodos.
 
 MCDM Studio — Modelos Multicritério de Decisão
 Autor: ProfBru - Bruno Penedo © 2026 - TODOS OS DIREITOS RESERVADOS

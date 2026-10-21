@@ -52,7 +52,7 @@ python3 config.py
 etapa "1/8 · Verificação matemática (Passada 1 da tripla-checagem)"
 python3 testes_nucleo.py
 
-etapa "2/8 · Pipeline de decisão — 9 métodos + consenso + robustez"
+etapa "2/8 · Pipeline de decisão — 10 métodos + consenso + robustez"
 if [[ -n "$CASO" ]]; then python3 pipeline.py "$CASO"; else python3 pipeline.py; fi
 
 etapa "3/8 · Matriz BCG — quadrante de oportunidade"

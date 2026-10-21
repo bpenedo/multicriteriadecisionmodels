@@ -20,7 +20,7 @@ _MCDM Studio — Modelos MultiCriterio de Decisão · Autor: **ProfBru - Bruno P
   Só consultas AGREGADAS (uma linha por caso). As tabelas detalhadas — ranking por
   método (3.744 linhas), Matriz de decisión (3.514), distribuição (4.230), robustez por
   método (4.160) — vivem nas páginas de caso, onde estão filtradas por `id_caso`.
-  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador. Ver bugs.md #BUG-028.
+  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador.
 -->
 
 ```sql casos
@@ -44,96 +44,72 @@ select dominio, count(*) as casos, avg(prob_vitoria) as confianca_media
 from mcdm.casos group by dominio order by casos desc
 ```
 
-# 🎯 Decisão MultiCriterio — nove escolas, um Veredicto com intervalo de confiança
+# 🎯 Decisión Multicriterio — diez escuelas, un veredicto con intervalo de confianza
 
-> **A planilha não erra a conta. Ela erra a pergunta.**
-> Ordenar por preço elege o mais barato. Ordenar por nota de especialista elege o mais caro.
-> Filtrar por "atende a todos os requisitos" costuma esvaziar a lista. Nenhuma das três
-> responde à pergunta que foi feita: *entre alternativas que se contradizem, qual escolher —
-> e com que confiança?*
+> **La hoja de cálculo no se equivoca en la cuenta. Se equivoca en la pregunta.** Ordenar por precio elige el más barato. Ordenar por nota de experto elige el más caro. Filtrar por "cumple todos los requisitos" suele vaciar la lista. Ninguna de las tres responde a la pregunta que se hizo: *entre alternativas que se contradicen, cuál elegir — y con qué confianza?*
 
-Este painel roda **nove métodos multiCriterio** sobre cada caso, tira o vencedor do **consenso
-de Borda** entre eles e depois **perturba os pesos 2.000 vezes** para responder à única
-pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouco diferente?*
+Este panel ejecuta **diez métodos multicriterio** sobre cada caso, extrae el ganador del **consenso de Borda** entre ellos y después **perturba los pesos 2.000 veces** para responder a la única pregunta que el comité realmente hace: *¿y si hubiéramos dado un peso un poco distinto?*
 
-<BigValue data={totais} value=casos title="Casos de decisão" fmt=num0/>
-<BigValue data={totais} value=alternativas title="Alternativas avaliadas" fmt=num0/>
-<BigValue data={totais} value=robustos title="Vereditos ROBUSTOS" fmt=num0/>
-<BigValue data={totais} value=frageis title="Vereditos FRÁGEIS" fmt=num0/>
+<BigValue data={totais} value=casos title="Casos de decisión" fmt=num0/>
+<BigValue data={totais} value=alternativas title="Alternativas evaluadas" fmt=num0/>
+<BigValue data={totais} value=robustos title="Veredictos ROBUSTOS" fmt=num0/>
+<BigValue data={totais} value=frageis title="Veredictos FRÁGILES" fmt=num0/>
 
-## 📋 Casos de decisão
+## 📋 Casos de decisión
 
-> Clique em qualquer caso para abrir o **relatório completo**: diagrama causa-efeito do
-> DEMATEL, mapa das nove escolas, núcleo do ELECTRE, dupla normalização do TOPSIS,
-> consenso de Borda, robustez sob 2.000 universos, matriz BCG e a Matriz de decisión.
+> Haz clic en cualquier caso para abrir el **informe completo**: diagrama causa-efecto del DEMATEL, mapa de las diez escuelas, núcleo del ELECTRE, doble normalización del TOPSIS, consenso de Borda, robustez bajo 2.000 universos, matriz BCG y la matriz de decisión.
 
 <DataTable data={casos} rows=all rowShading=true link=link>
   <Column id=nome title="Caso"/>
-  <Column id=dominio title="Domínio"/>
+  <Column id=dominio title="Dominio"/>
   <Column id=n_alternativas title="Alternativas" fmt=num0/>
-  <Column id=vencedor_rotulo title="🏆 Vencedor"/>
-  <Column id=prob_vitoria title="Confiança (%)" fmt=num1 contentType=colorscale/>
-  <Column id=classificacao title="Veredito"/>
+  <Column id=vencedor_rotulo title="🏆 Ganador"/>
+  <Column id=prob_vitoria title="Confianza (%)" fmt=num1 contentType=colorscale/>
+  <Column id=classificacao title="Veredicto"/>
 </DataTable>
 
-> **Como ler o Veredicto.** `ROBUSTO` (≥ 90%) = a escolha não depende da calibração fina dos
-> pesos; pode ir ao comitê. `PROVÁVEL` (60–90%) = se sustenta na maioria dos cenários, mas o
-> vice é competitivo. `FRÁGIL` (abaixo de 60%) = **o 1º lugar é artefato dos pesos** — o
-> sistema diz isso em vez de exibir um troféu.
+> **Cómo leer el Veredicto.** `ROBUSTO` (≥ 90%) = la elección no depende de la calibración fina de los pesos; puede ir al comité. `PROBABLE` (60–90%) = se sostiene en la mayoría de los escenarios, pero el segundo es competitivo. `FRÁGIL` (por debajo del 60%) = **el 1.º puesto es un artefacto de los pesos** — el sistema lo dice en lugar de exhibir un trofeo.
 
-<BarChart data={resumo_dominio} x=dominio y=casos title="Casos por domínio de aplicação" yAxisTitle="Casos"/>
+<BarChart data={resumo_dominio} x=dominio y=casos title="Casos por dominio de aplicación" yAxisTitle="Casos"/>
 
-## 🧮 DEMATEL — a causa raiz de cada decisão
+## 🧮 DEMATEL — la causa raíz de cada decisión
 
-> A pergunta que quase ninguém faz antes de atribuir pesos: **os Criterios são
-> independentes?** Quase nunca são. Consumo energético *causa* autonomia; blindagem
-> *causa* peso, que *causa* perda de mobilidade. Somar os dois como independentes conta a
-> mesma coisa duas vezes.
+> La pregunta que casi nadie hace antes de asignar pesos: **¿son independientes los criterios?** Casi nunca lo son. El consumo energético *causa* autonomía; el blindaje *causa* peso, que *causa* pérdida de movilidad. Sumar ambos como independientes cuenta lo mismo dos veces.
 >
-> O **DEMATEL** (Gabus & Fontela, Battelle) monta a matriz de relação total
-> `T = X(I−X)⁻¹` — que soma influências diretas **e indiretas** de qualquer comprimento de
-> caminho — e separa: `R+C` = importância no sistema; `R−C > 0` = **CAUSA** (alavanca:
-> mexa aqui) e `R−C < 0` = **EFEITO** (termômetro: resultado do que já se fez).
+> El **DEMATEL** (Gabus & Fontela, Battelle) monta la matriz de relación total `T = X(I−X)⁻¹` — que suma influencias directas **e indirectas** de cualquier longitud de camino — y separa: `R+C` = importancia en el sistema; `R−C > 0` = **CAUSA** (palanca: actúa aquí) y `R−C < 0` = **EFECTO** (termómetro: resultado de lo ya hecho).
 >
-> A coluna **Causa raiz** abaixo é o Criterio de maior `R−C` de cada caso: é nele que uma
-> intervenção move o sistema inteiro.
+> La columna **Causa raíz** de abajo es el criterio de mayor `R−C` de cada caso: es ahí donde una intervención mueve el sistema entero.
 
 <DataTable data={alavancas} rows=all rowShading=true>
   <Column id=nome title="Caso"/>
-  <Column id=n_criterios title="Critérios" fmt=num0/>
+  <Column id=n_criterios title="Criterios" fmt=num0/>
   <Column id=n_causas title="Causas" fmt=num0 contentType=colorscale/>
-  <Column id=causa_raiz title="🔧 Causa raiz (maior R−C)"/>
-  <Column id=criterio_maior_peso title="Critério de maior peso"/>
+  <Column id=causa_raiz title="🔧 Causa raíz (mayor R−C)"/>
+  <Column id=criterio_maior_peso title="Criterio de mayor peso"/>
   <Column id=maior_peso_pct title="Peso (%)" fmt=num1/>
 </DataTable>
 
-<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="Critérios que são CAUSA em cada caso (alavancas contra o total)" yAxisTitle="Critérios" swapXY=true/>
+<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="Criterios que son CAUSA en cada caso (palancas frente al total)" yAxisTitle="Critérios" swapXY=true/>
 
-> **Abra um caso** para ver o diagrama causa-efeito completo, a tabela com `R` e `C`
-> separados e a **matriz de relação total** com as ligações uma a uma.
+> **Abre un caso** para ver el diagrama causa-efecto completo, la tabla con `R` y `C` separados y la **matriz de relación total** con los enlaces uno a uno.
 
-## 🎲 Matriz BCG — mapa de oportunidades por categoria
+## 🎲 Matriz BCG — mapa de oportunidades por categoría
 
-> Além de *qual escolher*, cada categoria tem um **perfil de oportunidade**: quantas
-> alternativas são ⭐ Estrela (investir), 🐄 Vaca (colher), ❓ Interrogação (avaliar o prêmio)
-> e 🐕 Abacaxi (descartar). Uma categoria só de Interrogações é um mercado caro; uma cheia de
-> Vacas é um mercado maduro, onde o dinheiro decide pouco.
+> Además de *cuál elegir*, cada categoría tiene un **perfil de oportunidad**: cuántas alternativas son ⭐ Estrella (invertir), 🐄 Vaca (cosechar), ❓ Interrogante (evaluar el premio) y 🐕 Perro (descartar). Una categoría solo de interrogantes es un mercado caro; una llena de vacas es un mercado maduro, donde el dinero decide poco.
 
 <DataTable data={bcg_geral} rows=all rowShading=true>
-  <Column id=nome title="Categoria"/>
+  <Column id=nome title="Categoría"/>
   <Column id=estrelas title="⭐" fmt=num0 contentType=colorscale/>
   <Column id=vacas title="🐄" fmt=num0 contentType=colorscale/>
   <Column id=interrogacoes title="❓" fmt=num0 contentType=colorscale/>
   <Column id=abacaxis title="🐕" fmt=num0 contentType=colorscale/>
   <Column id=total title="Total" fmt=num0/>
-  <Column id=quadrante_do_vencedor title="Quadrante do 1º colocado"/>
+  <Column id=quadrante_do_vencedor title="Cuadrante del 1.º puesto"/>
 </DataTable>
 
-## ⚖️ As nove escolas de decisão
+## ⚖️ Las diez escuelas de decisión
 
-> Cada método é uma **teoria diferente sobre o que significa "melhor"**, e é por isso que
-> rodamos todos: quando nove escolas independentes elegem o mesmo vencedor, a escolha não é
-> artefato de um método. Quando divergem, a divergência aponta onde está o trade-off real.
+> Cada método es una **teoría distinta sobre lo que significa "mejor"**, y por eso ejecutamos todos: cuando diez escuelas independientes eligen al mismo ganador, la elección no es un artefacto de un método. Cuando divergen, la divergencia señala dónde está el trade-off real.
 
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
@@ -147,23 +123,15 @@ pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouc
 | **TODIM** | Teoria dos Prospectos | Perda dói mais que ganho equivalente | Decisor avesso a perda (todos são) |
 | **SAPEVO-M** | Ordinal multidecisor | Julgamento ordinal de vários decisores | Comitê que não concorda entre si |
 
-## 🎯 Robustez — o intervalo de confiança da própria decisão
+## 🎯 Robustez — el intervalo de confianza de la propia decisión
 
-> **O problema.** Todo método MCDM devolve um vencedor com confiança implícita de 100%. Mas
-> os pesos nunca são exatos — são estimativas de preferência. Se dois pontos percentuais no
-> peso de um Criterio trocam o 1º com o 2º colocado, o "vencedor" é artefato da calibração,
-> não fato do conjunto. Ninguém reporta isso. **É onde as decisões morrem no comitê.**
+> **El problema.** Todo método MCDM devuelve un ganador con confianza implícita del 100%. Pero los pesos nunca son exactos — son estimaciones de preferencia. Si dos puntos porcentuales en el peso de un criterio intercambian el 1.º con el 2.º, el "ganador" es un artefacto de la calibración, no un hecho del conjunto. Nadie informa de esto. **Es donde las decisiones mueren en el comité.**
 >
-> **A solução.** Perturbamos os pesos com `w' ~ Dirichlet(κ·w)` e reranqueamos 2.000 vezes.
-> A Dirichlet é a escolha natural: seu suporte é exatamente o simplex (pesos positivos que
-> somam 1) e ela satisfaz `E[w'] = w` — perturbamos **sem enviesar**. Com κ = 200, um peso de
-> 13% oscila ±2,4 p.p.
+> **La solución.** Perturbamos los pesos con `w' ~ Dirichlet(κ·w)` y reordenamos 2.000 veces. La Dirichlet es la elección natural: su soporte es exactamente el simplex (pesos positivos que suman 1) y satisface `E[w'] = w` — perturbamos **sin sesgar**. Con κ = 200, un peso del 13% oscila ±2,4 p.p.
 >
-> O Veredicto deixa de ser *"o Modelo C é o melhor"* e passa a ser **"o Modelo C vence em 96%
-> dos universos de preferência plausíveis"**.
+> El veredicto deja de ser *"el Modelo C es el mejor"* y pasa a ser **"el Modelo C gana en el 96% de los universos de preferencia plausibles"**.
 
-**Abra um caso na tabela acima** para ver o diagrama causa-efeito, o mapa das nove escolas, a
-matriz BCG e a distribuição completa das posições nos 2.000 universos.
+**Abre un caso de la tabla de arriba** para ver el diagrama causa-efecto, el mapa de las diez escuelas, la matriz BCG y la distribución completa de las posiciones en los 2.000 universos.
 
 ---
 

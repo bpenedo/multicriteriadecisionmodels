@@ -20,7 +20,7 @@ _MCDM Studio — Modelos MultiCriterion de Decisão · Autor: **ProfBru - Bruno 
   Só consultas AGREGADAS (uma linha por caso). As tabelas detalhadas — ranking por
   método (3.744 linhas), Decision matrix (3.514), distribuição (4.230), Robustness por
   método (4.160) — vivem nas páginas de caso, onde estão filtradas por `id_caso`.
-  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador. Ver bugs.md #BUG-028.
+  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador.
 -->
 
 ```sql casos
@@ -44,100 +44,76 @@ select dominio, count(*) as casos, avg(prob_vitoria) as confianca_media
 from mcdm.casos group by dominio order by casos desc
 ```
 
-# 🎯 Decisão MultiCriterion — nove escolas, um Verdict com intervalo de confiança
+# 🎯 Multi-Criteria Decision — ten schools, one verdict with a confidence interval
 
-> **A planilha não erra a conta. Ela erra a pergunta.**
-> Ordenar por preço elege o mais barato. Ordenar por nota de especialista elege o mais caro.
-> Filtrar por "atende a todos os requisitos" costuma esvaziar a lista. Nenhuma das três
-> responde à pergunta que foi feita: *entre Alternatives que se contradizem, qual escolher —
-> e com que confiança?*
+> **The spreadsheet does not get the arithmetic wrong. It gets the question wrong.** Sorting by price elects the cheapest. Sorting by expert score elects the most expensive. Filtering by "meets all requirements" usually empties the list. None of the three answers the question that was asked: *among alternatives that contradict each other, which to choose — and with what confidence?*
 
-Este painel roda **nove métodos multiCriterion** sobre cada caso, tira o vencedor do **consenso
-de Borda** entre eles e depois **perturba os pesos 2.000 vezes** para responder à única
-pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouco diferente?*
+This dashboard runs **ten multi-criteria methods** on every case, draws the winner from the **Borda consensus** among them, and then **perturbs the weights 2,000 times** to answer the one question the committee really asks: *what if we had set a slightly different weight?*
 
-<BigValue data={totais} value=casos title="Casos de decisão" fmt=num0/>
-<BigValue data={totais} value=alternativas title="Alternativas avaliadas" fmt=num0/>
-<BigValue data={totais} value=robustos title="Vereditos ROBUSTOS" fmt=num0/>
-<BigValue data={totais} value=frageis title="Vereditos FRÁGEIS" fmt=num0/>
+<BigValue data={totais} value=casos title="Decision cases" fmt=num0/>
+<BigValue data={totais} value=alternativas title="Alternatives assessed" fmt=num0/>
+<BigValue data={totais} value=robustos title="ROBUST verdicts" fmt=num0/>
+<BigValue data={totais} value=frageis title="FRAGILE verdicts" fmt=num0/>
 
-## 📋 Casos de decisão
+## 📋 Decision cases
 
-> Clique em qualquer caso para abrir o **relatório completo**: diagrama causa-efeito do
-> DEMATEL, mapa das nove escolas, núcleo do ELECTRE, dupla normalização do TOPSIS,
-> Borda consensus, Robustness sob 2.000 universos, matriz BCG e a Decision matrix.
+> Click any case to open the **full report**: DEMATEL cause-effect diagram, map of the ten schools, the ELECTRE core, the TOPSIS double normalization, Borda consensus, robustness across 2,000 universes, BCG matrix and the decision matrix.
 
 <DataTable data={casos} rows=all rowShading=true link=link>
-  <Column id=nome title="Caso"/>
-  <Column id=dominio title="Domínio"/>
-  <Column id=n_alternativas title="Alternativas" fmt=num0/>
-  <Column id=vencedor_rotulo title="🏆 Vencedor"/>
-  <Column id=prob_vitoria title="Confiança (%)" fmt=num1 contentType=colorscale/>
-  <Column id=classificacao title="Veredito"/>
+  <Column id=nome title="Case"/>
+  <Column id=dominio title="Domain"/>
+  <Column id=n_alternativas title="Alternatives" fmt=num0/>
+  <Column id=vencedor_rotulo title="🏆 Winner"/>
+  <Column id=prob_vitoria title="Confidence (%)" fmt=num1 contentType=colorscale/>
+  <Column id=classificacao title="Verdict"/>
 </DataTable>
 
-> **Como ler o Verdict.** `ROBUSTO` (≥ 90%) = a escolha não depende da calibração fina dos
-> pesos; pode ir ao comitê. `PROVÁVEL` (60–90%) = se sustenta na maioria dos cenários, mas o
-> vice é competitivo. `FRÁGIL` (abaixo de 60%) = **o 1º lugar é artefato dos pesos** — o
-> sistema diz isso em vez de exibir um troféu.
+> **How to read the Verdict.** `ROBUST` (≥ 90%) = the choice does not depend on fine calibration of the weights; it can go to the committee. `LIKELY` (60–90%) = it holds in most scenarios, but the runner-up is competitive. `FRAGILE` (below 60%) = **first place is an artefact of the weights** — the system says so instead of displaying a trophy.
 
-<BarChart data={resumo_dominio} x=dominio y=casos title="Casos por domínio de aplicação" yAxisTitle="Casos"/>
+<BarChart data={resumo_dominio} x=dominio y=casos title="Cases by application domain" yAxisTitle="Casos"/>
 
-## 🧮 DEMATEL — a causa raiz de cada decisão
+## 🧮 DEMATEL — the root cause of every decision
 
-> A pergunta que quase ninguém faz antes de atribuir pesos: **os Criterions são
-> independentes?** Quase nunca são. Consumo energético *causa* autonomia; blindagem
-> *causa* peso, que *causa* perda de mobilidade. Somar os dois como independentes conta a
-> mesma coisa duas vezes.
+> The question almost nobody asks before assigning weights: **are the criteria independent?** They almost never are. Energy consumption *causes* range; armour *causes* weight, which *causes* loss of mobility. Adding the two as independent counts the same thing twice.
 >
-> O **DEMATEL** (Gabus & Fontela, Battelle) monta a matriz de relação total
-> `T = X(I−X)⁻¹` — que soma influências diretas **e indiretas** de qualquer comprimento de
-> caminho — e separa: `R+C` = importância no sistema; `R−C > 0` = **CAUSA** (alavanca:
-> mexa aqui) e `R−C < 0` = **EFEITO** (termômetro: resultado do que já se fez).
+> **DEMATEL** (Gabus & Fontela, Battelle) builds the total relation matrix `T = X(I−X)⁻¹` — which sums direct **and indirect** influences of any path length — and separates: `R+C` = importance in the system; `R−C > 0` = **CAUSE** (lever: act here) and `R−C < 0` = **EFFECT** (thermometer: the result of what has already been done).
 >
-> A coluna **Causa raiz** abaixo é o Criterion de maior `R−C` de cada caso: é nele que uma
-> intervenção move o sistema inteiro.
+> The **Root cause** column below is the criterion with the highest `R−C` in each case: it is there that one intervention moves the whole system.
 
 <DataTable data={alavancas} rows=all rowShading=true>
-  <Column id=nome title="Caso"/>
-  <Column id=n_criterios title="Critérios" fmt=num0/>
-  <Column id=n_causas title="Causas" fmt=num0 contentType=colorscale/>
-  <Column id=causa_raiz title="🔧 Causa raiz (maior R−C)"/>
-  <Column id=criterio_maior_peso title="Critério de maior peso"/>
-  <Column id=maior_peso_pct title="Peso (%)" fmt=num1/>
+  <Column id=nome title="Case"/>
+  <Column id=n_criterios title="Criteria" fmt=num0/>
+  <Column id=n_causas title="Causes" fmt=num0 contentType=colorscale/>
+  <Column id=causa_raiz title="🔧 Root cause (highest R−C)"/>
+  <Column id=criterio_maior_peso title="Highest-weight criterion"/>
+  <Column id=maior_peso_pct title="Weight (%)" fmt=num1/>
 </DataTable>
 
-<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="Critérios que são CAUSA em cada caso (alavancas contra o total)" yAxisTitle="Critérios" swapXY=true/>
+<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="Criteria that are a CAUSE in each case (levers against the total)" yAxisTitle="Critérios" swapXY=true/>
 
-> **Abra um caso** para ver o diagrama causa-efeito completo, a tabela com `R` e `C`
-> separados e a **matriz de relação total** com as ligações uma a uma.
+> **Open a case** to see the full cause-effect diagram, the table with `R` and `C` separated, and the **total relation matrix** with the links one by one.
 
-## 🎲 Matriz BCG — mapa de oportunidades por categoria
+## 🎲 BCG matrix — a map of opportunity by category
 
-> Além de *qual escolher*, cada categoria tem um **perfil de oportunidade**: quantas
-> Alternatives são ⭐ Estrela (investir), 🐄 Vaca (colher), ❓ Interrogação (avaliar o prêmio)
-> e 🐕 Abacaxi (descartar). Uma categoria só de Interrogações é um mercado caro; uma cheia de
-> Vacas é um mercado maduro, onde o dinheiro decide pouco.
+> Beyond *which one to pick*, each category has an **opportunity profile**: how many alternatives are ⭐ Star (invest), 🐄 Cow (harvest), ❓ Question mark (weigh the prize) and 🐕 Dog (drop). A category made only of question marks is an expensive market; one full of cows is a mature market, where money decides little.
 
 <DataTable data={bcg_geral} rows=all rowShading=true>
-  <Column id=nome title="Categoria"/>
+  <Column id=nome title="Category"/>
   <Column id=estrelas title="⭐" fmt=num0 contentType=colorscale/>
   <Column id=vacas title="🐄" fmt=num0 contentType=colorscale/>
   <Column id=interrogacoes title="❓" fmt=num0 contentType=colorscale/>
   <Column id=abacaxis title="🐕" fmt=num0 contentType=colorscale/>
   <Column id=total title="Total" fmt=num0/>
-  <Column id=quadrante_do_vencedor title="Quadrante do 1º colocado"/>
+  <Column id=quadrante_do_vencedor title="Quadrant of the 1st place"/>
 </DataTable>
 
-## ⚖️ As nove escolas de decisão
+## ⚖️ The ten schools of decision
 
-> Cada método é uma **teoria diferente sobre o que significa "melhor"**, e é por isso que
-> rodamos todos: quando nove escolas independentes elegem o mesmo vencedor, a escolha não é
-> artefato de um método. Quando divergem, a divergência aponta onde está o trade-off real.
+> Each method is a **different theory of what "best" means**, and that is why we run them all: when ten independent schools elect the same winner, the choice is not an artefact of one method. When they diverge, the divergence points to where the real trade-off is.
 
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
-| **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre Criterions | Criterions quantitativos, decisor único |
+| **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre Criterions | Criteria quantitativos, decisor único |
 | **ELECTRE I** | Outranking | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
 | **ELECTRE II** | Outranking | Limiares forte e fraco | Ordenação completa com veto |
 | **PROMETHEE II** | Outranking | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
@@ -147,23 +123,15 @@ pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouc
 | **TODIM** | Teoria dos Prospectos | Perda dói mais que ganho equivalente | Decisor avesso a perda (todos são) |
 | **SAPEVO-M** | Ordinal multidecisor | Julgamento ordinal de vários decisores | Comitê que não concorda entre si |
 
-## 🎯 Robustness — o intervalo de confiança da própria decisão
+## 🎯 Robustness — a confidence interval on the decision itself
 
-> **O problema.** Todo método MCDM devolve um vencedor com confiança implícita de 100%. Mas
-> os pesos nunca são exatos — são estimativas de preferência. Se dois pontos percentuais no
-> peso de um Criterion trocam o 1º com o 2º colocado, o "vencedor" é artefato da calibração,
-> não fato do conjunto. Ninguém reporta isso. **É onde as decisões morrem no comitê.**
+> **The problem.** Every MCDM method returns a winner with an implicit confidence of 100%. But weights are never exact — they are preference estimates. If two percentage points in one criterion's weight swap first and second place, the "winner" is an artefact of the calibration, not a fact about the set. Nobody reports this. **It is where decisions die in committee.**
 >
-> **A solução.** Perturbamos os pesos com `w' ~ Dirichlet(κ·w)` e reranqueamos 2.000 vezes.
-> A Dirichlet é a escolha natural: seu suporte é exatamente o simplex (pesos positivos que
-> somam 1) e ela satisfaz `E[w'] = w` — perturbamos **sem enviesar**. Com κ = 200, um peso de
-> 13% oscila ±2,4 p.p.
+> **The solution.** We perturb the weights with `w' ~ Dirichlet(κ·w)` and re-rank 2,000 times. The Dirichlet is the natural choice: its support is exactly the simplex (positive weights summing to 1) and it satisfies `E[w'] = w` — we perturb **without biasing**. With κ = 200, a weight of 13% swings ±2.4 p.p.
 >
-> O Verdict deixa de ser *"o Modelo C é o melhor"* e passa a ser **"o Modelo C vence em 96%
-> dos universos de preferência plausíveis"**.
+> The verdict stops being *"Model C is the best"* and becomes **"Model C wins in 96% of plausible preference universes"**.
 
-**Abra um caso na tabela acima** para ver o diagrama causa-efeito, o mapa das nove escolas, a
-matriz BCG e a distribuição completa das posições nos 2.000 universos.
+**Open a case from the table above** to see the cause-effect diagram, the map of the ten schools, the BCG matrix and the full distribution of positions across the 2,000 universes.
 
 ---
 

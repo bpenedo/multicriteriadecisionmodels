@@ -20,7 +20,7 @@ _MCDM Studio — Modelos Multiमानदंड de Decisão · Autor: **ProfBru
   Só consultas AGREGADAS (uma linha por caso). As tabelas detalhadas — ranking por
   método (3.744 linhas), निर्णय मैट्रिक्स (3.514), distribuição (4.230), मजबूती por
   método (4.160) — vivem nas páginas de caso, onde estão filtradas por `id_caso`.
-  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador. Ver bugs.md #BUG-028.
+  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador.
 -->
 
 ```sql casos
@@ -44,100 +44,76 @@ select dominio, count(*) as casos, avg(prob_vitoria) as confianca_media
 from mcdm.casos group by dominio order by casos desc
 ```
 
-# 🎯 Decisão Multiमानदंड — nove escolas, um निर्णय com intervalo de confiança
+# 🎯 बहु-मानदंड निर्णय — दस विचारधाराएँ, विश्वास अंतराल के साथ एक निर्णय
 
-> **A planilha não erra a conta. Ela erra a pergunta.**
-> Ordenar por preço elege o mais barato. Ordenar por nota de especialista elege o mais caro.
-> Filtrar por "atende a todos os requisitos" costuma esvaziar a lista. Nenhuma das três
-> responde à pergunta que foi feita: *entre विकल्पs que se contradizem, qual escolher —
-> e com que confiança?*
+> **स्प्रेडशीट गणना में गलती नहीं करती। वह प्रश्न में गलती करती है।** मूल्य से क्रमित करें तो सबसे सस्ता चुना जाता है। विशेषज्ञ अंक से क्रमित करें तो सबसे महँगा। “सभी आवश्यकताएँ पूरी करता है” से छाँटें तो सूची आमतौर पर खाली हो जाती है। तीनों में से कोई भी पूछे गए प्रश्न का उत्तर नहीं देता: *परस्पर विरोधी विकल्पों में से कौन सा चुनें — और कितने विश्वास के साथ?*
 
-Este painel roda **nove métodos multiमानदंड** sobre cada caso, tira o vencedor do **consenso
-de Borda** entre eles e depois **perturba os pesos 2.000 vezes** para responder à única
-pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouco diferente?*
+यह पटल प्रत्येक प्रकरण पर **दस बहु-मानदंड विधियाँ** चलाता है, उनके बीच की **बोर्डा सहमति** से विजेता निकालता है, और फिर **भारों को 2,000 बार विचलित** करता है, ताकि उस एक प्रश्न का उत्तर दे सके जो समिति वास्तव में पूछती है: *और यदि हमने थोड़ा भिन्न भार दिया होता?*
 
-<BigValue data={totais} value=casos title="Casos de decisão" fmt=num0/>
-<BigValue data={totais} value=alternativas title="Alternativas avaliadas" fmt=num0/>
-<BigValue data={totais} value=robustos title="Vereditos ROBUSTOS" fmt=num0/>
-<BigValue data={totais} value=frageis title="Vereditos FRÁGEIS" fmt=num0/>
+<BigValue data={totais} value=casos title="निर्णय प्रकरण" fmt=num0/>
+<BigValue data={totais} value=alternativas title="मूल्यांकित विकल्प" fmt=num0/>
+<BigValue data={totais} value=robustos title="मजबूत निर्णय" fmt=num0/>
+<BigValue data={totais} value=frageis title="नाज़ुक निर्णय" fmt=num0/>
 
-## 📋 Casos de decisão
+## 📋 निर्णय प्रकरण
 
-> Clique em qualquer caso para abrir o **relatório completo**: diagrama causa-efeito do
-> DEMATEL, mapa das nove escolas, núcleo do ELECTRE, dupla normalização do TOPSIS,
-> बोर्डा सर्वसम्मति, मजबूती sob 2.000 universos, matriz BCG e a निर्णय मैट्रिक्स.
+> किसी भी प्रकरण पर क्लिक करें और **पूर्ण रिपोर्ट** खुलेगी: DEMATEL का कारण-प्रभाव आरेख, दस विचारधाराओं का नक्शा, ELECTRE का कोर, TOPSIS का दोहरा सामान्यीकरण, बोर्डा सहमति, 2,000 ब्रह्मांडों पर मजबूती, BCG आव्यूह और निर्णय आव्यूह।
 
 <DataTable data={casos} rows=all rowShading=true link=link>
-  <Column id=nome title="Caso"/>
-  <Column id=dominio title="Domínio"/>
-  <Column id=n_alternativas title="Alternativas" fmt=num0/>
-  <Column id=vencedor_rotulo title="🏆 Vencedor"/>
-  <Column id=prob_vitoria title="Confiança (%)" fmt=num1 contentType=colorscale/>
-  <Column id=classificacao title="Veredito"/>
+  <Column id=nome title="प्रकरण"/>
+  <Column id=dominio title="क्षेत्र"/>
+  <Column id=n_alternativas title="विकल्प" fmt=num0/>
+  <Column id=vencedor_rotulo title="🏆 विजेता"/>
+  <Column id=prob_vitoria title="विश्वास (%)" fmt=num1 contentType=colorscale/>
+  <Column id=classificacao title="निर्णय"/>
 </DataTable>
 
-> **Como ler o निर्णय.** `ROBUSTO` (≥ 90%) = a escolha não depende da calibração fina dos
-> pesos; pode ir ao comitê. `PROVÁVEL` (60–90%) = se sustenta na maioria dos cenários, mas o
-> vice é competitivo. `FRÁGIL` (abaixo de 60%) = **o 1º lugar é artefato dos pesos** — o
-> sistema diz isso em vez de exibir um troféu.
+> **निर्णय कैसे पढ़ें।** `मजबूत` (≥ 90%) = चयन भारों के सूक्ष्म अंशांकन पर निर्भर नहीं है; यह समिति तक जा सकता है। `संभावित` (60–90%) = अधिकांश परिदृश्यों में टिकता है, पर दूसरा स्थान प्रतिस्पर्धी है। `नाज़ुक` (60% से नीचे) = **पहला स्थान भारों की कृति है** — प्रणाली ट्रॉफी दिखाने के बजाय यही कहती है।
 
-<BarChart data={resumo_dominio} x=dominio y=casos title="Casos por domínio de aplicação" yAxisTitle="Casos"/>
+<BarChart data={resumo_dominio} x=dominio y=casos title="अनुप्रयोग क्षेत्र के अनुसार प्रकरण" yAxisTitle="Casos"/>
 
-## 🧮 DEMATEL — a causa raiz de cada decisão
+## 🧮 DEMATEL — हर निर्णय का मूल कारण
 
-> A pergunta que quase ninguém faz antes de atribuir pesos: **os मानदंडs são
-> independentes?** Quase nunca são. Consumo energético *causa* autonomia; blindagem
-> *causa* peso, que *causa* perda de mobilidade. Somar os dois como independentes conta a
-> mesma coisa duas vezes.
+> भार देने से पहले वह प्रश्न जो लगभग कोई नहीं पूछता: **क्या मानदंड स्वतंत्र हैं?** वे लगभग कभी नहीं होते। ऊर्जा खपत परिसर को *उत्पन्न करती है*; कवच भार को *उत्पन्न करता है*, और भार गतिशीलता की हानि को *उत्पन्न करता है*। दोनों को स्वतंत्र मानकर जोड़ना एक ही बात को दो बार गिनना है।
 >
-> O **DEMATEL** (Gabus & Fontela, Battelle) monta a matriz de relação total
-> `T = X(I−X)⁻¹` — que soma influências diretas **e indiretas** de qualquer comprimento de
-> caminho — e separa: `R+C` = importância no sistema; `R−C > 0` = **CAUSA** (alavanca:
-> mexa aqui) e `R−C < 0` = **EFEITO** (termômetro: resultado do que já se fez).
+> **DEMATEL** (Gabus और Fontela, Battelle) कुल संबंध आव्यूह `T = X(I−X)⁻¹` बनाता है — जो किसी भी पथ-लंबाई के प्रत्यक्ष **और अप्रत्यक्ष** प्रभावों को जोड़ता है — और पृथक करता है: `R+C` = प्रणाली में महत्त्व; `R−C > 0` = **कारण** (लीवर: यहाँ हस्तक्षेप करें) और `R−C < 0` = **प्रभाव** (थर्मामीटर: जो पहले किया गया उसका परिणाम)।
 >
-> A coluna **Causa raiz** abaixo é o मानदंड de maior `R−C` de cada caso: é nele que uma
-> intervenção move o sistema inteiro.
+> नीचे का **मूल कारण** स्तंभ प्रत्येक प्रकरण का सर्वाधिक `R−C` वाला मानदंड है: वहीं एक हस्तक्षेप पूरी प्रणाली को हिला देता है।
 
 <DataTable data={alavancas} rows=all rowShading=true>
-  <Column id=nome title="Caso"/>
-  <Column id=n_criterios title="Critérios" fmt=num0/>
-  <Column id=n_causas title="Causas" fmt=num0 contentType=colorscale/>
-  <Column id=causa_raiz title="🔧 Causa raiz (maior R−C)"/>
-  <Column id=criterio_maior_peso title="Critério de maior peso"/>
-  <Column id=maior_peso_pct title="Peso (%)" fmt=num1/>
+  <Column id=nome title="प्रकरण"/>
+  <Column id=n_criterios title="मानदंड" fmt=num0/>
+  <Column id=n_causas title="कारण" fmt=num0 contentType=colorscale/>
+  <Column id=causa_raiz title="🔧 मूल कारण (सर्वाधिक R−C)"/>
+  <Column id=criterio_maior_peso title="सर्वाधिक भार वाला मानदंड"/>
+  <Column id=maior_peso_pct title="भार (%)" fmt=num1/>
 </DataTable>
 
-<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="Critérios que são CAUSA em cada caso (alavancas contra o total)" yAxisTitle="Critérios" swapXY=true/>
+<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="प्रत्येक प्रकरण में कारण बनने वाले मानदंड (कुल के सापेक्ष लीवर)" yAxisTitle="Critérios" swapXY=true/>
 
-> **Abra um caso** para ver o diagrama causa-efeito completo, a tabela com `R` e `C`
-> separados e a **matriz de relação total** com as ligações uma a uma.
+> **कोई प्रकरण खोलें** और देखें पूरा कारण-प्रभाव आरेख, `R` तथा `C` को अलग दिखाने वाली तालिका, और एक-एक कड़ी के साथ **कुल संबंध आव्यूह**।
 
-## 🎲 Matriz BCG — mapa de oportunidades por categoria
+## 🎲 BCG आव्यूह — श्रेणी-वार अवसरों का नक्शा
 
-> Além de *qual escolher*, cada categoria tem um **perfil de oportunidade**: quantas
-> विकल्पs são ⭐ Estrela (investir), 🐄 Vaca (colher), ❓ Interrogação (avaliar o prêmio)
-> e 🐕 Abacaxi (descartar). Uma categoria só de Interrogações é um mercado caro; uma cheia de
-> Vacas é um mercado maduro, onde o dinheiro decide pouco.
+> *कौन सा चुनें* के अलावा, हर श्रेणी का एक **अवसर-प्रोफ़ाइल** होता है: कितने विकल्प ⭐ सितारा (निवेश), 🐄 गाय (फसल काटें), ❓ प्रश्नचिह्न (पुरस्कार आँकें) और 🐕 कुत्ता (छोड़ दें) हैं। केवल प्रश्नचिह्नों वाली श्रेणी एक महँगा बाज़ार है; गायों से भरी श्रेणी एक परिपक्व बाज़ार है, जहाँ पैसा कम निर्णय करता है।
 
 <DataTable data={bcg_geral} rows=all rowShading=true>
-  <Column id=nome title="Categoria"/>
+  <Column id=nome title="श्रेणी"/>
   <Column id=estrelas title="⭐" fmt=num0 contentType=colorscale/>
   <Column id=vacas title="🐄" fmt=num0 contentType=colorscale/>
   <Column id=interrogacoes title="❓" fmt=num0 contentType=colorscale/>
   <Column id=abacaxis title="🐕" fmt=num0 contentType=colorscale/>
-  <Column id=total title="Total" fmt=num0/>
-  <Column id=quadrante_do_vencedor title="Quadrante do 1º colocado"/>
+  <Column id=total title="कुल" fmt=num0/>
+  <Column id=quadrante_do_vencedor title="प्रथम स्थान का चतुर्थांश"/>
 </DataTable>
 
-## ⚖️ As nove escolas de decisão
+## ⚖️ निर्णय की दस विचारधाराएँ
 
-> Cada método é uma **teoria diferente sobre o que significa "melhor"**, e é por isso que
-> rodamos todos: quando nove escolas independentes elegem o mesmo vencedor, a escolha não é
-> artefato de um método. Quando divergem, a divergência aponta onde está o trade-off real.
+> प्रत्येक विधि **इस बात का भिन्न सिद्धांत है कि “बेहतर” का अर्थ क्या है**, और इसीलिए हम सभी चलाते हैं: जब दस स्वतंत्र विचारधाराएँ एक ही विजेता चुनती हैं, तो वह चयन किसी एक विधि की कृति नहीं होता। जब वे भिन्न होती हैं, वह भिन्नता बताती है कि असली समझौता कहाँ है।
 
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
-| **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre मानदंडs | मानदंडs quantitativos, decisor único |
+| **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre मानदंडs | मानदंड quantitativos, decisor único |
 | **ELECTRE I** | अधिवर्गीकरण | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
 | **ELECTRE II** | अधिवर्गीकरण | Limiares forte e fraco | Ordenação completa com veto |
 | **PROMETHEE II** | अधिवर्गीकरण | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
@@ -147,23 +123,15 @@ pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouc
 | **TODIM** | Teoria dos Prospectos | Perda dói mais que ganho equivalente | Decisor avesso a perda (todos são) |
 | **SAPEVO-M** | Ordinal multidecisor | Julgamento ordinal de vários decisores | Comitê que não concorda entre si |
 
-## 🎯 मजबूती — o intervalo de confiança da própria decisão
+## 🎯 मजबूती — स्वयं निर्णय का विश्वास अंतराल
 
-> **O problema.** Todo método MCDM devolve um vencedor com confiança implícita de 100%. Mas
-> os pesos nunca são exatos — são estimativas de preferência. Se dois pontos percentuais no
-> peso de um मानदंड trocam o 1º com o 2º colocado, o "vencedor" é artefato da calibração,
-> não fato do conjunto. Ninguém reporta isso. **É onde as decisões morrem no comitê.**
+> **समस्या।** प्रत्येक MCDM विधि एक विजेता देती है, जिसका अंतर्निहित विश्वास 100% होता है। पर भार कभी यथार्थ नहीं होते — वे अधिमान के आकलन हैं। यदि किसी मानदंड के भार में दो प्रतिशत अंक पहले और दूसरे स्थान को आपस में बदल देते हैं, तो वह “विजेता” अंशांकन की कृति है, समुच्चय का तथ्य नहीं। इसकी सूचना कोई नहीं देता। **निर्णय समिति में यहीं मरते हैं।**
 >
-> **A solução.** Perturbamos os pesos com `w' ~ Dirichlet(κ·w)` e reranqueamos 2.000 vezes.
-> A Dirichlet é a escolha natural: seu suporte é exatamente o simplex (pesos positivos que
-> somam 1) e ela satisfaz `E[w'] = w` — perturbamos **sem enviesar**. Com κ = 200, um peso de
-> 13% oscila ±2,4 p.p.
+> **समाधान।** हम भारों को `w' ~ Dirichlet(κ·w)` से विचलित करते हैं और 2,000 बार पुनः क्रमित करते हैं। डिरिक्ले स्वाभाविक चुनाव है: उसका आधार ठीक सिम्पलेक्स है (धनात्मक भार जिनका योग 1 है) और वह `E[w'] = w` को संतुष्ट करता है — हम **पूर्वाग्रह के बिना** विचलित करते हैं। κ = 200 पर 13% का भार ±2.4 प्रतिशत अंक झूलता है।
 >
-> O निर्णय deixa de ser *"o Modelo C é o melhor"* e passa a ser **"o Modelo C vence em 96%
-> dos universos de preferência plausíveis"**.
+> निर्णय अब *“मॉडल C सर्वोत्तम है”* नहीं रहता, बल्कि बनता है **“मॉडल C प्रशंसनीय अधिमान-ब्रह्मांडों के 96% में जीतता है”**।
 
-**Abra um caso na tabela acima** para ver o diagrama causa-efeito, o mapa das nove escolas, a
-matriz BCG e a distribuição completa das posições nos 2.000 universos.
+**ऊपर की तालिका से कोई प्रकरण खोलें** और देखें कारण-प्रभाव आरेख, दस विचारधाराओं का नक्शा, BCG आव्यूह, तथा 2,000 ब्रह्मांडों में स्थानों का पूर्ण वितरण।
 
 ---
 

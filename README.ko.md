@@ -118,7 +118,7 @@ E-mail: profbruanbima@gmail.com
 
 ### 4. 당신의 직관이 틀린 지점
 
-<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL x AHP" width="820"/></div>
+<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL, AHP, AHP Fuzzy e BWM" width="820"/></div>
 
 **이것이 해결하는 고통:** 당신은 무엇이 중요한지 안다고 생각합니다. 두 가지 가중치 계열이 그것을 시험합니다.
 

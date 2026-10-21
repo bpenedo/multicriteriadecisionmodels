@@ -118,7 +118,7 @@ Perturbamos los pesos con `w' ~ Dirichlet(κ·w)` y reordenamos 2.000 veces. La 
 
 ### 4. Dónde se equivoca su intuición
 
-<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL x AHP" width="820"/></div>
+<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL, AHP, AHP Fuzzy e BWM" width="820"/></div>
 
 **El dolor que esto resuelve:** usted cree que sabe qué es importante. Dos familias de pesos lo ponen a prueba.
 

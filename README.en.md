@@ -118,7 +118,7 @@ We perturb the weights with `w' ~ Dirichlet(κ·w)` and re-rank 2,000 times. The
 
 ### 4. Where your intuition is wrong
 
-<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL x AHP" width="820"/></div>
+<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL, AHP, AHP Fuzzy e BWM" width="820"/></div>
 
 **The pain this solves:** you think you know what matters. Two families of weights put that to the test.
 

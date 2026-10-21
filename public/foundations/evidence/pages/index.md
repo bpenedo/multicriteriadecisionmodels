@@ -20,7 +20,7 @@ _MCDM Studio — Modelos Multicritério de Decisão · Autor: **ProfBru - Bruno 
   Só consultas AGREGADAS (uma linha por caso). As tabelas detalhadas — ranking por
   método (3.744 linhas), matriz de decisão (3.514), distribuição (4.230), robustez por
   método (4.160) — vivem nas páginas de caso, onde estão filtradas por `id_caso`.
-  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador. Ver bugs.md #BUG-028.
+  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador.
 -->
 
 ```sql casos
@@ -44,17 +44,11 @@ select dominio, count(*) as casos, avg(prob_vitoria) as confianca_media
 from mcdm.casos group by dominio order by casos desc
 ```
 
-# 🎯 Decisão Multicritério — nove escolas, um veredito com intervalo de confiança
+# 🎯 Decisão Multicritério — dez escolas, um veredito com intervalo de confiança
 
-> **A planilha não erra a conta. Ela erra a pergunta.**
-> Ordenar por preço elege o mais barato. Ordenar por nota de especialista elege o mais caro.
-> Filtrar por "atende a todos os requisitos" costuma esvaziar a lista. Nenhuma das três
-> responde à pergunta que foi feita: *entre alternativas que se contradizem, qual escolher —
-> e com que confiança?*
+> **A planilha não erra a conta. Ela erra a pergunta.** Ordenar por preço elege o mais barato. Ordenar por nota de especialista elege o mais caro. Filtrar por "atende a todos os requisitos" costuma esvaziar a lista. Nenhuma das três responde à pergunta que foi feita: *entre alternativas que se contradizem, qual escolher — e com que confiança?*
 
-Este painel roda **nove métodos multicritério** sobre cada caso, tira o vencedor do **consenso
-de Borda** entre eles e depois **perturba os pesos 2.000 vezes** para responder à única
-pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouco diferente?*
+Este painel roda **dez métodos multicritério** sobre cada caso, tira o vencedor do **consenso de Borda** entre eles e depois **perturba os pesos 2.000 vezes** para responder à única pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouco diferente?*
 
 <BigValue data={totais} value=casos title="Casos de decisão" fmt=num0/>
 <BigValue data={totais} value=alternativas title="Alternativas avaliadas" fmt=num0/>
@@ -63,9 +57,7 @@ pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouc
 
 ## 📋 Casos de decisão
 
-> Clique em qualquer caso para abrir o **relatório completo**: diagrama causa-efeito do
-> DEMATEL, mapa das nove escolas, núcleo do ELECTRE, dupla normalização do TOPSIS,
-> consenso de Borda, robustez sob 2.000 universos, matriz BCG e a matriz de decisão.
+> Clique em qualquer caso para abrir o **relatório completo**: diagrama causa-efeito do DEMATEL, mapa das dez escolas, núcleo do ELECTRE, dupla normalização do TOPSIS, consenso de Borda, robustez sob 2.000 universos, matriz BCG e a matriz de decisão.
 
 <DataTable data={casos} rows=all rowShading=true link=link>
   <Column id=nome title="Caso"/>
@@ -76,27 +68,17 @@ pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouc
   <Column id=classificacao title="Veredito"/>
 </DataTable>
 
-> **Como ler o Veredito.** `ROBUSTO` (≥ 90%) = a escolha não depende da calibração fina dos
-> pesos; pode ir ao comitê. `PROVÁVEL` (60–90%) = se sustenta na maioria dos cenários, mas o
-> vice é competitivo. `FRÁGIL` (abaixo de 60%) = **o 1º lugar é artefato dos pesos** — o
-> sistema diz isso em vez de exibir um troféu.
+> **Como ler o Veredito.** `ROBUSTO` (≥ 90%) = a escolha não depende da calibração fina dos pesos; pode ir ao comitê. `PROVÁVEL` (60–90%) = se sustenta na maioria dos cenários, mas o vice é competitivo. `FRÁGIL` (abaixo de 60%) = **o 1º lugar é artefato dos pesos** — o sistema diz isso em vez de exibir um troféu.
 
 <BarChart data={resumo_dominio} x=dominio y=casos title="Casos por domínio de aplicação" yAxisTitle="Casos"/>
 
 ## 🧮 DEMATEL — a causa raiz de cada decisão
 
-> A pergunta que quase ninguém faz antes de atribuir pesos: **os critérios são
-> independentes?** Quase nunca são. Consumo energético *causa* autonomia; blindagem
-> *causa* peso, que *causa* perda de mobilidade. Somar os dois como independentes conta a
-> mesma coisa duas vezes.
+> A pergunta que quase ninguém faz antes de atribuir pesos: **os critérios são independentes?** Quase nunca são. Consumo energético *causa* autonomia; blindagem *causa* peso, que *causa* perda de mobilidade. Somar os dois como independentes conta a mesma coisa duas vezes.
 >
-> O **DEMATEL** (Gabus & Fontela, Battelle) monta a matriz de relação total
-> `T = X(I−X)⁻¹` — que soma influências diretas **e indiretas** de qualquer comprimento de
-> caminho — e separa: `R+C` = importância no sistema; `R−C > 0` = **CAUSA** (alavanca:
-> mexa aqui) e `R−C < 0` = **EFEITO** (termômetro: resultado do que já se fez).
+> O **DEMATEL** (Gabus & Fontela, Battelle) monta a matriz de relação total `T = X(I−X)⁻¹` — que soma influências diretas **e indiretas** de qualquer comprimento de caminho — e separa: `R+C` = importância no sistema; `R−C > 0` = **CAUSA** (alavanca: mexa aqui) e `R−C < 0` = **EFEITO** (termômetro: resultado do que já se fez).
 >
-> A coluna **Causa raiz** abaixo é o critério de maior `R−C` de cada caso: é nele que uma
-> intervenção move o sistema inteiro.
+> A coluna **Causa raiz** abaixo é o critério de maior `R−C` de cada caso: é nele que uma intervenção move o sistema inteiro.
 
 <DataTable data={alavancas} rows=all rowShading=true>
   <Column id=nome title="Caso"/>
@@ -109,15 +91,11 @@ pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouc
 
 <BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="Critérios que são CAUSA em cada caso (alavancas contra o total)" yAxisTitle="Critérios" swapXY=true/>
 
-> **Abra um caso** para ver o diagrama causa-efeito completo, a tabela com `R` e `C`
-> separados e a **matriz de relação total** com as ligações uma a uma.
+> **Abra um caso** para ver o diagrama causa-efeito completo, a tabela com `R` e `C` separados e a **matriz de relação total** com as ligações uma a uma.
 
 ## 🎲 Matriz BCG — mapa de oportunidades por categoria
 
-> Além de *qual escolher*, cada categoria tem um **perfil de oportunidade**: quantas
-> alternativas são ⭐ Estrela (investir), 🐄 Vaca (colher), ❓ Interrogação (avaliar o prêmio)
-> e 🐕 Abacaxi (descartar). Uma categoria só de Interrogações é um mercado caro; uma cheia de
-> Vacas é um mercado maduro, onde o dinheiro decide pouco.
+> Além de *qual escolher*, cada categoria tem um **perfil de oportunidade**: quantas alternativas são ⭐ Estrela (investir), 🐄 Vaca (colher), ❓ Interrogação (avaliar o prêmio) e 🐕 Abacaxi (descartar). Uma categoria só de Interrogações é um mercado caro; uma cheia de Vacas é um mercado maduro, onde o dinheiro decide pouco.
 
 <DataTable data={bcg_geral} rows=all rowShading=true>
   <Column id=nome title="Categoria"/>
@@ -129,11 +107,9 @@ pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouc
   <Column id=quadrante_do_vencedor title="Quadrante do 1º colocado"/>
 </DataTable>
 
-## ⚖️ As nove escolas de decisão
+## ⚖️ As dez escolas de decisão
 
-> Cada método é uma **teoria diferente sobre o que significa "melhor"**, e é por isso que
-> rodamos todos: quando nove escolas independentes elegem o mesmo vencedor, a escolha não é
-> artefato de um método. Quando divergem, a divergência aponta onde está o trade-off real.
+> Cada método é uma **teoria diferente sobre o que significa "melhor"**, e é por isso que rodamos todos: quando dez escolas independentes elegem o mesmo vencedor, a escolha não é artefato de um método. Quando divergem, a divergência aponta onde está o trade-off real.
 
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
@@ -149,21 +125,13 @@ pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouc
 
 ## 🎯 Robustez — o intervalo de confiança da própria decisão
 
-> **O problema.** Todo método MCDM devolve um vencedor com confiança implícita de 100%. Mas
-> os pesos nunca são exatos — são estimativas de preferência. Se dois pontos percentuais no
-> peso de um critério trocam o 1º com o 2º colocado, o "vencedor" é artefato da calibração,
-> não fato do conjunto. Ninguém reporta isso. **É onde as decisões morrem no comitê.**
+> **O problema.** Todo método MCDM devolve um vencedor com confiança implícita de 100%. Mas os pesos nunca são exatos — são estimativas de preferência. Se dois pontos percentuais no peso de um critério trocam o 1º com o 2º colocado, o "vencedor" é artefato da calibração, não fato do conjunto. Ninguém reporta isso. **É onde as decisões morrem no comitê.**
 >
-> **A solução.** Perturbamos os pesos com `w' ~ Dirichlet(κ·w)` e reranqueamos 2.000 vezes.
-> A Dirichlet é a escolha natural: seu suporte é exatamente o simplex (pesos positivos que
-> somam 1) e ela satisfaz `E[w'] = w` — perturbamos **sem enviesar**. Com κ = 200, um peso de
-> 13% oscila ±2,4 p.p.
+> **A solução.** Perturbamos os pesos com `w' ~ Dirichlet(κ·w)` e reranqueamos 2.000 vezes. A Dirichlet é a escolha natural: seu suporte é exatamente o simplex (pesos positivos que somam 1) e ela satisfaz `E[w'] = w` — perturbamos **sem enviesar**. Com κ = 200, um peso de 13% oscila ±2,4 p.p.
 >
-> O veredito deixa de ser *"o Modelo C é o melhor"* e passa a ser **"o Modelo C vence em 96%
-> dos universos de preferência plausíveis"**.
+> O veredito deixa de ser *"o Modelo C é o melhor"* e passa a ser **"o Modelo C vence em 96% dos universos de preferência plausíveis"**.
 
-**Abra um caso na tabela acima** para ver o diagrama causa-efeito, o mapa das nove escolas, a
-matriz BCG e a distribuição completa das posições nos 2.000 universos.
+**Abra um caso na tabela acima** para ver o diagrama causa-efeito, o mapa das dez escolas, a matriz BCG e a distribuição completa das posições nos 2.000 universos.
 
 ---
 

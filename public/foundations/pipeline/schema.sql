@@ -258,7 +258,7 @@ CREATE TABLE IF NOT EXISTS veredito (
 );
 
 -- Matriz BCG: quadrante de cada alternativa dentro da sua categoria.
--- Eixos derivados dos MESMOS pesos do DEMATEL que alimentam os nove métodos,
+-- Eixos derivados dos MESMOS pesos do DEMATEL que alimentam os dez métodos,
 -- renormalizados dentro dos grupos de benefício e de custo.
 CREATE TABLE IF NOT EXISTS bcg_quadrante (
     id_caso            TEXT NOT NULL,

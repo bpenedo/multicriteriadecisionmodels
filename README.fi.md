@@ -118,7 +118,7 @@ Häiritsemme painoja muodossa `w' ~ Dirichlet(κ·w)` ja järjestämme uudelleen
 
 ### 4. Missä intuitiosi on väärässä
 
-<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL x AHP" width="820"/></div>
+<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL, AHP, AHP Fuzzy e BWM" width="820"/></div>
 
 **Kipu, jonka tämä poistaa:** luulet tietäväsi, mikä on tärkeää. Kaksi painoperhettä koettelee sitä.
 

@@ -20,7 +20,7 @@ _MCDM Studio — Modelos Multi准则 de Decisão · Autor: **ProfBru - Bruno Pen
   Só consultas AGREGADAS (uma linha por caso). As tabelas detalhadas — ranking por
   método (3.744 linhas), 决策矩阵 (3.514), distribuição (4.230), 稳健性 por
   método (4.160) — vivem nas páginas de caso, onde estão filtradas por `id_caso`.
-  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador. Ver bugs.md #BUG-028.
+  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador.
 -->
 
 ```sql casos
@@ -44,100 +44,76 @@ select dominio, count(*) as casos, avg(prob_vitoria) as confianca_media
 from mcdm.casos group by dominio order by casos desc
 ```
 
-# 🎯 Decisão Multi准则 — nove escolas, um 结论 com intervalo de confiança
+# 🎯 多准则决策 — 十大学派，一个带置信区间的结论
 
-> **A planilha não erra a conta. Ela erra a pergunta.**
-> Ordenar por preço elege o mais barato. Ordenar por nota de especialista elege o mais caro.
-> Filtrar por "atende a todos os requisitos" costuma esvaziar a lista. Nenhuma das três
-> responde à pergunta que foi feita: *entre 备选方案s que se contradizem, qual escolher —
-> e com que confiança?*
+> **电子表格算得没错，错的是它问的问题。** 按价格排序选出最便宜的。按专家评分排序选出最贵的。按“满足全部要求”筛选往往把清单清空。这三种都没有回答真正被提出的问题：*在互相矛盾的备选之间，该选哪一个——又有多大的确信？*
 
-Este painel roda **nove métodos multi准则** sobre cada caso, tira o vencedor do **consenso
-de Borda** entre eles e depois **perturba os pesos 2.000 vezes** para responder à única
-pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouco diferente?*
+本面板对每个案例运行**十种多准则方法**，从它们之间的**博尔达共识**中得出优胜方案，然后**对权重扰动 2000 次**，以回答委员会真正会问的那一个问题：*如果当初给的权重略有不同呢？*
 
-<BigValue data={totais} value=casos title="Casos de decisão" fmt=num0/>
-<BigValue data={totais} value=alternativas title="Alternativas avaliadas" fmt=num0/>
-<BigValue data={totais} value=robustos title="Vereditos ROBUSTOS" fmt=num0/>
-<BigValue data={totais} value=frageis title="Vereditos FRÁGEIS" fmt=num0/>
+<BigValue data={totais} value=casos title="决策案例" fmt=num0/>
+<BigValue data={totais} value=alternativas title="已评估备选" fmt=num0/>
+<BigValue data={totais} value=robustos title="稳健结论" fmt=num0/>
+<BigValue data={totais} value=frageis title="脆弱结论" fmt=num0/>
 
-## 📋 Casos de decisão
+## 📋 决策案例
 
-> Clique em qualquer caso para abrir o **relatório completo**: diagrama causa-efeito do
-> DEMATEL, mapa das nove escolas, núcleo do ELECTRE, dupla normalização do TOPSIS,
-> 波达共识, 稳健性 sob 2.000 universos, matriz BCG e a 决策矩阵.
+> 点击任意案例即可打开**完整报告**：DEMATEL 因果图、十大学派对照图、ELECTRE 核、TOPSIS 双重标准化、博尔达共识、2000 个宇宙下的稳健性、BCG 矩阵以及决策矩阵。
 
 <DataTable data={casos} rows=all rowShading=true link=link>
-  <Column id=nome title="Caso"/>
-  <Column id=dominio title="Domínio"/>
-  <Column id=n_alternativas title="Alternativas" fmt=num0/>
-  <Column id=vencedor_rotulo title="🏆 Vencedor"/>
-  <Column id=prob_vitoria title="Confiança (%)" fmt=num1 contentType=colorscale/>
-  <Column id=classificacao title="Veredito"/>
+  <Column id=nome title="案例"/>
+  <Column id=dominio title="领域"/>
+  <Column id=n_alternativas title="备选方案" fmt=num0/>
+  <Column id=vencedor_rotulo title="🏆 优胜方案"/>
+  <Column id=prob_vitoria title="置信度 (%)" fmt=num1 contentType=colorscale/>
+  <Column id=classificacao title="结论"/>
 </DataTable>
 
-> **Como ler o 结论.** `ROBUSTO` (≥ 90%) = a escolha não depende da calibração fina dos
-> pesos; pode ir ao comitê. `PROVÁVEL` (60–90%) = se sustenta na maioria dos cenários, mas o
-> vice é competitivo. `FRÁGIL` (abaixo de 60%) = **o 1º lugar é artefato dos pesos** — o
-> sistema diz isso em vez de exibir um troféu.
+> **如何读结论。** `稳健`（≥ 90%）= 该选择不依赖权重的精细校准，可以提交委员会。`可能`（60–90%）= 在多数情形下成立，但第二名颇具竞争力。`脆弱`（低于 60%）= **第一名是权重的产物**——系统会这么说，而不是摆出一座奖杯。
 
-<BarChart data={resumo_dominio} x=dominio y=casos title="Casos por domínio de aplicação" yAxisTitle="Casos"/>
+<BarChart data={resumo_dominio} x=dominio y=casos title="按应用领域划分的案例" yAxisTitle="Casos"/>
 
-## 🧮 DEMATEL — a causa raiz de cada decisão
+## 🧮 DEMATEL — 每个决策的根本原因
 
-> A pergunta que quase ninguém faz antes de atribuir pesos: **os 准则s são
-> independentes?** Quase nunca são. Consumo energético *causa* autonomia; blindagem
-> *causa* peso, que *causa* perda de mobilidade. Somar os dois como independentes conta a
-> mesma coisa duas vezes.
+> 分配权重之前几乎没人问的问题：**各准则彼此独立吗？** 几乎从来都不独立。能耗*导致*续航；装甲*导致*重量，而重量*导致*机动性下降。把两者当作独立相加，等于把同一件事算了两遍。
 >
-> O **DEMATEL** (Gabus & Fontela, Battelle) monta a matriz de relação total
-> `T = X(I−X)⁻¹` — que soma influências diretas **e indiretas** de qualquer comprimento de
-> caminho — e separa: `R+C` = importância no sistema; `R−C > 0` = **CAUSA** (alavanca:
-> mexa aqui) e `R−C < 0` = **EFEITO** (termômetro: resultado do que já se fez).
+> **DEMATEL**（Gabus 与 Fontela，Battelle）构造总关系矩阵 `T = X(I−X)⁻¹`——它把任意路径长度的直接**与间接**影响都求和——并作区分：`R+C` = 在系统中的重要性；`R−C > 0` = **原因**（杠杆：从此处着手），`R−C < 0` = **结果**（温度计：已做之事的产物）。
 >
-> A coluna **Causa raiz** abaixo é o 准则 de maior `R−C` de cada caso: é nele que uma
-> intervenção move o sistema inteiro.
+> 下方的**根本原因**一列，是每个案例中 `R−C` 最大的准则：正是在那里，一次干预能带动整个系统。
 
 <DataTable data={alavancas} rows=all rowShading=true>
-  <Column id=nome title="Caso"/>
-  <Column id=n_criterios title="Critérios" fmt=num0/>
-  <Column id=n_causas title="Causas" fmt=num0 contentType=colorscale/>
-  <Column id=causa_raiz title="🔧 Causa raiz (maior R−C)"/>
-  <Column id=criterio_maior_peso title="Critério de maior peso"/>
-  <Column id=maior_peso_pct title="Peso (%)" fmt=num1/>
+  <Column id=nome title="案例"/>
+  <Column id=n_criterios title="准则" fmt=num0/>
+  <Column id=n_causas title="原因" fmt=num0 contentType=colorscale/>
+  <Column id=causa_raiz title="🔧 根本原因（R−C 最大）"/>
+  <Column id=criterio_maior_peso title="权重最大的准则"/>
+  <Column id=maior_peso_pct title="权重（%）" fmt=num1/>
 </DataTable>
 
-<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="Critérios que são CAUSA em cada caso (alavancas contra o total)" yAxisTitle="Critérios" swapXY=true/>
+<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="在各案例中属于原因的准则（相对总数的杠杆）" yAxisTitle="Critérios" swapXY=true/>
 
-> **Abra um caso** para ver o diagrama causa-efeito completo, a tabela com `R` e `C`
-> separados e a **matriz de relação total** com as ligações uma a uma.
+> **打开一个案例**，即可看到完整的因果图、`R` 与 `C` 分列的表格，以及逐条列出连接的**总关系矩阵**。
 
-## 🎲 Matriz BCG — mapa de oportunidades por categoria
+## 🎲 BCG 矩阵 — 按类别绘制的机会地图
 
-> Além de *qual escolher*, cada categoria tem um **perfil de oportunidade**: quantas
-> 备选方案s são ⭐ Estrela (investir), 🐄 Vaca (colher), ❓ Interrogação (avaliar o prêmio)
-> e 🐕 Abacaxi (descartar). Uma categoria só de Interrogações é um mercado caro; uma cheia de
-> Vacas é um mercado maduro, onde o dinheiro decide pouco.
+> 除了*选哪一个*之外，每个类别还有一份**机会画像**：有多少备选是 ⭐ 明星（投入）、🐄 金牛（收获）、❓ 问号（权衡赌注）与 🐕 瘦狗（放弃）。只有问号的类别是昂贵的市场；满是金牛的类别是成熟市场，钱在其中起的作用很小。
 
 <DataTable data={bcg_geral} rows=all rowShading=true>
-  <Column id=nome title="Categoria"/>
+  <Column id=nome title="类别"/>
   <Column id=estrelas title="⭐" fmt=num0 contentType=colorscale/>
   <Column id=vacas title="🐄" fmt=num0 contentType=colorscale/>
   <Column id=interrogacoes title="❓" fmt=num0 contentType=colorscale/>
   <Column id=abacaxis title="🐕" fmt=num0 contentType=colorscale/>
-  <Column id=total title="Total" fmt=num0/>
-  <Column id=quadrante_do_vencedor title="Quadrante do 1º colocado"/>
+  <Column id=total title="合计" fmt=num0/>
+  <Column id=quadrante_do_vencedor title="第一名所在象限"/>
 </DataTable>
 
-## ⚖️ As nove escolas de decisão
+## ⚖️ 十大决策学派
 
-> Cada método é uma **teoria diferente sobre o que significa "melhor"**, e é por isso que
-> rodamos todos: quando nove escolas independentes elegem o mesmo vencedor, a escolha não é
-> artefato de um método. Quando divergem, a divergência aponta onde está o trade-off real.
+> 每种方法都是**关于“更好”含义的不同理论**，所以我们全部运行：当十个独立学派选出同一个优胜方案时，这个选择就不是某一方法的产物。当它们分歧时，分歧恰好指出真正的权衡在哪里。
 
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
-| **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre 准则s | 准则s quantitativos, decisor único |
+| **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre 准则s | 准则 quantitativos, decisor único |
 | **ELECTRE I** | 级别高于关系 | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
 | **ELECTRE II** | 级别高于关系 | Limiares forte e fraco | Ordenação completa com veto |
 | **PROMETHEE II** | 级别高于关系 | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
@@ -147,23 +123,15 @@ pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouc
 | **TODIM** | Teoria dos Prospectos | Perda dói mais que ganho equivalente | Decisor avesso a perda (todos são) |
 | **SAPEVO-M** | Ordinal multidecisor | Julgamento ordinal de vários decisores | Comitê que não concorda entre si |
 
-## 🎯 稳健性 — o intervalo de confiança da própria decisão
+## 🎯 稳健性 — 决策本身的置信区间
 
-> **O problema.** Todo método MCDM devolve um vencedor com confiança implícita de 100%. Mas
-> os pesos nunca são exatos — são estimativas de preferência. Se dois pontos percentuais no
-> peso de um 准则 trocam o 1º com o 2º colocado, o "vencedor" é artefato da calibração,
-> não fato do conjunto. Ninguém reporta isso. **É onde as decisões morrem no comitê.**
+> **问题所在。** 任何 MCDM 方法都会给出一个隐含 100% 确信度的优胜方案。但权重从不精确——它们是偏好的估计。如果某个准则的权重变动两个百分点就让第一与第二互换，那么这个“优胜方案”是校准的产物，而非这组备选的事实。没有人报告这一点。**决策正是死在委员会这一步。**
 >
-> **A solução.** Perturbamos os pesos com `w' ~ Dirichlet(κ·w)` e reranqueamos 2.000 vezes.
-> A Dirichlet é a escolha natural: seu suporte é exatamente o simplex (pesos positivos que
-> somam 1) e ela satisfaz `E[w'] = w` — perturbamos **sem enviesar**. Com κ = 200, um peso de
-> 13% oscila ±2,4 p.p.
+> **解法。** 我们以 `w' ~ Dirichlet(κ·w)` 扰动权重并重新排序 2000 次。狄利克雷分布是自然的选择：它的支撑集恰好是单纯形（和为 1 的正权重），且满足 `E[w'] = w`——我们在扰动时**不引入偏倚**。取 κ = 200 时，13% 的权重波动约 ±2.4 个百分点。
 >
-> O 结论 deixa de ser *"o Modelo C é o melhor"* e passa a ser **"o Modelo C vence em 96%
-> dos universos de preferência plausíveis"**.
+> 结论不再是*“C 方案最好”*，而成为**“在 96% 的合理偏好宇宙中，C 方案胜出”**。
 
-**Abra um caso na tabela acima** para ver o diagrama causa-efeito, o mapa das nove escolas, a
-matriz BCG e a distribuição completa das posições nos 2.000 universos.
+**打开上表中的一个案例**，即可看到因果图、十大学派对照图、BCG 矩阵，以及 2000 个宇宙中各名次的完整分布。
 
 ---
 

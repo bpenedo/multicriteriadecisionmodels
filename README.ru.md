@@ -118,7 +118,7 @@ E-mail: profbruanbima@gmail.com
 
 ### 4. Где ваша интуиция ошибается
 
-<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL x AHP" width="820"/></div>
+<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL, AHP, AHP Fuzzy e BWM" width="820"/></div>
 
 **Какую боль это снимает:** вы полагаете, что знаете, что важно. Два семейства весов проверяют это.
 

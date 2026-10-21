@@ -118,7 +118,7 @@ E-mail: profbruanbima@gmail.com
 
 ### 4. जहाँ आपका अंतर्ज्ञान गलत है
 
-<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL x AHP" width="820"/></div>
+<div align="center"><img src="docs/telas/blindado/pesos_dematel_ahp.png" alt="DEMATEL, AHP, AHP Fuzzy e BWM" width="820"/></div>
 
 **यह जिस पीड़ा को हल करता है:** आप सोचते हैं कि आप जानते हैं क्या महत्वपूर्ण है। भारों के दो परिवार इसकी परीक्षा लेते हैं।
 

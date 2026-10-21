@@ -33,7 +33,7 @@ order by prob_vitoria desc limit 20
 select * from mcdm.robustez where id_caso = '${params.caso}' order by prob_vitoria desc limit 1
 ```
 ```sql metodos_c
--- Apenas as 10 primeiras do consenso × 9 métodos = 90 linhas. Trazer as 38
+-- Apenas as 10 primeiras do consenso × 10 métodos = 100 linhas. Trazer as 38
 -- alternativas daria 342 e o gráfico agrupado ficaria ilegível de qualquer forma.
 select r.* from mcdm.ranking_metodos r
 join mcdm.consenso c on c.id_caso = r.id_caso and c.alternativa = r.alternativa
@@ -65,6 +65,14 @@ select * from mcdm.bcg where id_caso = '${params.caso}' order by rank_consenso l
 select * from mcdm.bcg_resumo where id_caso = '${params.caso}'
 ```
 
+```sql drsa_q
+select * from mcdm.drsa_qualidade where id_caso = '${params.caso}'
+```
+
+```sql drsa_r
+select * from mcdm.drsa_regras where id_caso = '${params.caso}'
+```
+
 <div style="text-align:center;margin:1rem 0 1.4rem;">
   <img src="/img/logo_capa.png" alt="ProfBru" width="150" style="display:inline-block;"/>
   <div style="font-weight:700;margin-top:0.45rem;">ProfBru © 2026</div>
@@ -80,7 +88,8 @@ select * from mcdm.bcg_resumo where id_caso = '${params.caso}'
 <BigValue data={caso} value=prob_vitoria title="Vence em (% dos universos)" fmt=num1/>
 <BigValue data={caso} value=classificacao title="Veredito"/>
 <BigValue data={caso} value=n_alternativas title="Alternativas" fmt=num0/>
-<BigValue data={caso} value=n_metodos title="Métodos" fmt=num0/>
+<BigValue data={caso} value=n_metodos title="Métodos que ordenam" fmt=num0/>
+<BigValue data={caso} value=n_modelos title="Modelos aplicados" fmt=num0/>
 
 ---
 
@@ -131,7 +140,7 @@ select * from mcdm.bcg_resumo where id_caso = '${params.caso}'
 
 <BarChart data={relacao_c} x=origem_rotulo y=intensidade series=destino_rotulo type=stacked title="Influência total exercida por cada critério, decomposta por destino" yAxisTitle="Intensidade acumulada" swapXY=true/>
 
-### Três famílias de peso sobre o mesmo problema
+### Quatro famílias de peso sobre o mesmo problema
 
 > O **AHP** pergunta, par a par, quanto um critério importa mais que outro. O **DEMATEL**
 > mede influência sistêmica. **Onde divergem está o efeito de segunda ordem subestimado.**
@@ -139,6 +148,11 @@ select * from mcdm.bcg_resumo where id_caso = '${params.caso}'
 > O **AHP Fuzzy** (Buckley, 1985) recebe o mesmo julgamento do AHP, mas não descarta a
 > imprecisão: quem disse "5" quis dizer algo entre 4 e 6, e essa faixa é carregada até o
 > fim. As colunas `l` e `u` são os limites do número triangular de cada peso.
+>
+> O **BWM** (Rezaei, 2015) resolve um problema operacional, não teórico: a matriz de Saaty
+> com 9 critérios exige 36 comparações e **ninguém a preenche com atenção até o fim**. O BWM
+> pede apenas o melhor e o pior critério e deriva o resto — 2n−3 comparações. A coluna
+> `BWM CR` diz se o julgamento resultante é consistente.
 
 <img src="/mc/{params.caso}/pesos_dematel_ahp.png" alt="DEMATEL, AHP e AHP Fuzzy" style="width:100%;border-radius:8px;"/>
 
@@ -150,21 +164,30 @@ select * from mcdm.bcg_resumo where id_caso = '${params.caso}'
   <Column id=peso_ahp_fuzzy title="AHP Fuzzy" fmt=pct2/>
   <Column id=fuzzy_l title="l" fmt=pct2/>
   <Column id=fuzzy_u title="u" fmt=pct2/>
+  <Column id=peso_bwm title="BWM" fmt=pct2/>
   <Column id=divergencia title="DEMATEL - AHP" fmt=pct2 contentType=colorscale/>
   <Column id=cr title="AHP CR" fmt=num4/>
+  <Column id=bwm_cr title="BWM CR" fmt=num4/>
 </DataTable>
 
 > [!NOTE]
-> O AHP Fuzzy **achata os extremos** em relacao ao AHP crisp: a media geometrica com
-> incerteza puxa os pesos para o centro. Um criterio que o AHP coloca em 50% costuma cair,
-> e um que ele deixa em 0,4% costuma subir. Isso nao e correcao de erro, e o que acontece
+> O AHP Fuzzy **achata os extremos** em relação ao AHP crisp: a média geométrica com
+> incerteza puxa os pesos para o centro. Um critério que o AHP coloca em 50% costuma cair,
+> e um que ele deixa em 0,4% costuma subir. Isso não é correção de erro, é o que acontece
 > quando se admite que o julgamento tinha uma faixa. Se a ORDEM dos pesos muda entre os
-> dois, a prioridade declarada nao sobrevive a imprecisao do proprio decisor, e isso e
-> informacao para o comite.
+> dois, a prioridade declarada não sobrevive à imprecisão do próprio decisor, e isso é
+> informação para o comitê.
 
 ---
 
 ## ⚖️ Dez escolas de decisão sobre o mesmo problema
+
+> [!IMPORTANT]
+> **São doze modelos aplicados a este caso, e dez entram neste gráfico.** O **BWM** devolve
+> pesos de critério (veja a tabela das quatro famílias, acima) e o **DRSA** devolve regras
+> (seção própria, adiante) — nenhum dos dois produz posição de alternativa, e por isso o
+> **consenso de Borda e a robustez são calculados sobre estes dez**. Contar os doze aqui
+> faria parecer que o consenso agrega o que ele não agrega.
 
 > Cada método é uma **teoria diferente sobre o que significa "melhor"**. Quando as dez
 > concordam, a escolha não é artefato de método. **Quando divergem, a divergência é o achado** —
@@ -259,7 +282,7 @@ select * from mcdm.bcg_resumo where id_caso = '${params.caso}'
 > O consenso responde **qual escolher**. A BCG responde **que tipo de aposta cada uma é** —
 > pergunta diferente, e igualmente decisiva na hora de assinar.
 >
-> Dois eixos, ambos derivados dos **mesmos pesos do DEMATEL** que alimentam os nove métodos
+> Dois eixos, ambos derivados dos **mesmos pesos do DEMATEL** que alimentam os dez métodos
 > (renormalizados por grupo, de modo que a BCG é um segundo corte da mesma modelagem, não
 > uma segunda modelagem):
 >
@@ -296,6 +319,36 @@ select * from mcdm.bcg_resumo where id_caso = '${params.caso}'
   <Column id=posicao title="Posição de custo" fmt=num3 contentType=colorscale/>
   <Column id=acao title="O que fazer"/>
 </DataTable>
+
+---
+
+## 📏 DRSA — a regra que explica as decisões passadas
+
+> Os outros onze modelos pedem preferências **declaradas**: pesos, comparações, limiares.
+> O **DRSA** (Greco, Matarazzo & Słowiński) faz o caminho inverso — recebe as decisões já
+> tomadas e devolve a **regra** que as explica, em português, para quem não sabe o que é
+> normalização vetorial. É a única família aqui que aprende de histórico em vez de exigir
+> que alguém saiba declarar o que prefere.
+
+<div class="grid grid-cols-3 gap-4">
+<BigValue data={drsa_q} value=gamma title="γ — qualidade da aproximação" fmt=pct1/>
+<BigValue data={drsa_q} value=n_regras title="Regras induzidas" fmt=num0/>
+<BigValue data={drsa_q} value=n_violacoes title="Pares que violam a dominância" fmt=num0/>
+</div>
+
+<DataTable data={drsa_r} rows=all rowShading=true>
+  <Column id=n_regra title="#"/>
+  <Column id=texto title="Regra"/>
+  <Column id=cobertura title="Cobre" fmt=num0/>
+  <Column id=certeza title="Certeza" fmt=pct0/>
+</DataTable>
+
+> [!NOTE]
+> **γ = 100%** significa que a relação de dominância classifica todas as alternativas sem
+> ambiguidade: o histórico é coerente e as regras o descrevem inteiramente. **γ < 100%** é
+> diagnóstico, não defeito — diz que existem pares em que a alternativa dominada foi
+> preferida, e a coluna *Pares que violam a dominância* conta quantos. Nesse caso a decisão
+> passada tem exceções, e saber disso vale mais que um ranking limpo.
 
 ---
 

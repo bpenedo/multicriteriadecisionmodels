@@ -20,7 +20,7 @@ _MCDM Studio — Modelos Multi기준 de Decisão · Autor: **ProfBru - Bruno Pen
   Só consultas AGREGADAS (uma linha por caso). As tabelas detalhadas — ranking por
   método (3.744 linhas), 의사결정 행렬 (3.514), distribuição (4.230), 견고성 por
   método (4.160) — vivem nas páginas de caso, onde estão filtradas por `id_caso`.
-  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador. Ver bugs.md #BUG-028.
+  Carregá-las todas aqui somava ~16 mil linhas e travava o navegador.
 -->
 
 ```sql casos
@@ -44,100 +44,76 @@ select dominio, count(*) as casos, avg(prob_vitoria) as confianca_media
 from mcdm.casos group by dominio order by casos desc
 ```
 
-# 🎯 Decisão Multi기준 — nove escolas, um 판정 com intervalo de confiança
+# 🎯 다기준 의사결정 — 열 학파, 신뢰구간이 있는 하나의 판정
 
-> **A planilha não erra a conta. Ela erra a pergunta.**
-> Ordenar por preço elege o mais barato. Ordenar por nota de especialista elege o mais caro.
-> Filtrar por "atende a todos os requisitos" costuma esvaziar a lista. Nenhuma das três
-> responde à pergunta que foi feita: *entre 대안s que se contradizem, qual escolher —
-> e com que confiança?*
+> **스프레드시트는 계산을 틀리지 않습니다. 질문을 틀립니다.** 가격으로 정렬하면 가장 싼 것이 뽑힙니다. 전문가 점수로 정렬하면 가장 비싼 것이 뽑힙니다. “모든 요건을 충족”으로 거르면 목록이 비기 마련입니다. 세 가지 모두 정작 제기된 질문에는 답하지 않습니다. *서로 모순되는 대안들 가운데 무엇을 고를 것인가 — 그리고 얼마나 확신할 수 있는가?*
 
-Este painel roda **nove métodos multi기준** sobre cada caso, tira o vencedor do **consenso
-de Borda** entre eles e depois **perturba os pesos 2.000 vezes** para responder à única
-pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouco diferente?*
+이 대시보드는 사례마다 **열 가지 다기준 방법**을 실행하고, 그 사이의 **보르다 합의**로 선정안을 도출한 뒤, **가중치를 2,000번 교란**하여 위원회가 실제로 묻는 단 하나의 질문에 답합니다. *가중치를 조금 다르게 주었더라면?*
 
-<BigValue data={totais} value=casos title="Casos de decisão" fmt=num0/>
-<BigValue data={totais} value=alternativas title="Alternativas avaliadas" fmt=num0/>
-<BigValue data={totais} value=robustos title="Vereditos ROBUSTOS" fmt=num0/>
-<BigValue data={totais} value=frageis title="Vereditos FRÁGEIS" fmt=num0/>
+<BigValue data={totais} value=casos title="의사결정 사례" fmt=num0/>
+<BigValue data={totais} value=alternativas title="평가된 대안" fmt=num0/>
+<BigValue data={totais} value=robustos title="견고 판정" fmt=num0/>
+<BigValue data={totais} value=frageis title="취약 판정" fmt=num0/>
 
-## 📋 Casos de decisão
+## 📋 의사결정 사례
 
-> Clique em qualquer caso para abrir o **relatório completo**: diagrama causa-efeito do
-> DEMATEL, mapa das nove escolas, núcleo do ELECTRE, dupla normalização do TOPSIS,
-> 보르다 합의, 견고성 sob 2.000 universos, matriz BCG e a 의사결정 행렬.
+> 아무 사례나 클릭하면 **전체 보고서**가 열립니다. DEMATEL 인과 다이어그램, 열 학파 대조도, ELECTRE 핵, TOPSIS 이중 정규화, 보르다 합의, 2,000개 세계에 대한 견고성, BCG 매트릭스, 그리고 의사결정 행렬.
 
 <DataTable data={casos} rows=all rowShading=true link=link>
-  <Column id=nome title="Caso"/>
-  <Column id=dominio title="Domínio"/>
-  <Column id=n_alternativas title="Alternativas" fmt=num0/>
-  <Column id=vencedor_rotulo title="🏆 Vencedor"/>
-  <Column id=prob_vitoria title="Confiança (%)" fmt=num1 contentType=colorscale/>
-  <Column id=classificacao title="Veredito"/>
+  <Column id=nome title="사례"/>
+  <Column id=dominio title="영역"/>
+  <Column id=n_alternativas title="대안" fmt=num0/>
+  <Column id=vencedor_rotulo title="🏆 선정안"/>
+  <Column id=prob_vitoria title="신뢰도 (%)" fmt=num1 contentType=colorscale/>
+  <Column id=classificacao title="판정"/>
 </DataTable>
 
-> **Como ler o 판정.** `ROBUSTO` (≥ 90%) = a escolha não depende da calibração fina dos
-> pesos; pode ir ao comitê. `PROVÁVEL` (60–90%) = se sustenta na maioria dos cenários, mas o
-> vice é competitivo. `FRÁGIL` (abaixo de 60%) = **o 1º lugar é artefato dos pesos** — o
-> sistema diz isso em vez de exibir um troféu.
+> **판정 읽는 법.** `견고`(≥ 90%) = 선택이 가중치의 미세 조정에 좌우되지 않으므로 위원회에 올릴 수 있습니다. `유력`(60–90%) = 대부분의 시나리오에서 유지되지만 2위가 경쟁력이 있습니다. `취약`(60% 미만) = **1위가 가중치의 산물입니다** — 시스템은 트로피를 내보이는 대신 이 사실을 말합니다.
 
-<BarChart data={resumo_dominio} x=dominio y=casos title="Casos por domínio de aplicação" yAxisTitle="Casos"/>
+<BarChart data={resumo_dominio} x=dominio y=casos title="적용 영역별 사례" yAxisTitle="Casos"/>
 
-## 🧮 DEMATEL — a causa raiz de cada decisão
+## 🧮 DEMATEL — 모든 결정의 근본 원인
 
-> A pergunta que quase ninguém faz antes de atribuir pesos: **os 기준s são
-> independentes?** Quase nunca são. Consumo energético *causa* autonomia; blindagem
-> *causa* peso, que *causa* perda de mobilidade. Somar os dois como independentes conta a
-> mesma coisa duas vezes.
+> 가중치를 주기 전에 거의 아무도 묻지 않는 질문. **기준들이 서로 독립인가?** 거의 그렇지 않습니다. 에너지 소비는 주행거리를 *일으키고*, 장갑은 무게를 *일으키며*, 무게는 기동성 상실을 *일으킵니다*. 이 둘을 독립인 것처럼 더하면 같은 것을 두 번 세는 셈입니다.
 >
-> O **DEMATEL** (Gabus & Fontela, Battelle) monta a matriz de relação total
-> `T = X(I−X)⁻¹` — que soma influências diretas **e indiretas** de qualquer comprimento de
-> caminho — e separa: `R+C` = importância no sistema; `R−C > 0` = **CAUSA** (alavanca:
-> mexa aqui) e `R−C < 0` = **EFEITO** (termômetro: resultado do que já se fez).
+> **DEMATEL**(Gabus & Fontela, Battelle)은 총관계 행렬 `T = X(I−X)⁻¹`를 만듭니다 — 임의 경로 길이의 직접 **및 간접** 영향을 모두 합산합니다 — 그리고 구분합니다. `R+C` = 시스템 내 중요도, `R−C > 0` = **원인**(레버: 여기를 건드린다), `R−C < 0` = **결과**(온도계: 이미 한 일의 산물).
 >
-> A coluna **Causa raiz** abaixo é o 기준 de maior `R−C` de cada caso: é nele que uma
-> intervenção move o sistema inteiro.
+> 아래 **근본 원인** 열은 각 사례에서 `R−C`가 가장 큰 기준입니다. 바로 거기서 하나의 개입이 시스템 전체를 움직입니다.
 
 <DataTable data={alavancas} rows=all rowShading=true>
-  <Column id=nome title="Caso"/>
-  <Column id=n_criterios title="Critérios" fmt=num0/>
-  <Column id=n_causas title="Causas" fmt=num0 contentType=colorscale/>
-  <Column id=causa_raiz title="🔧 Causa raiz (maior R−C)"/>
-  <Column id=criterio_maior_peso title="Critério de maior peso"/>
-  <Column id=maior_peso_pct title="Peso (%)" fmt=num1/>
+  <Column id=nome title="사례"/>
+  <Column id=n_criterios title="기준" fmt=num0/>
+  <Column id=n_causas title="원인" fmt=num0 contentType=colorscale/>
+  <Column id=causa_raiz title="🔧 근본 원인(최대 R−C)"/>
+  <Column id=criterio_maior_peso title="가중치가 가장 큰 기준"/>
+  <Column id=maior_peso_pct title="가중치(%)" fmt=num1/>
 </DataTable>
 
-<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="Critérios que são CAUSA em cada caso (alavancas contra o total)" yAxisTitle="Critérios" swapXY=true/>
+<BarChart data={alavancas} x=nome y={['n_causas','n_criterios']} type=grouped title="각 사례에서 원인인 기준 (총계 대비 레버)" yAxisTitle="Critérios" swapXY=true/>
 
-> **Abra um caso** para ver o diagrama causa-efeito completo, a tabela com `R` e `C`
-> separados e a **matriz de relação total** com as ligações uma a uma.
+> **사례를 열면** 전체 인과 다이어그램, `R`과 `C`를 분리한 표, 그리고 연결을 하나하나 보여 주는 **총관계 행렬**을 볼 수 있습니다.
 
-## 🎲 Matriz BCG — mapa de oportunidades por categoria
+## 🎲 BCG 매트릭스 — 범주별 기회 지도
 
-> Além de *qual escolher*, cada categoria tem um **perfil de oportunidade**: quantas
-> 대안s são ⭐ Estrela (investir), 🐄 Vaca (colher), ❓ Interrogação (avaliar o prêmio)
-> e 🐕 Abacaxi (descartar). Uma categoria só de Interrogações é um mercado caro; uma cheia de
-> Vacas é um mercado maduro, onde o dinheiro decide pouco.
+> *무엇을 고를지* 외에도 각 범주에는 **기회 프로필**이 있습니다. 대안 중 몇 개가 ⭐ 스타(투자), 🐄 캐시카우(수확), ❓ 물음표(상금을 따져볼 대상), 🐕 개(정리)인지입니다. 물음표만 있는 범주는 값비싼 시장이고, 캐시카우로 가득한 범주는 돈이 거의 결정하지 못하는 성숙한 시장입니다.
 
 <DataTable data={bcg_geral} rows=all rowShading=true>
-  <Column id=nome title="Categoria"/>
+  <Column id=nome title="범주"/>
   <Column id=estrelas title="⭐" fmt=num0 contentType=colorscale/>
   <Column id=vacas title="🐄" fmt=num0 contentType=colorscale/>
   <Column id=interrogacoes title="❓" fmt=num0 contentType=colorscale/>
   <Column id=abacaxis title="🐕" fmt=num0 contentType=colorscale/>
-  <Column id=total title="Total" fmt=num0/>
-  <Column id=quadrante_do_vencedor title="Quadrante do 1º colocado"/>
+  <Column id=total title="합계" fmt=num0/>
+  <Column id=quadrante_do_vencedor title="1위의 사분면"/>
 </DataTable>
 
-## ⚖️ As nove escolas de decisão
+## ⚖️ 열 개의 의사결정 학파
 
-> Cada método é uma **teoria diferente sobre o que significa "melhor"**, e é por isso que
-> rodamos todos: quando nove escolas independentes elegem o mesmo vencedor, a escolha não é
-> artefato de um método. Quando divergem, a divergência aponta onde está o trade-off real.
+> 각 방법은 **“더 좋다”가 무엇인지에 대한 서로 다른 이론**이며, 그래서 전부 실행합니다. 열 개의 독립적인 학파가 같은 선정안을 뽑으면 그 선택은 한 방법의 산물이 아닙니다. 갈릴 때는, 그 갈림이 진짜 트레이드오프가 어디인지 가리킵니다.
 
 | Método | Escola | O que assume | Quando é a ferramenta certa |
 |---|---|---|---|
-| **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre 기준s | 기준s quantitativos, decisor único |
+| **AHP-TOPSIS 2n** | Distância à solução ideal | Compensação total entre 기준s | 기준 quantitativos, decisor único |
 | **ELECTRE I** | 우위관계 | Incomparabilidade é permitida | Triagem: eliminar o que é dominado |
 | **ELECTRE II** | 우위관계 | Limiares forte e fraco | Ordenação completa com veto |
 | **PROMETHEE II** | 우위관계 | Preferência gradual (6 funções) | Quando "um pouco melhor" não é "melhor" |
@@ -147,23 +123,15 @@ pergunta que o comitê realmente faz: *e se a gente tivesse dado um peso um pouc
 | **TODIM** | Teoria dos Prospectos | Perda dói mais que ganho equivalente | Decisor avesso a perda (todos são) |
 | **SAPEVO-M** | Ordinal multidecisor | Julgamento ordinal de vários decisores | Comitê que não concorda entre si |
 
-## 🎯 견고성 — o intervalo de confiança da própria decisão
+## 🎯 견고성 — 의사결정 자체의 신뢰구간
 
-> **O problema.** Todo método MCDM devolve um vencedor com confiança implícita de 100%. Mas
-> os pesos nunca são exatos — são estimativas de preferência. Se dois pontos percentuais no
-> peso de um 기준 trocam o 1º com o 2º colocado, o "vencedor" é artefato da calibração,
-> não fato do conjunto. Ninguém reporta isso. **É onde as decisões morrem no comitê.**
+> **문제.** 모든 MCDM 방법은 암묵적으로 100% 확신을 지닌 선정안을 내놓습니다. 그러나 가중치는 결코 정확하지 않습니다 — 선호의 추정치입니다. 어떤 기준의 가중치가 2퍼센트포인트 움직여 1위와 2위가 바뀐다면, 그 “선정안”은 집합에 관한 사실이 아니라 보정의 산물입니다. 아무도 이것을 보고하지 않습니다. **결정이 위원회에서 죽는 지점이 바로 여기입니다.**
 >
-> **A solução.** Perturbamos os pesos com `w' ~ Dirichlet(κ·w)` e reranqueamos 2.000 vezes.
-> A Dirichlet é a escolha natural: seu suporte é exatamente o simplex (pesos positivos que
-> somam 1) e ela satisfaz `E[w'] = w` — perturbamos **sem enviesar**. Com κ = 200, um peso de
-> 13% oscila ±2,4 p.p.
+> **해법.** `w' ~ Dirichlet(κ·w)`로 가중치를 교란하고 2,000번 다시 순위를 매깁니다. 디리클레는 자연스러운 선택입니다. 그 지지집합이 정확히 단체(합이 1인 양의 가중치)이고 `E[w'] = w`를 만족하기 때문입니다 — **편향 없이** 교란합니다. κ = 200일 때 13%의 가중치는 ±2.4%p 흔들립니다.
 >
-> O 판정 deixa de ser *"o Modelo C é o melhor"* e passa a ser **"o Modelo C vence em 96%
-> dos universos de preferência plausíveis"**.
+> 판정은 더 이상 *“모델 C가 최고다”*가 아니라 **“모델 C는 그럴듯한 선호 세계의 96%에서 승리한다”**가 됩니다.
 
-**Abra um caso na tabela acima** para ver o diagrama causa-efeito, o mapa das nove escolas, a
-matriz BCG e a distribuição completa das posições nos 2.000 universos.
+**위 표에서 사례를 열면** 인과 다이어그램, 열 학파 대조도, BCG 매트릭스, 그리고 2,000개 세계에 걸친 순위의 전체 분포를 볼 수 있습니다.
 
 ---
 
